@@ -13,7 +13,9 @@ namespace CellShop_Api.Models
         public int Quantity { get; set; }
         [DefaultValue(true)]
         public bool Status { get; set; }
+        public int ProductId { get; set; }
         public Product Product { get; set; }
+        public int InvoiceId { get; set; }
         public Invoice Invoice { get; set; }
 
     }

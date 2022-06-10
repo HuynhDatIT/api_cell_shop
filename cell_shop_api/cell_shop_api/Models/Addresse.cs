@@ -14,7 +14,8 @@ namespace CellShop_Api.Models
         [Required]
         public string Phone { get; set; }
         [DefaultValue(true)]
-        public bool Status { get; set; } 
+        public bool Status { get; set; }
+        public int AccountId { get; set; }
         public Account Account { get; set; }
     }
 }

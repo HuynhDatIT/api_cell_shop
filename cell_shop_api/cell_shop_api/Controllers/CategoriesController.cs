@@ -1,5 +1,4 @@
 ﻿using CellShop_Api.Interface;
-using CellShop_Api.Interface.IServices;
 using CellShop_Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

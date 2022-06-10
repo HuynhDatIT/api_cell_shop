@@ -18,7 +18,8 @@ namespace CellShop_Api.Models
         public int Stock { get; set; }
         public float Rating { get; set; } = 0;
         [DefaultValue(true)]
-        public bool Status { get; set; } 
+        public bool Status { get; set; }
+        public int ModelProductId { get; set; }
         public ModelProduct ModelProduct { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }
         public ICollection<BannerImage> BannerImages { get; set; }

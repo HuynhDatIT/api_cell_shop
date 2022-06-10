@@ -17,6 +17,7 @@ namespace CellShop_Api.Models
         [Required]
         public string Email { get; set; }
         public bool Status { get; set; }
+        public int RoleId { get; set; }
         public Role Role { get; set; }
         public ICollection<Log> Logs { get; set; }
         public ICollection<Addresse> Addresses { get; set; }

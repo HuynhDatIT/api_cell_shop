@@ -24,8 +24,9 @@ namespace CellShop_Api.Models
         public string DeliveryAddress { get; set; }
 
         public DeliveryStatus DeliveryStatus { get; set; } = DeliveryStatus.Order;
-        [DefaultValue(true)]
-        public bool Status { get; set; } 
+       
+        public bool Status { get; set; }
+        public int AccountId { get; set; }
         public Account Account { get; set; }
         public ICollection<InvoiceDetail> InvoiceDetails { get; set; }
     }

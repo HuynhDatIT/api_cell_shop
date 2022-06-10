@@ -1,7 +1,6 @@
 using CellShop_Api.AutoMapperConfig;
 using CellShop_Api.Data;
 using CellShop_Api.Interface;
-using CellShop_Api.Interface.IServices;
 using CellShop_Api.Models;
 using CellShop_Api.Services;
 using CellShop_Api.Unit_Of_Work;
