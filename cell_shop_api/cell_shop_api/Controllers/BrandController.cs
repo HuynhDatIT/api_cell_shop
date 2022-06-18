@@ -1,4 +1,4 @@
-﻿using CellShop_Api.Interface;
+﻿using cell_shop_api.Services.InterfaceSevice;
 using CellShop_Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,48 +12,27 @@ namespace CellShop_Api.Controllers
     [ApiController]
     public class BrandController : ControllerBase
     {
-        private readonly IGenericService<Brand> BrandService;
+        private readonly IBrandService BrandService;
 
-        public BrandController(IGenericService<Brand> brandService)
+        public BrandController(IBrandService brandService)
         {
             BrandService = brandService;
         }
 
-
-
-        // GET: api/<BrandController>
         [HttpGet]
-        public  async Task<IList<Brand>> Get()
+        public async Task<IActionResult> GetAllBrand()
         {
-            var listItem = await BrandService.GetAll();
-            return listItem;
+            var listBrand = await BrandService.GetAllAsync();
+            return Ok(listBrand);
         }
 
-        // GET api/<BrandController>/5
         [HttpGet("{id}")]
-        public async Task<Brand> Get(int id)
+        public async Task<IActionResult> GetBrandById(int id)
         {
-            var item = await BrandService.GetById(id);
-
-            return item;
+            var brand = await BrandService.GetByIdAsync(id);
+            
+            return brand != null ? Ok(brand) : NotFound();  
         }
-
-        // POST api/<BrandController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<BrandController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<BrandController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+    
     }
 }

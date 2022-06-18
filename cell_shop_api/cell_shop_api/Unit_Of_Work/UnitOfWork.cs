@@ -1,46 +1,45 @@
-﻿using CellShop_Api.Data;
-using CellShop_Api.Interface;
+﻿using cell_shop_api.Repository;
+using cell_shop_api.Repository.InheritRepository.Interface;
+using cell_shop_api.Unit_Of_Work;
+using CellShop_Api.Data;
 using CellShop_Api.Models;
-using CellShop_Api.Repository;
 
 namespace CellShop_Api.Unit_Of_Work
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly CellShopDbContext _dbContext;
-        private IGenericRepositoryCURD<ModelProduct> _modelProductRepository;
-        private IGenericRepositoryCURD<Product> _productRepository;
-        private IGenericRepositoryCURD<Categorie> _catogorieRepository;
-        private IGenericRepositoryCURD<Brand> _brandRepository;
-        public UnitOfWork(CellShopDbContext db)
+        private IModelProductRepository modelProductRepository;
+        private IProductRepository productRepository;
+        private ICategorieRepository categorieRepository;
+        private IBrandRepository brandRepository;
+        public UnitOfWork(CellShopDbContext dbContext)
         {
-            _dbContext = db;
-            _modelProductRepository = new GenericRepositoryCURD<ModelProduct>(_dbContext);
-            _productRepository = new GenericRepositoryCURD<Product>(_dbContext);
-            _catogorieRepository = new GenericRepositoryCURD<Categorie>(_dbContext);
-            _brandRepository = new GenericRepositoryCURD<Brand>(_dbContext);
+            _dbContext = dbContext;
+            modelProductRepository = new ModelProductRepository(_dbContext);
+            productRepository = new ProductRepository(_dbContext);
+            categorieRepository = new CategorieRepository(_dbContext);
+            brandRepository = new BrandRepository(_dbContext);
         }
 
-        public IGenericRepositoryCURD<ModelProduct> ModelProductRepository
+        public IModelProductRepository ModelProductRepository
         {
-            get { return _modelProductRepository; }
+            get { return modelProductRepository; }
         }
 
-        public IGenericRepositoryCURD<Product> ProductRepositoryCURD
+        public IProductRepository ProductRepository
         {
-            get { return _productRepository; }
+            get { return productRepository; }
+        }
+        public ICategorieRepository CategorieRepository
+        {
+            get { return categorieRepository; }
         }
 
-        public IGenericRepositoryCURD<Categorie> CategorieRepositoryCURD
+        public IBrandRepository BrandRepository
         {
-            get { return _catogorieRepository; }
+            get { return brandRepository; }
         }
-
-        public IGenericRepositoryCURD<Brand> BrandRepositoryCURD
-        {
-            get { return _brandRepository; }
-        }
-        
 
         public void SaveChanges()
         {

@@ -1,6 +1,7 @@
+using cell_shop_api.Services.InterfaceSevice;
+using cell_shop_api.Unit_Of_Work;
 using CellShop_Api.AutoMapperConfig;
 using CellShop_Api.Data;
-using CellShop_Api.Interface;
 using CellShop_Api.Models;
 using CellShop_Api.Services;
 using CellShop_Api.Unit_Of_Work;
@@ -33,6 +34,14 @@ namespace CellShop_Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Enable CORS
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            }));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -55,10 +64,7 @@ namespace CellShop_Api
             services.AddSingleton(mapper);
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IGenericService<Categorie>, CategorieService>();
-            services.AddScoped<IGenericService<Brand>, BrandService>();
-            services.AddScoped<IGenericService<ModelProduct>, ModelProductService>();
-            services.AddScoped<IGenericService<Product>, ProductService>();
+            services.AddScoped<IBrandService, BrandService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

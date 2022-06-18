@@ -1,11 +1,12 @@
-﻿using CellShop_Api.Interface;
+﻿using cell_shop_api.Services.InterfaceSevice;
+using cell_shop_api.Unit_Of_Work;
 using CellShop_Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CellShop_Api.Services
 {
-    public class BrandService : IGenericService<Brand>
+    public class BrandService : IBrandService
     {
         private readonly IUnitOfWork UnitOfWork;
 
@@ -13,17 +14,15 @@ namespace CellShop_Api.Services
         {
             UnitOfWork = unitOfWork;
         }
-
-        public async Task<IList<Brand>> GetAll()
+        public async Task<IEnumerable<Brand>> GetAllAsync()
         {
-            var listItem = await UnitOfWork.BrandRepositoryCURD.GetAll();
+            var listItem = await UnitOfWork.BrandRepository.GetAllAsync();
 
             return listItem;
         }
-
-        public Task<Brand> GetById(int id)
+        public async Task<Brand> GetByIdAsync(int id)
         {
-            var item = UnitOfWork.BrandRepositoryCURD.GetById(id);
+            var item = await UnitOfWork.BrandRepository.GetByIdAsync(id);
 
             return item;
         }

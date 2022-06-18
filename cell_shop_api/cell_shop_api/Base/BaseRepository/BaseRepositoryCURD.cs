@@ -1,17 +1,16 @@
 ﻿using CellShop_Api.Data;
-using CellShop_Api.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CellShop_Api.Repository
+namespace cell_shop_api.Repository.BaseRepository
 {
-    public class GenericRepositoryCURD<T> : IGenericRepositoryCURD<T> where T : class
+    public class BaseRepositoryCURD<T> : IBaseRepositoryCRUD<T> where T : class
     {
         private readonly CellShopDbContext _db;
 
-        public GenericRepositoryCURD(CellShopDbContext db)
+        public BaseRepositoryCURD(CellShopDbContext db)
         {
             _db = db;
         }
@@ -21,21 +20,21 @@ namespace CellShop_Api.Repository
             _db.Set<T>().Remove(obj);
         }
 
-        public async Task<IList<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             var listItem = await _db.Set<T>().ToListAsync();
-            
+
             return listItem;
         }
 
-        public async Task<T> GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
             var itemT = await _db.Set<T>().FindAsync(id);
-            
+
             return itemT;
         }
 
-        public async Task Insert(T obj)
+        public async Task AddAsync(T obj)
         {
             await _db.Set<T>().AddAsync(obj);
         }
