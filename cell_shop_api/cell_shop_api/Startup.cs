@@ -57,7 +57,7 @@ namespace CellShop_Api
             //config automapper
             var mappingconfig = new AutoMapper.MapperConfiguration(
                 m => m.AddProfile(
-                    new AutoMapperProfile()
+                    new AccountAutomapper()
                     ));
 
             AutoMapper.IMapper mapper = mappingconfig.CreateMapper();

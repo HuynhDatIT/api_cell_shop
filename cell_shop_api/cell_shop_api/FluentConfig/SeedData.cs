@@ -79,7 +79,7 @@ namespace cell_shop_api.FluentConfig
                 },
                 new Product
                 {
-                    Id = 1,
+                    Id = 3,
                     Color = "Red",
                     Ram = 6,
                     Rom = 512,
@@ -90,7 +90,7 @@ namespace cell_shop_api.FluentConfig
                 },
                 new Product
                 {
-                    Id = 3,
+                    Id = 4,
                     Color = "Black",
                     Ram = 6,
                     Rom = 512,
@@ -100,7 +100,7 @@ namespace cell_shop_api.FluentConfig
                     ModelProductId = 2
                 }
                 );
-            modelBuilder.Entity<Account>().HasData(
+            modelBuilder.Entity<Role>().HasData(
                 new Role
                 {
                     Id = 1,
@@ -138,7 +138,7 @@ namespace cell_shop_api.FluentConfig
                     PassWord = "12345".HashMD5(),
                     RoleId = 1,
                     FullName = "Huynh Tan Dat",
-                    Email = "admin@gmail.com",
+                    Email = "user2@gmail.com",
                 }
                 );
             modelBuilder.Entity<Cart>().HasData(
@@ -158,7 +158,7 @@ namespace cell_shop_api.FluentConfig
                 },
                 new Cart
                 {
-                    Id = 1,
+                    Id = 3,
                     ProductId = 3,
                     AccountId = 2,
                     Quantity = 1

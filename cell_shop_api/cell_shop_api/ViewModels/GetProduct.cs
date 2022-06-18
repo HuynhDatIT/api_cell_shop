@@ -1,6 +1,6 @@
 ﻿namespace CellShop_Api.ViewModels
 {
-    public class ProductViewModel
+    public class GetProduct
     {
         public int Id { get; set; }
        

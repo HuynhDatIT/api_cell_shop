@@ -4,9 +4,9 @@ using CellShop_Api.ViewModels;
 
 namespace CellShop_Api.AutoMapperConfig
 {
-    public class AutoMapperProfile : Profile
+    public class AccountAutomapper : Profile
     {
-        public AutoMapperProfile()
+        public AccountAutomapper()
         {
             
         }

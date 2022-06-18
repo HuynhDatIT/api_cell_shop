@@ -1,6 +1,8 @@
 ﻿using CellShop_Api.Models;
 using CellShop_Api.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using cell_shop_api.FluentConfig;
+using cell_shop_api.FluentConfig.ModelConfig;
 
 namespace CellShop_Api.Data
 {
@@ -14,6 +16,26 @@ namespace CellShop_Api.Data
         {
             base.OnModelCreating(modelBuilder);
            
+            modelBuilder.AccountFluent();
+            modelBuilder.AddresseFluent();
+            modelBuilder.BannerFluent();
+            modelBuilder.BrandFluent();
+            modelBuilder.CategorieFluent();
+            modelBuilder.CartFluent();
+            modelBuilder.InvoiceFluent();
+            modelBuilder.InvoiceDetailFluent();
+            modelBuilder.LinkFluent();
+            modelBuilder.LogFluent();
+            modelBuilder.ModelProductFluent();
+            modelBuilder.ProductFluent();
+            modelBuilder.ProductImageFluent();
+            modelBuilder.PromotionFluent();
+            modelBuilder.ReviewFluent();
+            modelBuilder.RoleFluent();
+            modelBuilder.WishListFluent();
+
+            modelBuilder.SeedAllData();
+            
         }
 
 
