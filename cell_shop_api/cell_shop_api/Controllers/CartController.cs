@@ -1,4 +1,5 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
+using cell_shop_api.ViewModels.Request;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -25,25 +26,16 @@ namespace cell_shop_api.Controllers
 
             return brand != null ? Ok(brand) : NotFound();
         }
-        //[HttpPost("add")]
-        //public IActionResult Add(CreateBrand createBrand)
-        //{
-        //    if (createBrand == null)
-        //        return BadRequest();
+        [HttpPost]
+        public async Task<IActionResult> Edit(CreateCart createCart)
+        {
+            if (createCart == null || createCart.Quantity == 0)
+                return BadRequest();
 
-        //    var result = _brandService.Add(createBrand);
+            var result = await _cartService.Edit(createCart);
 
-        //    return Ok(result);
-        //}
-        //[HttpPut("update")]
-        //public IActionResult Update(GetBrand getBrand)
-        //{
-        //    if (getBrand == null)
-        //        return BadRequest();
-
-        //    var result = _brandService.Update(getBrand);
-
-        //    return Ok(result);
-        //}
+            return result ? Ok() : BadRequest(); 
+        }
+      
     }
 }
