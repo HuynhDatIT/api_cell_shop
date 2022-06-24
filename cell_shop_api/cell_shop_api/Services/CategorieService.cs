@@ -21,13 +21,13 @@ namespace cell_shop_api.Services
             _mapper = mapper;
         }
 
-        public string Add(CreateCategorie createCategorie)
+        public int Add(CreateCategorie createCategorie)
         {
             var isExist = _unitOfWork.CategorieRepository.IsNameExist(createCategorie.Name);
 
             if (isExist)
             {
-                return Notification.Exist_Messege;
+                return 0;
             }
             else
             {
@@ -35,9 +35,7 @@ namespace cell_shop_api.Services
 
                 _unitOfWork.CategorieRepository.Add(categorie);
 
-                _unitOfWork.SaveChanges();
-
-                return Notification.Success_Messege;
+                return _unitOfWork.SaveChanges();
             }
         }
 
@@ -59,21 +57,18 @@ namespace cell_shop_api.Services
             return getCategorie;
         }
 
-        public async Task<string> Update(GetCategorie getCategorie)
+        public async Task<int> Update(GetCategorie getCategorie)
         {
             var categorie = await _unitOfWork.CategorieRepository.GetByIdAsync(getCategorie.Id);
 
-            if (categorie != null)
-            {
-                categorie.Name = getCategorie.Name;
+            if (categorie == null)
+                return 0;
+            
+            categorie.Name = getCategorie.Name;
 
-                _unitOfWork.CategorieRepository.Update(categorie);
+            _unitOfWork.CategorieRepository.Update(categorie);
 
-                _unitOfWork.SaveChanges();
-
-                return Notification.Success_Messege;
-            }
-            return Notification.NotFound_Messege;
+            return _unitOfWork.SaveChanges();
         }
     }
 }

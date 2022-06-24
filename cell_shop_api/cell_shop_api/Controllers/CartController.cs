@@ -22,20 +22,40 @@ namespace cell_shop_api.Controllers
             if (string.IsNullOrEmpty(id.ToString()) || id <= 0)
                 return BadRequest();
 
-            var brand = await _cartService.GetCarts(id);
+            var brand = await _cartService.GetCartsAsync(id);
 
             return brand != null ? Ok(brand) : NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(CreateCart createCart)
+        public async Task<IActionResult> Add(CreateCart createCart)
         {
-            if (createCart == null || createCart.Quantity == 0)
+            if (createCart == null || createCart.Quantity <= 0)
                 return BadRequest();
 
-            var result = await _cartService.Edit(createCart);
+            var result = await _cartService.AddAsync(createCart);
 
-            return result ? Ok() : BadRequest(); 
+            return result > 0 ? Ok() : BadRequest(); 
         }
-      
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int cartid)
+        {
+            if (cartid <= 0)
+                return BadRequest();
+
+            var result = await _cartService.DeleteAsync(cartid);
+
+            return result > 0 ? Ok() : BadRequest();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateCart updateCart)
+        {
+            if (updateCart == null || updateCart.Quantity <= 0)
+                return BadRequest();
+
+            var result = await _cartService.UpdateAsync(updateCart);
+
+            return result > 0 ? Ok() : BadRequest();
+        }
+
     }
 }

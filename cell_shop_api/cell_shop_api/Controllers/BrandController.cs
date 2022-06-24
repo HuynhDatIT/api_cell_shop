@@ -1,4 +1,5 @@
-﻿using cell_shop_api.Services.InterfaceSevice;
+﻿using cell_shop_api.Helper;
+using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.ViewModels.Request;
 using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
@@ -47,17 +48,17 @@ namespace CellShop_Api.Controllers
             
             var result = _brandService.Add(createBrand);
 
-            return Ok(result);
+            return result > 0 ? Ok() : BadRequest();
         }
         [HttpPut]
-        public IActionResult Update(GetBrand getBrand)
+        public async Task<IActionResult> Update(GetBrand getBrand)
         {
             if (getBrand == null)
                 return BadRequest();
 
-            var result = _brandService.Update(getBrand);
+            var result = await _brandService.Update(getBrand);
 
-            return Ok(result);
+            return result > 0 ? Ok() : BadRequest();
         }
 
     }

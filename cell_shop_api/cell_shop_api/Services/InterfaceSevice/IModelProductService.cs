@@ -8,7 +8,7 @@ namespace cell_shop_api.Services.InterfaceSevice
 {
     public interface IModelProductService : IBaseService<GetModelProduct>
     {
-        string Add(CreateModelProduct createModelProduct);
-        Task<string> Update(UpdateModelProduct updateModelProduct);
+        int Add(CreateModelProduct createModelProduct);
+        Task<int> Update(UpdateModelProduct updateModelProduct);
     }
 }

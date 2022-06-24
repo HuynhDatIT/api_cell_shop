@@ -64,6 +64,7 @@ namespace CellShop_Api
             services.AddScoped<IModelProductService, ModelProductService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IProductImageService, ProductImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

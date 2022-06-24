@@ -21,42 +21,37 @@ namespace cell_shop_api.Services
             _mapper = mapper;
         }
 
-        public async Task<bool> Edit(CreateCart createCart)
+
+        public async Task<int> DeleteAsync(int cartid)
         {
-            //check account...
+            var cart = await _unitOfWork.CartRepository.GetByIdAsync(cartid);
+
+            _unitOfWork.CartRepository.Delete(cart);
+           
+            return _unitOfWork.SaveChanges();
+        }
+
+        public async Task<int> AddAsync(CreateCart createCart)
+        {
             var cart = await _unitOfWork.CartRepository
                                            .IsProductAccountExistAsync(createCart);
             if(cart == null)
             {
-                if (createCart.Quantity < 0)
-                    return false;
                 var itemCart = _mapper.Map<Cart>(createCart);
                 _unitOfWork.CartRepository.Add(itemCart);
-                _unitOfWork.SaveChanges();
-                return true;
+                return _unitOfWork.SaveChanges();
+                
             }
             else
             {
                 cart.Quantity += createCart.Quantity;
-                
-                if(cart.Quantity == 0)
-                {
-                    _unitOfWork.CartRepository.Delete(cart);
-                    _unitOfWork.SaveChanges();
-                    return true;
-                }  
-                else
-                {
-                    _unitOfWork.CartRepository.Update(cart);
-                    _unitOfWork.SaveChanges();
-                    return true;
-                }
-               
+                _unitOfWork.CartRepository.Update(cart);
+                return _unitOfWork.SaveChanges();
             }
             
         }
 
-        public async Task<IEnumerable<GetCart>> GetCarts(int accountid)
+        public async Task<IEnumerable<GetCart>> GetCartsAsync(int accountid)
         {
             //check account...
             var carts = await _unitOfWork.CartRepository.GetCartByAccountIdAsync(accountid);
@@ -66,5 +61,15 @@ namespace cell_shop_api.Services
             return getcart;
         }
 
+        public async Task<int> UpdateAsync(UpdateCart updateCart)
+        {
+            var cart = await _unitOfWork.CartRepository.GetByIdAsync(updateCart.CartId);
+            
+            cart.Quantity = updateCart.Quantity;
+            
+            _unitOfWork.CartRepository.Update(cart);
+            
+            return _unitOfWork.SaveChanges();
+        }
     }
 }

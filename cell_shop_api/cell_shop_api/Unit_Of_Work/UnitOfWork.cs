@@ -4,6 +4,7 @@ using cell_shop_api.Repository.Interface;
 using cell_shop_api.Unit_Of_Work;
 using CellShop_Api.Data;
 using CellShop_Api.Models;
+using System.Threading.Tasks;
 
 namespace CellShop_Api.Unit_Of_Work
 {
@@ -15,6 +16,7 @@ namespace CellShop_Api.Unit_Of_Work
         private ICategorieRepository categorieRepository;
         private IBrandRepository brandRepository;
         private ICartRepository cartRepository;
+        private IProductImageRepository productImageRepository;
         public UnitOfWork(CellShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -22,7 +24,8 @@ namespace CellShop_Api.Unit_Of_Work
             productRepository = new ProductRepository(_dbContext);
             categorieRepository = new CategorieRepository(_dbContext);
             brandRepository = new BrandRepository(_dbContext);
-            cartRepository = new CartRepository(_dbContext);    
+            cartRepository = new CartRepository(_dbContext);  
+            productImageRepository = new ProductImageRepository(_dbContext);
         }
 
         public IModelProductRepository ModelProductRepository
@@ -49,14 +52,21 @@ namespace CellShop_Api.Unit_Of_Work
             get { return cartRepository; }
         }
 
-        public void SaveChanges()
+        public IProductImageRepository ProductImageRepository
         {
-            _dbContext.SaveChanges();
+            get { return productImageRepository; }
         }
 
-        public void SaveChangesAsync()
+        public int SaveChanges()
         {
-            _dbContext.SaveChangesAsync();
+            return _dbContext.SaveChanges();
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _dbContext.SaveChangesAsync();
+        }
+
+       
     }
 }

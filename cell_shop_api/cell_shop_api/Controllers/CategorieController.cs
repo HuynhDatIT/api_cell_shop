@@ -46,17 +46,17 @@ namespace cell_shop_api.Controllers
 
             var result = _categorieService.Add(createCategorie);
 
-            return Ok(result);
+            return result > 0 ? Ok() : BadRequest();
         }
         [HttpPut]
-        public IActionResult Update(GetCategorie getCategorie)
+        public async Task<IActionResult> Update(GetCategorie getCategorie)
         {
             if (getCategorie == null || getCategorie.Id <= 0)
                 return BadRequest();
 
-            var result = _categorieService.Update(getCategorie);
+            var result = await _categorieService.Update(getCategorie);
 
-            return Ok(result);
+            return result > 0 ? Ok() : BadRequest();
         }
     }
 }

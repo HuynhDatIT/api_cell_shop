@@ -21,23 +21,19 @@ namespace cell_shop_api.Services
             _mapper = mapper;
         }
 
-        public string Add(CreateModelProduct createModelProduct)
+        public int Add(CreateModelProduct createModelProduct)
         {
             var isExist = _unitOfWork.ModelProductRepository.IsNameExist(createModelProduct.Name);
 
             if (isExist)
-            {
-                return Notification.Exist_Messege;
-            }
+                return 0;
             else
             {
                 var modelProduct = _mapper.Map<ModelProduct>(createModelProduct);
 
                 _unitOfWork.ModelProductRepository.Add(modelProduct);
 
-                _unitOfWork.SaveChanges();
-
-                return Notification.Success_Messege;
+                return _unitOfWork.SaveChanges();
             }
         }
 
@@ -59,7 +55,7 @@ namespace cell_shop_api.Services
             return getModelProduct;
         }
 
-        public async Task<string> Update(UpdateModelProduct updateModelProduct)
+        public async Task<int> Update(UpdateModelProduct updateModelProduct)
         {
             var modelProduct = await _unitOfWork.ModelProductRepository.GetByIdAsync(updateModelProduct.Id);
 
@@ -73,11 +69,9 @@ namespace cell_shop_api.Services
 
                 _unitOfWork.ModelProductRepository.Update(modelProduct);
 
-                _unitOfWork.SaveChanges();
-
-                return Notification.Success_Messege;
+                return _unitOfWork.SaveChanges();
             }
-            return Notification.NotFound_Messege;
+            return 0;
         }
     }
 }

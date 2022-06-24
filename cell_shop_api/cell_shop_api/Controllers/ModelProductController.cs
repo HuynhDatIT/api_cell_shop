@@ -45,17 +45,17 @@ namespace cell_shop_api.Controllers
 
             var result = _modelProductService.Add(createModelProduct);
 
-            return Ok(result);
+            return result > 0 ? Ok() : BadRequest();
         }
         [HttpPut]
-        public IActionResult Update(UpdateModelProduct updateModelProduct)
+        public async Task<IActionResult> Update(UpdateModelProduct updateModelProduct)
         {
             if (updateModelProduct == null || updateModelProduct.Id <= 0)
                 return BadRequest();
 
-            var result = _modelProductService.Update(updateModelProduct);
+            var result = await _modelProductService.Update(updateModelProduct);
 
-            return Ok(result);
+            return result > 0 ? Ok() : BadRequest();
         }
     }
 }
