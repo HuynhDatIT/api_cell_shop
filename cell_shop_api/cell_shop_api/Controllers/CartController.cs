@@ -15,7 +15,7 @@ namespace cell_shop_api.Controllers
         {
             _cartService = cartService;
         }
-        [HttpGet("getbyaccountid/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByAccoutId(int id)
         {
             if (string.IsNullOrEmpty(id.ToString()) || id <= 0)

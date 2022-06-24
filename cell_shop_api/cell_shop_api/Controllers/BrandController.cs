@@ -21,7 +21,7 @@ namespace CellShop_Api.Controllers
             _brandService = brandService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var listBrand = await _brandService.GetAllAsync();
@@ -29,7 +29,7 @@ namespace CellShop_Api.Controllers
             return Ok(listBrand);
         }
 
-        [HttpGet("getbyid/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             if (string.IsNullOrEmpty(id.ToString()) || id <= 0)
@@ -39,7 +39,7 @@ namespace CellShop_Api.Controllers
             
             return brand != null ? Ok(brand) : NotFound();  
         }
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult Add(CreateBrand createBrand)
         {
             if (createBrand == null)
@@ -49,7 +49,7 @@ namespace CellShop_Api.Controllers
 
             return Ok(result);
         }
-        [HttpPut("update")]
+        [HttpPut]
         public IActionResult Update(GetBrand getBrand)
         {
             if (getBrand == null)

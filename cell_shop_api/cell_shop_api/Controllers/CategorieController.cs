@@ -20,7 +20,7 @@ namespace cell_shop_api.Controllers
             _categorieService = categorieService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var listCategorie = await _categorieService.GetAllAsync();
@@ -28,7 +28,7 @@ namespace cell_shop_api.Controllers
             return Ok(listCategorie);
         }
 
-        [HttpGet("getbyid/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             if (string.IsNullOrEmpty(id.ToString()) || id <= 0)
@@ -38,7 +38,7 @@ namespace cell_shop_api.Controllers
 
             return brand != null ? Ok(brand) : NotFound();
         }
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult Add(CreateCategorie createCategorie)
         {
             if (createCategorie == null)
@@ -48,7 +48,7 @@ namespace cell_shop_api.Controllers
 
             return Ok(result);
         }
-        [HttpPut("update")]
+        [HttpPut]
         public IActionResult Update(GetCategorie getCategorie)
         {
             if (getCategorie == null || getCategorie.Id <= 0)

@@ -18,7 +18,7 @@ namespace cell_shop_api.Controllers
             _productService = productService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var listproduct = await _productService.GetAllAsync();
@@ -26,7 +26,7 @@ namespace cell_shop_api.Controllers
             return Ok(listproduct);
         }
 
-        [HttpGet("getbyid/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             if (string.IsNullOrEmpty(id.ToString()) || id <= 0)

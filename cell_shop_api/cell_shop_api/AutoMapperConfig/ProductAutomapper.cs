@@ -9,9 +9,9 @@ namespace cell_shop_api.AutoMapperConfig
         public ProductAutomapper()
         {
             CreateMap<Product, GetProduct>()
-                .ForMember(x => x.ModelProductName,
+                .ForMember(x => x.ModelProductName, 
                            x => x.MapFrom(x => x.ModelProduct.Name));
-
+                
             CreateMap<Product, GetProductId>();
                  
                 

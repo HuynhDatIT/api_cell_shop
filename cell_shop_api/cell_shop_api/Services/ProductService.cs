@@ -26,7 +26,7 @@ namespace cell_shop_api.Services
             var listProduct = await _unitOfWork.ProductRepository.GetAllAsync();
 
             var listGetProduct = _mapper.Map<IEnumerable<GetProduct>>(listProduct);
-
+           
             return listGetProduct;
         }
 

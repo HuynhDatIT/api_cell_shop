@@ -19,7 +19,7 @@ namespace cell_shop_api.Controllers
             _modelProductService = modelProductService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var listBrand = await _modelProductService.GetAllAsync();
@@ -27,7 +27,7 @@ namespace cell_shop_api.Controllers
             return Ok(listBrand);
         }
 
-        [HttpGet("getbyid/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             if (string.IsNullOrEmpty(id.ToString()) || id <= 0)
@@ -37,7 +37,7 @@ namespace cell_shop_api.Controllers
 
             return brand != null ? Ok(brand) : NotFound();
         }
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult Add(CreateModelProduct createModelProduct)
         {
             if (createModelProduct == null)
@@ -47,7 +47,7 @@ namespace cell_shop_api.Controllers
 
             return Ok(result);
         }
-        [HttpPut("update")]
+        [HttpPut]
         public IActionResult Update(UpdateModelProduct updateModelProduct)
         {
             if (updateModelProduct == null || updateModelProduct.Id <= 0)
