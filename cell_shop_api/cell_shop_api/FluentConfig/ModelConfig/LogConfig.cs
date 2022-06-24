@@ -1,5 +1,6 @@
 ﻿using CellShop_Api.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace cell_shop_api.FluentConfig.ModelConfig
 {
@@ -10,8 +11,8 @@ namespace cell_shop_api.FluentConfig.ModelConfig
             modelBuilder.Entity<Log>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Log>()
-                .Property(b => b.Status)
-                .HasDefaultValue(true);
+                .Property(b => b.Time)
+                .HasDefaultValue(DateTime.Now);
         }
     }
 }

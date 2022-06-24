@@ -9,7 +9,9 @@ namespace cell_shop_api.FluentConfig.ModelConfig
         {
             modelBuilder.Entity<Cart>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
-         
+            modelBuilder.Entity<Cart>()
+                .Property(b => b.Status)
+                .HasDefaultValue(true);
         }
     }
 }

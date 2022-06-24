@@ -1,4 +1,5 @@
-﻿using CellShop_Api.Data;
+﻿using cell_shop_api.Base.Interface;
+using CellShop_Api.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,42 +7,48 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository.BaseRepository
 {
-    public class BaseRepositoryCURD<T> : IBaseRepositoryCRUD<T> where T : class
+    public class BaseRepositoryCURD<T> : IBaseRepository<T> where T : class, IBaseModel
     {
         private readonly CellShopDbContext _db;
-
+        protected readonly DbSet<T> _dbSet;
         public BaseRepositoryCURD(CellShopDbContext db)
         {
             _db = db;
+            _dbSet = _db.Set<T>();  
         }
 
-        public void Delete(T obj)
+        public virtual void Delete(T obj)
         {
             _db.Set<T>().Remove(obj);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            var listItem = await _db.Set<T>().ToListAsync();
+            var listItem = await _dbSet
+                                    .Where(x => x.Status == true)
+                                        .ToListAsync();
 
             return listItem;
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(int id)
         {
-            var itemT = await _db.Set<T>().FindAsync(id);
+            var itemT = await _dbSet
+                                    .Where(x => x.Status == true && x.Id == id)
+                                         .FirstOrDefaultAsync();
 
             return itemT;
         }
 
-        public async Task AddAsync(T obj)
+        public virtual void Add(T obj)
         {
-            await _db.Set<T>().AddAsync(obj);
+            _dbSet.Add(obj);
         }
 
-        public void Update(T obj)
+        public virtual void Update(T obj)
         {
-            _db.Set<T>().Update(obj);
+            _dbSet.Update(obj);
         }
+
     }
 }

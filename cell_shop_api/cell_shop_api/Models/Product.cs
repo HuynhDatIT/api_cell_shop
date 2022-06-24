@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using cell_shop_api.Base.Interface;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CellShop_Api.Models
 {
-    public class Product
+    public class Product : IBaseModel
     {
         [Key]
         public int Id { get; set; }
@@ -16,9 +17,9 @@ namespace CellShop_Api.Models
         public float Price { get; set; }
         [Required]
         public int Stock { get; set; }
-        public float Rating { get; set; } = 0;
-        [DefaultValue(true)]
+        public float Rating { get; set; }
         public bool Status { get; set; }
+        [Required]
         public int ModelProductId { get; set; }
         public ModelProduct ModelProduct { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }

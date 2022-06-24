@@ -1,9 +1,14 @@
-﻿using cell_shop_api.Repository.BaseRepository;
+﻿using cell_shop_api.Base.Interface;
+using cell_shop_api.ViewModels.Request;
 using CellShop_Api.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository.Interface
 {
-    public interface ICartRepository : IBaseRepositoryCRUD<Cart>
+    public interface ICartRepository : IBaseRepository<Cart>
     {
+        Task<IEnumerable<Cart>> GetCartByAccountIdAsync(int accountid);
+        Task<Cart> IsProductAccountExistAsync(CreateCart createCart);
     }
 }

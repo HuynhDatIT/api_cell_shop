@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using cell_shop_api.Base.Interface;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CellShop_Api.Models
 {
-    public class Addresse
+    public class Addresse : IBaseModel
     {
         [Key]
         public int Id { get; set; }
@@ -13,8 +14,8 @@ namespace CellShop_Api.Models
         public string Type { get; set; }
         [Required]
         public string Phone { get; set; }
-        [DefaultValue(true)]
         public bool Status { get; set; }
+        [Required]
         public int AccountId { get; set; }
         public Account Account { get; set; }
     }

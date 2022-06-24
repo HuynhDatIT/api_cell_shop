@@ -41,7 +41,9 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(2);
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -132,6 +134,8 @@ namespace cell_shop_api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
@@ -150,6 +154,11 @@ namespace cell_shop_api.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -213,6 +222,11 @@ namespace cell_shop_api.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
@@ -227,21 +241,24 @@ namespace cell_shop_api.Migrations
                             Id = 1,
                             AccountId = 2,
                             ProductId = 1,
-                            Quantity = 1
+                            Quantity = 1,
+                            Status = false
                         },
                         new
                         {
                             Id = 2,
                             AccountId = 2,
                             ProductId = 2,
-                            Quantity = 1
+                            Quantity = 1,
+                            Status = false
                         },
                         new
                         {
                             Id = 3,
                             AccountId = 2,
                             ProductId = 3,
-                            Quantity = 1
+                            Quantity = 1,
+                            Status = false
                         });
                 });
 
@@ -295,7 +312,9 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateInvoice")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 6, 23, 20, 3, 37, 617, DateTimeKind.Local).AddTicks(1383));
 
                     b.Property<string>("DeliveryAddress")
                         .IsRequired()
@@ -310,10 +329,14 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DeliveryStatus")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<int>("Discount")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -335,6 +358,8 @@ namespace cell_shop_api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("InvoiceId")
@@ -350,7 +375,9 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -404,13 +431,10 @@ namespace cell_shop_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
                     b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 6, 23, 20, 3, 37, 620, DateTimeKind.Local).AddTicks(61));
 
                     b.HasKey("Id");
 
@@ -503,13 +527,17 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<float>("Rating")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<int>("Rom")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
@@ -586,6 +614,11 @@ namespace cell_shop_api.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -714,6 +747,11 @@ namespace cell_shop_api.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
@@ -727,13 +765,15 @@ namespace cell_shop_api.Migrations
                         {
                             Id = 1,
                             AccountId = 2,
-                            ProductId = 1
+                            ProductId = 1,
+                            Status = false
                         },
                         new
                         {
                             Id = 2,
                             AccountId = 3,
-                            ProductId = 2
+                            ProductId = 2,
+                            Status = false
                         });
                 });
 

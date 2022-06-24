@@ -1,3 +1,4 @@
+using cell_shop_api.Services;
 using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
 using CellShop_Api.AutoMapperConfig;
@@ -43,7 +44,7 @@ namespace CellShop_Api
             }));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CellShop_Api", Version = "v1" });
@@ -54,17 +55,14 @@ namespace CellShop_Api
                     Configuration.GetConnectionString("CellshopDbSql"))
                 );
 
-            //config automapper
-            var mappingconfig = new AutoMapper.MapperConfiguration(
-                m => m.AddProfile(
-                    new AccountAutomapper()
-                    ));
-
-            AutoMapper.IMapper mapper = mappingconfig.CreateMapper();
-            services.AddSingleton(mapper);
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<ICategorieService, CategorieService>();
+            services.AddScoped<IModelProductService, ModelProductService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICartService, CartService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

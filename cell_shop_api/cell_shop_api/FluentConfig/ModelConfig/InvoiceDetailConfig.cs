@@ -7,9 +7,9 @@ namespace cell_shop_api.FluentConfig.ModelConfig
     {
         public static void InvoiceDetailFluent(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Invoice>()
+            modelBuilder.Entity<InvoiceDetail>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
-            modelBuilder.Entity<Invoice>()
+            modelBuilder.Entity<InvoiceDetail>()
                 .Property(b => b.Status)
                 .HasDefaultValue(true);
         }

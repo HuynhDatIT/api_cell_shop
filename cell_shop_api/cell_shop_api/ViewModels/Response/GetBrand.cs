@@ -1,4 +1,4 @@
-﻿namespace CellShop_Api.ViewModels
+﻿namespace cell_shop_api.ViewModels.Response
 {
     public class GetBrand
     {

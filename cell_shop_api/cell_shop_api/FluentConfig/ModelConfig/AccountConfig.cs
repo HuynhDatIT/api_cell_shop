@@ -12,6 +12,9 @@ namespace cell_shop_api.FluentConfig.ModelConfig
             modelBuilder.Entity<Account>()
                 .Property(b => b.Status)
                 .HasDefaultValue(true);
+            modelBuilder.Entity<Account>()// defaul account la user
+               .Property(b => b.RoleId)
+               .HasDefaultValue(2);
         }
     }
 }

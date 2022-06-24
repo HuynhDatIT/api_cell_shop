@@ -1,5 +1,10 @@
-﻿using cell_shop_api.Services.InterfaceSevice;
+﻿using AutoMapper;
+using cell_shop_api.Base.Interface;
+using cell_shop_api.Helper;
+using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
+using cell_shop_api.ViewModels.Request;
+using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,23 +13,69 @@ namespace CellShop_Api.Services
 {
     public class BrandService : IBrandService
     {
-        private readonly IUnitOfWork UnitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public BrandService(IUnitOfWork unitOfWork)
+        public BrandService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            UnitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public async Task<IEnumerable<Brand>> GetAllAsync()
-        {
-            var listItem = await UnitOfWork.BrandRepository.GetAllAsync();
 
-            return listItem;
-        }
-        public async Task<Brand> GetByIdAsync(int id)
+        public string Add(CreateBrand createbrand)
         {
-            var item = await UnitOfWork.BrandRepository.GetByIdAsync(id);
+            var isExist = _unitOfWork.BrandRepository.IsNameExist(createbrand.Name);
+            
+            if (isExist)
+            {
+                return Notification.Exist_Messege;
+            }
+            else
+            {
+                var brand = _mapper.Map<Brand>(createbrand);
 
-            return item;
+                _unitOfWork.BrandRepository.Add(brand);
+
+                _unitOfWork.SaveChanges();
+
+                return Notification.Success_Messege;
+            }
+            
         }
+
+        public async Task<IEnumerable<GetBrand>> GetAllAsync()
+        {
+            var listBrand = await _unitOfWork.BrandRepository.GetAllAsync();
+
+            var listGetBrand = _mapper.Map<IEnumerable<GetBrand>>(listBrand);
+
+            return listGetBrand;
+        }
+        public async Task<GetBrand> GetByIdAsync(int id)
+        {
+            var brand = await _unitOfWork.BrandRepository.GetByIdAsync(id);
+
+            var getBrand = _mapper.Map<GetBrand>(brand);
+
+            return getBrand;
+        }
+
+        public async Task<string> Update(GetBrand getBrand)
+        {
+            var brand = await _unitOfWork.BrandRepository.GetByIdAsync(getBrand.Id);
+
+            if (brand != null)
+            {
+                brand.Name = getBrand.Name;
+
+                _unitOfWork.BrandRepository.Update(brand);
+
+                _unitOfWork.SaveChanges();
+
+                return Notification.Success_Messege;
+            }
+            return  Notification.NotFound_Messege;
+        }
+
     }
 }

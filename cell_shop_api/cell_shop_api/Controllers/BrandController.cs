@@ -1,4 +1,6 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
+using cell_shop_api.ViewModels.Request;
+using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,27 +14,51 @@ namespace CellShop_Api.Controllers
     [ApiController]
     public class BrandController : ControllerBase
     {
-        private readonly IBrandService BrandService;
+        private readonly IBrandService _brandService;
 
         public BrandController(IBrandService brandService)
         {
-            BrandService = brandService;
+            _brandService = brandService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllBrand()
+        [HttpGet("getall")]
+        public async Task<IActionResult> GetAll()
         {
-            var listBrand = await BrandService.GetAllAsync();
+            var listBrand = await _brandService.GetAllAsync();
+           
             return Ok(listBrand);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetBrandById(int id)
+        [HttpGet("getbyid/{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var brand = await BrandService.GetByIdAsync(id);
+            if (string.IsNullOrEmpty(id.ToString()) || id <= 0)
+                return BadRequest();
+
+            var brand = await _brandService.GetByIdAsync(id);
             
             return brand != null ? Ok(brand) : NotFound();  
         }
-    
+        [HttpPost("add")]
+        public IActionResult Add(CreateBrand createBrand)
+        {
+            if (createBrand == null)
+                return BadRequest();
+            
+            var result = _brandService.Add(createBrand);
+
+            return Ok(result);
+        }
+        [HttpPut("update")]
+        public IActionResult Update(GetBrand getBrand)
+        {
+            if (getBrand == null)
+                return BadRequest();
+
+            var result = _brandService.Update(getBrand);
+
+            return Ok(result);
+        }
+
     }
 }

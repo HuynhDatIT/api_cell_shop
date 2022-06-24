@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using cell_shop_api.Base.Interface;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CellShop_Api.Models
 {
-    public class InvoiceDetail
+    public class InvoiceDetail : IBaseModel
     {
         [Key]
         public int Id { get; set; }
@@ -11,10 +12,11 @@ namespace CellShop_Api.Models
         public float Price { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [DefaultValue(true)]
         public bool Status { get; set; }
+        [Required]
         public int ProductId { get; set; }
         public Product Product { get; set; }
+        [Required]
         public int InvoiceId { get; set; }
         public Invoice Invoice { get; set; }
 

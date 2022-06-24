@@ -1,5 +1,7 @@
-﻿using CellShop_Api.Models;
+﻿using CellShop_Api.Enum;
+using CellShop_Api.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace cell_shop_api.FluentConfig.ModelConfig
 {
@@ -12,6 +14,15 @@ namespace cell_shop_api.FluentConfig.ModelConfig
             modelBuilder.Entity<Invoice>()
                 .Property(b => b.Status)
                 .HasDefaultValue(true);
+            modelBuilder.Entity<Invoice>()
+                .Property(b => b.DateInvoice)
+                .HasDefaultValue(DateTime.Now);
+            modelBuilder.Entity<Invoice>()
+                .Property(b => b.Discount)
+                .HasDefaultValue(0);
+            modelBuilder.Entity<Invoice>()
+               .Property(b => b.DeliveryStatus)
+               .HasDefaultValue(DeliveryStatus.Order);
         }
     }
 }

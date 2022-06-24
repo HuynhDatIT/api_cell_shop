@@ -1,10 +1,11 @@
-﻿using System;
+﻿using cell_shop_api.Base.Interface;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CellShop_Api.Models
 {
-    public class Promotion
+    public class Promotion : IBaseModel
     {
         [Key]
         public int Id { get; set; }
@@ -16,7 +17,6 @@ namespace CellShop_Api.Models
         public DateTime EndDate { get; set; }
         [Required]
         public int Discount { get; set; }
-        [DefaultValue(true)]
         public bool Status { get; set; } 
     }
 }

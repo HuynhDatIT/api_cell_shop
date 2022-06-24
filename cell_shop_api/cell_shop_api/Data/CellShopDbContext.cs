@@ -1,5 +1,4 @@
 ﻿using CellShop_Api.Models;
-using CellShop_Api.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using cell_shop_api.FluentConfig;
 using cell_shop_api.FluentConfig.ModelConfig;
@@ -18,7 +17,7 @@ namespace CellShop_Api.Data
            
             modelBuilder.AccountFluent();
             modelBuilder.AddresseFluent();
-            modelBuilder.BannerFluent();
+            modelBuilder.BannerImageFluent();
             modelBuilder.BrandFluent();
             modelBuilder.CategorieFluent();
             modelBuilder.CartFluent();

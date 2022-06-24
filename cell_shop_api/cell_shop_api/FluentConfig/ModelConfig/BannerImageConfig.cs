@@ -5,11 +5,11 @@ namespace cell_shop_api.FluentConfig.ModelConfig
 {
     public static class BannerImageConfig
     {
-        public static void BannerFluent(this ModelBuilder modelBuilder)
+        public static void BannerImageFluent(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Brand>()
+            modelBuilder.Entity<BannerImage>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
-            modelBuilder.Entity<Brand>()
+            modelBuilder.Entity<BannerImage>()
                 .Property(b => b.Status)
                 .HasDefaultValue(true);
         }

@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using cell_shop_api.Base.Interface;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CellShop_Api.Models
 {
-    public class Link
+    public class Link : IBaseModel
     {
         [Key]
         public int Id { get; set; }
@@ -11,7 +12,6 @@ namespace CellShop_Api.Models
         public string PathLink { get; set; }
         [Required]
         public string Title { get; set; }
-        [DefaultValue(true)]
         public bool Status { get; set; }
 
     }

@@ -9,9 +9,12 @@ namespace cell_shop_api.FluentConfig.ModelConfig
         {
             modelBuilder.Entity<Product>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
-            modelBuilder.Entity<ModelProduct>()
+            modelBuilder.Entity<Product>()
                 .Property(b => b.Status)
                 .HasDefaultValue(true);
+            modelBuilder.Entity<Product>()
+                .Property(b => b.Rating)
+                .HasDefaultValue(0);
         }
     }
 }

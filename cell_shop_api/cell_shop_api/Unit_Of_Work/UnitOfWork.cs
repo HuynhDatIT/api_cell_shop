@@ -1,5 +1,6 @@
 ﻿using cell_shop_api.Repository;
 using cell_shop_api.Repository.InheritRepository.Interface;
+using cell_shop_api.Repository.Interface;
 using cell_shop_api.Unit_Of_Work;
 using CellShop_Api.Data;
 using CellShop_Api.Models;
@@ -13,6 +14,7 @@ namespace CellShop_Api.Unit_Of_Work
         private IProductRepository productRepository;
         private ICategorieRepository categorieRepository;
         private IBrandRepository brandRepository;
+        private ICartRepository cartRepository;
         public UnitOfWork(CellShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -20,6 +22,7 @@ namespace CellShop_Api.Unit_Of_Work
             productRepository = new ProductRepository(_dbContext);
             categorieRepository = new CategorieRepository(_dbContext);
             brandRepository = new BrandRepository(_dbContext);
+            cartRepository = new CartRepository(_dbContext);    
         }
 
         public IModelProductRepository ModelProductRepository
@@ -39,6 +42,11 @@ namespace CellShop_Api.Unit_Of_Work
         public IBrandRepository BrandRepository
         {
             get { return brandRepository; }
+        }
+
+        public ICartRepository CartRepository
+        {
+            get { return cartRepository; }
         }
 
         public void SaveChanges()
