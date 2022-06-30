@@ -41,24 +41,18 @@ namespace CellShop_Api.Controllers
             return brand != null ? Ok(brand) : NotFound();  
         }
         [HttpPost]
-        public IActionResult Add(CreateBrand createBrand)
+        public async Task<IActionResult> Add(CreateBrand createBrand)
         {
-            if (createBrand == null)
-                return BadRequest();
-            
-            var result = _brandService.Add(createBrand);
+            var result = await _brandService.AddAsync(createBrand);
 
-            return result > 0 ? Ok() : BadRequest();
+            return result ? Ok() : BadRequest();
         }
         [HttpPut]
         public async Task<IActionResult> Update(GetBrand getBrand)
         {
-            if (getBrand == null)
-                return BadRequest();
+            var result = await _brandService.UpdateAsync(getBrand);
 
-            var result = await _brandService.Update(getBrand);
-
-            return result > 0 ? Ok() : BadRequest();
+            return result ? Ok() : BadRequest();
         }
 
     }

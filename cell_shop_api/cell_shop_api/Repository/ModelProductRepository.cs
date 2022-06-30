@@ -31,9 +31,11 @@ namespace cell_shop_api.Repository
                                            .FirstOrDefaultAsync();
             return modelProduct;
         }
-        public bool IsNameExist(string name)
+
+        public async Task<ModelProduct> GetModelProductByName(string name)
         {
-            return _dbSet.Where(x => x.Name == name && x.Status == true).Count() > 0;
+            return await _dbSet.FirstOrDefaultAsync(
+                                x => x.Name == name && x.Status == true);
         }
     }
 }

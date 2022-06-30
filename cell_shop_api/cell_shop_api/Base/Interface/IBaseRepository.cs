@@ -8,7 +8,7 @@ namespace cell_shop_api.Base.Interface
         void Delete(T obj);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
-        void Add(T obj);
+        Task AddAsync(T obj);
         void Update(T obj);
     }
 }

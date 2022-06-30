@@ -23,17 +23,23 @@ namespace cell_shop_api.Services
 
         public int Add(CreateModelProduct createModelProduct)
         {
-            var isExist = _unitOfWork.ModelProductRepository.IsNameExist(createModelProduct.Name);
+            
+        }
 
-            if (isExist)
-                return 0;
+        public async Task<bool> AddAsync(CreateModelProduct createModelProduct)
+        {
+            var modelProduct = await _unitOfWork.ModelProductRepository
+                                    .GetModelProductByName(createModelProduct.Name);
+
+            if (modelProduct != null)
+                return false;
             else
             {
-                var modelProduct = _mapper.Map<ModelProduct>(createModelProduct);
+                var modelProductNew = _mapper.Map<ModelProduct>(createModelProduct);
 
-                _unitOfWork.ModelProductRepository.Add(modelProduct);
+                await _unitOfWork.ModelProductRepository.AddAsync(modelProductNew);
 
-                return _unitOfWork.SaveChanges();
+                return _unitOfWork.SaveChanges() > 0;
             }
         }
 
@@ -54,24 +60,20 @@ namespace cell_shop_api.Services
 
             return getModelProduct;
         }
-
-        public async Task<int> Update(UpdateModelProduct updateModelProduct)
+        public async Task<bool> UpdateAsync(UpdateModelProduct updateModelProduct)
         {
-            var modelProduct = await _unitOfWork.ModelProductRepository.GetByIdAsync(updateModelProduct.Id);
+            var modelProduct = await _unitOfWork.ModelProductRepository
+                                                .GetByIdAsync(updateModelProduct.Id);
 
             if (modelProduct != null)
             {
-                modelProduct.Name = updateModelProduct.Name;
-                modelProduct.Description = updateModelProduct.Description;
-                modelProduct.Specification = updateModelProduct.Specification;
-                modelProduct.CategorieId = updateModelProduct.CategorieId;
-                modelProduct.BrandId = updateModelProduct.BrandId;
+                _mapper.Map(updateModelProduct, modelProduct);
 
                 _unitOfWork.ModelProductRepository.Update(modelProduct);
 
-                return _unitOfWork.SaveChanges();
+                return _unitOfWork.SaveChanges() > 0;
             }
-            return 0;
+            return false;
         }
     }
 }

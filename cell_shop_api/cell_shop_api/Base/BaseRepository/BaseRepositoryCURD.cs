@@ -40,9 +40,9 @@ namespace cell_shop_api.Repository.BaseRepository
             return itemT;
         }
 
-        public virtual void Add(T obj)
+        public virtual async Task AddAsync(T obj)
         {
-            _dbSet.Add(obj);
+            await _dbSet.AddAsync(obj);
         }
 
         public virtual void Update(T obj)

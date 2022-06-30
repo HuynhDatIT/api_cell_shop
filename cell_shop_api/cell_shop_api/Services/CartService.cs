@@ -22,31 +22,34 @@ namespace cell_shop_api.Services
         }
 
 
-        public async Task<int> DeleteAsync(int cartid)
+        public async Task<bool> DeleteAsync(int cartid)
         {
             var cart = await _unitOfWork.CartRepository.GetByIdAsync(cartid);
 
             _unitOfWork.CartRepository.Delete(cart);
            
-            return _unitOfWork.SaveChanges();
+            return _unitOfWork.SaveChanges() > 0;
         }
 
-        public async Task<int> AddAsync(CreateCart createCart)
+        public async Task<bool> AddAsync(CreateCart createCart)
         {
             var cart = await _unitOfWork.CartRepository
                                            .IsProductAccountExistAsync(createCart);
             if(cart == null)
             {
                 var itemCart = _mapper.Map<Cart>(createCart);
-                _unitOfWork.CartRepository.Add(itemCart);
-                return _unitOfWork.SaveChanges();
+               
+                await _unitOfWork.CartRepository.AddAsync(itemCart);
                 
+                return _unitOfWork.SaveChanges() > 0;
             }
             else
             {
                 cart.Quantity += createCart.Quantity;
+                
                 _unitOfWork.CartRepository.Update(cart);
-                return _unitOfWork.SaveChanges();
+                
+                return _unitOfWork.SaveChanges() > 0;
             }
             
         }
@@ -61,15 +64,16 @@ namespace cell_shop_api.Services
             return getcart;
         }
 
-        public async Task<int> UpdateAsync(UpdateCart updateCart)
+        public async Task<bool> UpdateAsync(UpdateCart updateCart)
         {
-            var cart = await _unitOfWork.CartRepository.GetByIdAsync(updateCart.CartId);
+            var cart = await _unitOfWork.CartRepository
+                                        .GetByIdAsync(updateCart.CartId);
             
             cart.Quantity = updateCart.Quantity;
             
             _unitOfWork.CartRepository.Update(cart);
             
-            return _unitOfWork.SaveChanges();
+            return _unitOfWork.SaveChanges() > 0;
         }
     }
 }

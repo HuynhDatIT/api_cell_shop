@@ -9,7 +9,7 @@ namespace cell_shop_api.Services.InterfaceSevice
 {
     public interface ICategorieService : IBaseService<GetCategorie>
     {
-        int Add(CreateCategorie createCategorie);
-        Task<int> Update(GetCategorie getCategorie);
+        Task<bool> AddAsync(CreateCategorie createCategorie);
+        Task<bool> UpdateAsync(GetCategorie getCategorie);
     }
 }

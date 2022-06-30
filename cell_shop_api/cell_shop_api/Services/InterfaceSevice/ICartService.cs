@@ -8,8 +8,8 @@ namespace cell_shop_api.Services.InterfaceSevice
     public interface ICartService 
     {
         Task<IEnumerable<GetCart>> GetCartsAsync(int accountid);
-        Task<int> AddAsync(CreateCart createCart);
-        Task<int> UpdateAsync(UpdateCart updateCart);
-        Task<int> DeleteAsync(int cartid);
+        Task<bool> AddAsync(CreateCart createCart);
+        Task<bool> UpdateAsync(UpdateCart updateCart);
+        Task<bool> DeleteAsync(int cartid);
     }
 }

@@ -9,7 +9,7 @@ namespace cell_shop_api.Services.InterfaceSevice
 {
     public interface IBrandService : IBaseService<GetBrand>
     {
-        int Add(CreateBrand brand);
-        Task<int> Update(GetBrand getBrand);
+        Task<bool> AddAsync(CreateBrand brand);
+        Task<bool> UpdateAsync(GetBrand getBrand);
     }
 }

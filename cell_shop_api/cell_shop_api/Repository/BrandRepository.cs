@@ -2,7 +2,9 @@
 using cell_shop_api.Repository.InheritRepository.Interface;
 using CellShop_Api.Data;
 using CellShop_Api.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository
 {
@@ -12,9 +14,9 @@ namespace cell_shop_api.Repository
         {
         }
 
-        public bool IsNameExist(string name)
+        public async Task<Brand> GetBrandByName(string name)
         {
-            return _dbSet.Where(x => x.Name == name && x.Status == true).Count() > 0;
+            return await _dbSet.FirstOrDefaultAsync(x => x.Name == name && x.Status == true);
         }
     }
 }

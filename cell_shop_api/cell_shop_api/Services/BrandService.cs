@@ -22,21 +22,22 @@ namespace CellShop_Api.Services
             _mapper = mapper;
         }
 
-        public int Add(CreateBrand createbrand)
+        public async Task<bool> AddAsync(CreateBrand createbrand)
         {
-            var isExist = _unitOfWork.BrandRepository.IsNameExist(createbrand.Name);
+            var brand = await _unitOfWork.BrandRepository
+                                         .GetBrandByName(createbrand.Name);
             
-            if (isExist)
+            if (brand != null)
             {
-                return 0;
+                return false;
             }
             else
             {
-                var brand = _mapper.Map<Brand>(createbrand);
+                var brandnew = _mapper.Map<Brand>(createbrand);
 
-                _unitOfWork.BrandRepository.Add(brand);
+                await _unitOfWork.BrandRepository.AddAsync(brandnew);
 
-                return _unitOfWork.SaveChanges();
+                return _unitOfWork.SaveChanges() > 0;
             }
             
         }
@@ -57,8 +58,7 @@ namespace CellShop_Api.Services
 
             return getBrand;
         }
-
-        public async Task<int> Update(GetBrand getBrand)
+        public async Task<bool> UpdateAsync(GetBrand getBrand)
         {
             var brand = await _unitOfWork.BrandRepository.GetByIdAsync(getBrand.Id);
 
@@ -68,10 +68,9 @@ namespace CellShop_Api.Services
 
                 _unitOfWork.BrandRepository.Update(brand);
 
-                return _unitOfWork.SaveChanges();
+                return _unitOfWork.SaveChanges() > 0;
             }
-            return 0;
+            return false;
         }
-
     }
 }

@@ -29,12 +29,9 @@ namespace cell_shop_api.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CreateCart createCart)
         {
-            if (createCart == null || createCart.Quantity <= 0)
-                return BadRequest();
-
             var result = await _cartService.AddAsync(createCart);
 
-            return result > 0 ? Ok() : BadRequest(); 
+            return result ? Ok() : BadRequest(); 
         }
         [HttpDelete]
         public async Task<IActionResult> Delete(int cartid)
@@ -44,17 +41,14 @@ namespace cell_shop_api.Controllers
 
             var result = await _cartService.DeleteAsync(cartid);
 
-            return result > 0 ? Ok() : BadRequest();
+            return result ? Ok() : BadRequest();
         }
         [HttpPut]
         public async Task<IActionResult> Update(UpdateCart updateCart)
         {
-            if (updateCart == null || updateCart.Quantity <= 0)
-                return BadRequest();
-
             var result = await _cartService.UpdateAsync(updateCart);
 
-            return result > 0 ? Ok() : BadRequest();
+            return result ? Ok() : BadRequest();
         }
 
     }

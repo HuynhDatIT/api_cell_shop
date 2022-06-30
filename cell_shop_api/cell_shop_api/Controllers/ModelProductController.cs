@@ -38,24 +38,18 @@ namespace cell_shop_api.Controllers
             return brand != null ? Ok(brand) : NotFound();
         }
         [HttpPost]
-        public IActionResult Add(CreateModelProduct createModelProduct)
+        public async Task<IActionResult> Add(CreateModelProduct createModelProduct)
         {
-            if (createModelProduct == null)
-                return BadRequest();
+            var result = await _modelProductService.AddAsync(createModelProduct);
 
-            var result = _modelProductService.Add(createModelProduct);
-
-            return result > 0 ? Ok() : BadRequest();
+            return result ? Ok() : BadRequest();
         }
         [HttpPut]
         public async Task<IActionResult> Update(UpdateModelProduct updateModelProduct)
         {
-            if (updateModelProduct == null || updateModelProduct.Id <= 0)
-                return BadRequest();
+            var result = await _modelProductService.UpdateAsync(updateModelProduct);
 
-            var result = await _modelProductService.Update(updateModelProduct);
-
-            return result > 0 ? Ok() : BadRequest();
+            return result ? Ok() : BadRequest();
         }
     }
 }
