@@ -21,11 +21,6 @@ namespace cell_shop_api.Services
             _mapper = mapper;
         }
 
-        public int Add(CreateModelProduct createModelProduct)
-        {
-            
-        }
-
         public async Task<bool> AddAsync(CreateModelProduct createModelProduct)
         {
             var modelProduct = await _unitOfWork.ModelProductRepository
