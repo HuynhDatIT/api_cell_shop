@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository
 {
-    public class ProductImageRepository : BaseRepositoryCURD<ProductImage>, IProductImageRepository
+    public class ProductImageRepository : BaseRepository<ProductImage>, IProductImageRepository
     {
         public ProductImageRepository(CellShopDbContext db) : base(db)
         {

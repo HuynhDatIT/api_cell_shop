@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository.BaseRepository
 {
-    public class BaseRepositoryCURD<T> : IBaseRepository<T> where T : class, IBaseModel
+    public class BaseRepository<T> : IBaseRepository<T> where T : class, IBaseModel
     {
         private readonly CellShopDbContext _db;
         protected readonly DbSet<T> _dbSet;
-        public BaseRepositoryCURD(CellShopDbContext db)
+        public BaseRepository(CellShopDbContext db)
         {
             _db = db;
             _dbSet = _db.Set<T>();
@@ -21,7 +21,10 @@ namespace cell_shop_api.Repository.BaseRepository
         {
             _db.Set<T>().Remove(obj);
         }
-
+        public virtual void DeleteRange(IList<T> listobj)
+        {
+            _db.Set<T>().RemoveRange(listobj);
+        }
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             var listItem = await _dbSet
@@ -44,10 +47,17 @@ namespace cell_shop_api.Repository.BaseRepository
         {
             await _dbSet.AddAsync(obj);
         }
-
+        public virtual async Task AddRangeAsync(IList<T> listobj)
+        {
+            await _dbSet.AddRangeAsync(listobj);
+        }
         public virtual void Update(T obj)
         {
             _dbSet.Update(obj);
+        }
+        public virtual void UpdateRange(IList<T> listobj)
+        {
+            _dbSet.UpdateRange(listobj);
         }
 
     }

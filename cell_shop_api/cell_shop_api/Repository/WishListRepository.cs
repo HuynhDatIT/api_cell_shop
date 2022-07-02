@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository
 {
-    public class WishListRepository : BaseRepositoryCURD<WishList>, IWishListRepository
+    public class WishListRepository : BaseRepository<WishList>, IWishListRepository
     {
         public WishListRepository(CellShopDbContext db) : base(db)
         {

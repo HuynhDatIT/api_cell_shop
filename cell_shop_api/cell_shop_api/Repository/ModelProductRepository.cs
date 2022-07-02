@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository
 {
-    public class ModelProductRepository : BaseRepositoryCURD<ModelProduct>, IModelProductRepository
+    public class ModelProductRepository : BaseRepository<ModelProduct>, IModelProductRepository
     {
         public ModelProductRepository(CellShopDbContext db) : base(db)
         {

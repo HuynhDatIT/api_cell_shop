@@ -2,6 +2,7 @@
 using cell_shop_api.Repository.Interface;
 using CellShop_Api.Data;
 using CellShop_Api.Models;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Threading.Tasks;
 
 namespace cell_shop_api.Unit_Of_Work
@@ -15,7 +16,10 @@ namespace cell_shop_api.Unit_Of_Work
         ICartRepository CartRepository { get; }
         IProductImageRepository ProductImageRepository { get; }
         IAccountRepository AccountRepository { get; }
+        IInvoiceRepository InvoiceRepository { get; }
+        IInvoiceDetailRepository InvoiceDetailRepository { get; }
         int SaveChanges();
         Task<int> SaveChangesAsync();
+        Task<IDbContextTransaction> BeginTransactionAsync();
     }
 }

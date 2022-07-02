@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository
 {
-    public class AccountRepository : BaseRepositoryCURD<Account>, IAccountRepository
+    public class AccountRepository : BaseRepository<Account>, IAccountRepository
     {
         public AccountRepository(CellShopDbContext db) : base(db)
         {

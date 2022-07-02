@@ -4,6 +4,7 @@ using cell_shop_api.Repository.Interface;
 using cell_shop_api.Unit_Of_Work;
 using CellShop_Api.Data;
 using CellShop_Api.Models;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Threading.Tasks;
 
 namespace CellShop_Api.Unit_Of_Work
@@ -18,6 +19,8 @@ namespace CellShop_Api.Unit_Of_Work
         private ICartRepository cartRepository;
         private IProductImageRepository productImageRepository;
         private IAccountRepository accountRepository;
+        private IInvoiceRepository invoiceRepository;
+        private IInvoiceDetailRepository invoiceDetailRepository;
         public UnitOfWork(CellShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -28,6 +31,8 @@ namespace CellShop_Api.Unit_Of_Work
             cartRepository = new CartRepository(_dbContext);  
             productImageRepository = new ProductImageRepository(_dbContext);
             accountRepository = new AccountRepository(dbContext);
+            invoiceRepository = new InvoiceRepository(dbContext);
+            invoiceDetailRepository = new InvoiceDetailRepository(dbContext);
         }
 
         public IModelProductRepository ModelProductRepository
@@ -64,6 +69,16 @@ namespace CellShop_Api.Unit_Of_Work
             get { return accountRepository; }
         }
 
+        public IInvoiceRepository InvoiceRepository
+        {
+                get { return invoiceRepository; }
+        }
+
+        public IInvoiceDetailRepository InvoiceDetailRepository
+        {
+            get { return invoiceDetailRepository; }
+        }
+
         public int SaveChanges()
         {
             return _dbContext.SaveChanges();
@@ -74,6 +89,10 @@ namespace CellShop_Api.Unit_Of_Work
             return await _dbContext.SaveChangesAsync();
         }
 
-       
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return await _dbContext.Database.BeginTransactionAsync();
+        }
+        
     }
 }

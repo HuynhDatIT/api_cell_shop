@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository
 {
-    public class BrandRepository : BaseRepositoryCURD<Brand>, IBrandRepository
+    public class BrandRepository : BaseRepository<Brand>, IBrandRepository
     {
         public BrandRepository(CellShopDbContext db) : base(db)
         {

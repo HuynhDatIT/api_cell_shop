@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository
 {
-    public class CartRepository : BaseRepositoryCURD<Cart> , ICartRepository
+    public class CartRepository : BaseRepository<Cart> , ICartRepository
     {
         public CartRepository(CellShopDbContext db) : base(db)
         {

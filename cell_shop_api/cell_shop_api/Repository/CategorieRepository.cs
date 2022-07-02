@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository
 {
-    public class CategorieRepository : BaseRepositoryCURD<Categorie>, ICategorieRepository
+    public class CategorieRepository : BaseRepository<Categorie>, ICategorieRepository
     {
         public CategorieRepository(CellShopDbContext db) : base(db)
         {
