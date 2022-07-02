@@ -35,10 +35,10 @@ namespace cell_shop_api.Repository
             return listcart;
         }
 
-        public async Task<Cart> IsProductAccountExistAsync(CreateCart createCart)
+        public async Task<Cart> IsProductAccountExistAsync(int productId, int accountId)
         {
-            var cart = await _dbSet.Where(x => x.AccountId == createCart.AccountId 
-                                            && x.ProductId == createCart.ProductId)
+            var cart = await _dbSet.Where(x => x.AccountId == accountId
+                                         && x.ProductId == productId)
                                     .FirstOrDefaultAsync();
             return cart;
         }

@@ -14,7 +14,7 @@ namespace cell_shop_api.Repository.BaseRepository
         public BaseRepositoryCURD(CellShopDbContext db)
         {
             _db = db;
-            _dbSet = _db.Set<T>();  
+            _dbSet = _db.Set<T>();
         }
 
         public virtual void Delete(T obj)

@@ -15,9 +15,9 @@ namespace CellShop_Api.Models
         public string PassWord { get; set; }
         [Required]
         public string FullName { get; set; }
-        [Required]
         public string Email { get; set; }
         public bool Status { get; set; }
+        [Required]
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public ICollection<Log> Logs { get; set; }

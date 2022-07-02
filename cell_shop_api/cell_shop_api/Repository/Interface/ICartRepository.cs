@@ -9,6 +9,6 @@ namespace cell_shop_api.Repository.Interface
     public interface ICartRepository : IBaseRepository<Cart>
     {
         Task<IEnumerable<Cart>> GetCartByAccountIdAsync(int accountid);
-        Task<Cart> IsProductAccountExistAsync(CreateCart createCart);
+        Task<Cart> IsProductAccountExistAsync(int productId, int accountId);
     }
 }

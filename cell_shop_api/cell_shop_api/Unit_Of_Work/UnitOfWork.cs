@@ -17,6 +17,7 @@ namespace CellShop_Api.Unit_Of_Work
         private IBrandRepository brandRepository;
         private ICartRepository cartRepository;
         private IProductImageRepository productImageRepository;
+        private IAccountRepository accountRepository;
         public UnitOfWork(CellShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -26,6 +27,7 @@ namespace CellShop_Api.Unit_Of_Work
             brandRepository = new BrandRepository(_dbContext);
             cartRepository = new CartRepository(_dbContext);  
             productImageRepository = new ProductImageRepository(_dbContext);
+            accountRepository = new AccountRepository(dbContext);
         }
 
         public IModelProductRepository ModelProductRepository
@@ -55,6 +57,11 @@ namespace CellShop_Api.Unit_Of_Work
         public IProductImageRepository ProductImageRepository
         {
             get { return productImageRepository; }
+        }
+
+        public IAccountRepository AccountRepository
+        {
+            get { return accountRepository; }
         }
 
         public int SaveChanges()

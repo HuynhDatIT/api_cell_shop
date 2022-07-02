@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using cell_shop_api.Base.Interface;
 using cell_shop_api.Helper;
 using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
@@ -14,11 +15,12 @@ namespace cell_shop_api.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public CartService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IClaimsService _claimsService;
+        public CartService(IUnitOfWork unitOfWork, IMapper mapper, IClaimsService claimsService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _claimsService = claimsService;
         }
 
 
@@ -33,12 +35,15 @@ namespace cell_shop_api.Services
 
         public async Task<bool> AddAsync(CreateCart createCart)
         {
+            var accountid = _claimsService.GetCurrentAccountId;
+            
             var cart = await _unitOfWork.CartRepository
-                                           .IsProductAccountExistAsync(createCart);
+                                        .IsProductAccountExistAsync(createCart.ProductId, accountid);
             if(cart == null)
             {
                 var itemCart = _mapper.Map<Cart>(createCart);
-               
+                
+
                 await _unitOfWork.CartRepository.AddAsync(itemCart);
                 
                 return _unitOfWork.SaveChanges() > 0;
@@ -54,10 +59,12 @@ namespace cell_shop_api.Services
             
         }
 
-        public async Task<IEnumerable<GetCart>> GetCartsAsync(int accountid)
+        public async Task<IEnumerable<GetCart>> GetCartsAsync()
         {
-            //check account...
-            var carts = await _unitOfWork.CartRepository.GetCartByAccountIdAsync(accountid);
+            var accountid = _claimsService.GetCurrentAccountId;
+            
+            var carts = await _unitOfWork.CartRepository
+                                        .GetCartByAccountIdAsync(accountid);
 
             var getcart = _mapper.Map<IEnumerable<GetCart>>(carts);
            

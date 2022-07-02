@@ -14,6 +14,7 @@ namespace cell_shop_api.Unit_Of_Work
         IBrandRepository BrandRepository { get; }
         ICartRepository CartRepository { get; }
         IProductImageRepository ProductImageRepository { get; }
+        IAccountRepository AccountRepository { get; }
         int SaveChanges();
         Task<int> SaveChangesAsync();
     }
