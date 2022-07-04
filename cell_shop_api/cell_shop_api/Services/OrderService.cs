@@ -30,12 +30,10 @@ namespace cell_shop_api.Services
         {
             /* Procces - Step by step
             1. Get AccountId
-            2. Create Invoice
-            3. Get InvoiceId
-            4. Create list InvoiceDetails
-            5. Reduce Stock Product
-                5.1 - Get productById in list InvoiceDetails
-                5.2 - Update Stock
+            2. Create Invoice, Create list InvoiceDetails
+            3. Reduce Stock Product
+                3.1 - Get productById in list InvoiceDetails
+                3.2 - Update Stock
              */
             var transaction = await _unitOfWork.BeginTransactionAsync();
             try
@@ -51,21 +49,7 @@ namespace cell_shop_api.Services
 
                 await _unitOfWork.SaveChangesAsync();
                 //step 3
-                var invoiceId = invoice.Id;
-
-                var invoiceDetails = _mapper.Map<IList<InvoiceDetail>>(createOrder.invoiceDetails);
-
-                for (int i = 0; i < invoiceDetails.Count; i++)
-                {
-                    invoiceDetails[i].InvoiceId = invoiceId;
-                }
-                // step 4
-                await _unitOfWork.InvoiceDetailRepository.AddRangeAsync(invoiceDetails);
-
-                await _unitOfWork.SaveChangesAsync();
-
-                //step 5
-                foreach (var invoiceDetail in invoiceDetails)
+                foreach (var invoiceDetail in invoice.InvoiceDetails)
                 {
                     var product = await _unitOfWork
                                         .ProductRepository
