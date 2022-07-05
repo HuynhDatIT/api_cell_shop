@@ -101,6 +101,7 @@ namespace CellShop_Api
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ISaveImageService, SaveImageService>();
             services.AddScoped<IWishListService, WishListService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddHttpContextAccessor();
 
             //authentication

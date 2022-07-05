@@ -22,6 +22,7 @@ namespace CellShop_Api.Unit_Of_Work
         private IInvoiceRepository invoiceRepository;
         private IInvoiceDetailRepository invoiceDetailRepository;
         private IWishListRepository wishListRepository;
+        private IRoleRepository roleRepository;
         public UnitOfWork(CellShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -29,12 +30,13 @@ namespace CellShop_Api.Unit_Of_Work
             productRepository = new ProductRepository(_dbContext);
             categorieRepository = new CategorieRepository(_dbContext);
             brandRepository = new BrandRepository(_dbContext);
-            cartRepository = new CartRepository(_dbContext);  
+            cartRepository = new CartRepository(_dbContext);
             productImageRepository = new ProductImageRepository(_dbContext);
             accountRepository = new AccountRepository(dbContext);
             invoiceRepository = new InvoiceRepository(dbContext);
             invoiceDetailRepository = new InvoiceDetailRepository(dbContext);
             wishListRepository = new WishListRepository(dbContext);
+            roleRepository = new RoleRepository(dbContext);
         }
 
         public IModelProductRepository ModelProductRepository
@@ -73,7 +75,7 @@ namespace CellShop_Api.Unit_Of_Work
 
         public IInvoiceRepository InvoiceRepository
         {
-                get { return invoiceRepository; }
+            get { return invoiceRepository; }
         }
 
         public IInvoiceDetailRepository InvoiceDetailRepository
@@ -86,6 +88,10 @@ namespace CellShop_Api.Unit_Of_Work
             get { return wishListRepository; }
         }
 
+        public IRoleRepository RoleRepository
+        {
+            get { return roleRepository; }
+        }
         public int SaveChanges()
         {
             return _dbContext.SaveChanges();
@@ -100,6 +106,6 @@ namespace CellShop_Api.Unit_Of_Work
         {
             return await _dbContext.Database.BeginTransactionAsync();
         }
-        
+
     }
 }
