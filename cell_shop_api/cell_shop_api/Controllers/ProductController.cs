@@ -1,4 +1,5 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
+using cell_shop_api.ViewModels.Request;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,16 +37,21 @@ namespace cell_shop_api.Controllers
 
             return product != null ? Ok(product) : NotFound();
         }
-        //[HttpPost("add")]
-        //public IActionResult Add()
-        //{
-        //    if (createBrand == null)
-        //        return BadRequest();
+        [HttpGet("model/{modelId}")]
+        public async Task<IActionResult> GetProductByModelId(int modelId)
+        {
 
-        //    var result = _productService.Add(createBrand);
+            var product = await _productService.GetProductByModelIdAsync(modelId);
 
-        //    return Ok(result);
-        //}
+            return product != null ? Ok(product) : NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct( CreateProduct createProduct)
+        {
+            var result = await _productService.CreateProductAsync(createProduct);
+
+            return result ? Ok() : BadRequest();
+        }
         //[HttpPut("update")]
         //public IActionResult Update(GetBrand getBrand)
         //{

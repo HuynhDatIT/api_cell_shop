@@ -41,7 +41,7 @@ namespace CellShop_Api.Controllers
             return brand != null ? Ok(brand) : NotFound();  
         }
         [HttpPost]
-        public async Task<IActionResult> Add(CreateBrand createBrand)
+        public async Task<IActionResult> Add([FromBody] CreateBrand createBrand)
         {
             var result = await _brandService.AddAsync(createBrand);
 
