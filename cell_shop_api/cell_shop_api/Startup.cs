@@ -100,6 +100,7 @@ namespace CellShop_Api
             services.AddScoped<IClaimsService, ClaimsService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ISaveImageService, SaveImageService>();
+            services.AddScoped<IWishListService, WishListService>();
             services.AddHttpContextAccessor();
 
             //authentication

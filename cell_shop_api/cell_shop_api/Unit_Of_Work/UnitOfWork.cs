@@ -21,6 +21,7 @@ namespace CellShop_Api.Unit_Of_Work
         private IAccountRepository accountRepository;
         private IInvoiceRepository invoiceRepository;
         private IInvoiceDetailRepository invoiceDetailRepository;
+        private IWishListRepository wishListRepository;
         public UnitOfWork(CellShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -33,6 +34,7 @@ namespace CellShop_Api.Unit_Of_Work
             accountRepository = new AccountRepository(dbContext);
             invoiceRepository = new InvoiceRepository(dbContext);
             invoiceDetailRepository = new InvoiceDetailRepository(dbContext);
+            wishListRepository = new WishListRepository(dbContext);
         }
 
         public IModelProductRepository ModelProductRepository
@@ -77,6 +79,11 @@ namespace CellShop_Api.Unit_Of_Work
         public IInvoiceDetailRepository InvoiceDetailRepository
         {
             get { return invoiceDetailRepository; }
+        }
+
+        public IWishListRepository WishListRepository
+        {
+            get { return wishListRepository; }
         }
 
         public int SaveChanges()
