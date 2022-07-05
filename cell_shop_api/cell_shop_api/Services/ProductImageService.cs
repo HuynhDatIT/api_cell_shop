@@ -18,6 +18,21 @@ namespace cell_shop_api.Services
             _mapper = mapper;
         }
 
+        public async Task<bool> DeleteProductImageRangeAsync(int productid)
+        {
+            var productImages = await _unitOfWork.ProductImageRepository
+                                            .GetProductImageByProductIdAsync(productid);
+
+            for (int i = 0; i < productImages.Count; i++)
+            {
+                productImages[i].Status = false;
+            }
+
+            _unitOfWork.ProductImageRepository.UpdateRange(productImages);
+
+            return _unitOfWork.SaveChanges() > 0;
+        }
+
         //public async Task<IEnumerable<GetProductImage>> GetAllAsync()
         //{
         //    var productImages = await _unitOfWork.ProductImageRepository.GetAllAsync();

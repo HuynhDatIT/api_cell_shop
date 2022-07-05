@@ -20,10 +20,8 @@ namespace cell_shop_api.Controllers
         [HttpGet("{productid}")]
         public async Task<IActionResult> GetByProductId(int productid)
         {
-            if (string.IsNullOrEmpty(productid.ToString()) || productid <= 0)
-                return BadRequest();
-
-            var productImages = await _productImageService.GetProductImagesByProductIdAsync(productid);
+            var productImages = await _productImageService
+                                        .GetProductImagesByProductIdAsync(productid);
 
             return Ok(productImages);
         }

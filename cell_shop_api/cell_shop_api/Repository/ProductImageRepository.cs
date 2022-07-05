@@ -17,7 +17,7 @@ namespace cell_shop_api.Repository
         {
         }
 
-        public async Task<IEnumerable<ProductImage>> GetProductImageByProductIdAsync(int productId)
+        public async Task<IList<ProductImage>> GetProductImageByProductIdAsync(int productId)
         {
             var productimage = await _dbSet.Where(x => x.ProductId == productId 
                                             && x.Status == true)

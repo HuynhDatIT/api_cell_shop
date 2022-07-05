@@ -8,7 +8,7 @@ namespace cell_shop_api.Repository.Interface
 {
     public interface IProductImageRepository : IBaseRepository<ProductImage>
     {
-        Task<IEnumerable<ProductImage>> GetProductImageByProductIdAsync(int productId);
+        Task<IList<ProductImage>> GetProductImageByProductIdAsync(int productId);
 
         
     }

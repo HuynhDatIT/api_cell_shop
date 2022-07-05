@@ -9,5 +9,6 @@ namespace cell_shop_api.Services.InterfaceSevice
     public interface IProductImageService 
     {
         Task<IEnumerable<GetProductImage>> GetProductImagesByProductIdAsync(int productid);
+        Task<bool> DeleteProductImageRangeAsync(int productid);
     }
 }

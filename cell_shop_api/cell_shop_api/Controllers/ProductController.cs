@@ -52,15 +52,19 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
-        //[HttpPut("update")]
-        //public IActionResult Update(GetBrand getBrand)
-        //{
-        //    if (getBrand == null)
-        //        return BadRequest();
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateProduct updateProduct)
+        {
+            var result = await _productService.UpdateProductAsync(updateProduct);
 
-        //    var result = _productService.Update(getBrand);
+            return result ? Ok() : BadRequest();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _productService.DeleteProductAsync(id);
 
-        //    return Ok(result);
-        //}
+            return result ? Ok() : BadRequest();
+        }
     }
 }

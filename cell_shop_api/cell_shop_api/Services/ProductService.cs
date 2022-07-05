@@ -15,12 +15,17 @@ namespace cell_shop_api.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ISaveImageService _saveImageService;
+        private readonly IProductImageService _productImageService;
 
-        public ProductService(IUnitOfWork unitOfWork, IMapper mapper, ISaveImageService saveImageService)
+        public ProductService(IUnitOfWork unitOfWork, 
+                                IMapper mapper,
+                                ISaveImageService saveImageService,
+                                IProductImageService productImageService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _saveImageService = saveImageService;
+            _productImageService = productImageService;
         }
 
         public async Task<bool> CreateProductAsync(CreateProduct createProduct)
@@ -45,6 +50,36 @@ namespace cell_shop_api.Services
             await _unitOfWork.ProductImageRepository.AddRangeAsync(listProductImage);
            
             return await _unitOfWork.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteProductAsync(int id)
+        {
+            var trancistion = await _unitOfWork.BeginTransactionAsync();
+            
+            try
+            {
+                var product = await _unitOfWork.ProductRepository.GetByIdAsync(id);
+
+                if (product == null) return false;
+
+                product.Status = false;
+
+                _unitOfWork.ProductRepository.Update(product);
+
+                _unitOfWork.SaveChanges();
+
+                await _productImageService.DeleteProductImageRangeAsync(id);
+
+                await trancistion.CommitAsync();
+
+                return true;
+            }
+            catch (System.Exception)
+            {
+                trancistion.Rollback();
+                throw;
+            }
+            
         }
 
         public async Task<IEnumerable<GetProduct>> GetAllAsync()
@@ -82,6 +117,19 @@ namespace cell_shop_api.Services
             var listGetProduct = _mapper.Map<IList<GetProduct>>(listProduct);
 
             return listGetProduct;
+        }
+
+        public async Task<bool> UpdateProductAsync(UpdateProduct updateProduct)
+        {
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(updateProduct.Id);
+
+            if (product == null) return false;
+
+            var productNew = _mapper.Map(updateProduct, product);
+
+            _unitOfWork.ProductRepository.Update(productNew);
+
+            return await _unitOfWork.SaveChangesAsync() > 0;
         }
     }
 }
