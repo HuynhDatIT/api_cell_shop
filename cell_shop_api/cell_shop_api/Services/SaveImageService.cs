@@ -19,10 +19,19 @@ namespace cell_shop_api.Services
         {
             _hostingEnvironment = hostingEnvironment;
         }
-
+        private bool IsImageSupport(IFormFile file)
+        {
+            if(Path.GetExtension(file.FileName).ToLower() != ".jpg"
+            && Path.GetExtension(file.FileName).ToLower() != ".png"
+            && Path.GetExtension(file.FileName).ToLower() != ".gif"
+            && Path.GetExtension(file.FileName).ToLower() != ".jpeg")
+                return false;
+            return true;
+        }
         public async Task<string> SaveImageAsync(IFormFile file, TypeImage typeImage)
         {
-            
+            if (!IsImageSupport(file)) return null;
+
             string upload = Path.Combine(_hostingEnvironment.ContentRootPath, $"image//{typeImage}");
             
             if(!Directory.Exists(upload))
@@ -52,6 +61,8 @@ namespace cell_shop_api.Services
 
             foreach (var file in formFiles)
             {
+                if (!IsImageSupport(file)) return null;
+               
                 if (file.Length > 0)
                 {
                     string filePath = Path.Combine(upload, file.FileName);

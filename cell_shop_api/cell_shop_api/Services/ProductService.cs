@@ -33,29 +33,43 @@ namespace cell_shop_api.Services
 
         public async Task<bool> CreateProductAsync(CreateProduct createProduct)
         {
-            var product = _mapper.Map<Product>(createProduct);
-
-            await _unitOfWork.ProductRepository.AddAsync(product);
-
-            await _unitOfWork.SaveChangesAsync();
-
-            var listProductImage = new List<ProductImage>();
-
-            foreach (var imagefile in createProduct.formFiles)
+            var transaction = await _unitOfWork.BeginTransactionAsync();
+            try
             {
-                var path = await _saveImageService.SaveImageAsync
-                                (imagefile, TypeImage.ImageProduct);
+                var product = _mapper.Map<Product>(createProduct);
 
-                var productImage = new ProductImage
+                await _unitOfWork.ProductRepository.AddAsync(product);
+
+                await _unitOfWork.SaveChangesAsync();
+
+                var listProductImage = new List<ProductImage>();
+
+                foreach (var imagefile in createProduct.formFiles)
                 {
-                    ProductId = product.Id,
-                    Path = path
-                };
-                listProductImage.Add(productImage);
+                    var path = await _saveImageService.SaveImageAsync
+                                    (imagefile, TypeImage.ImageProduct);
+
+                    var productImage = new ProductImage
+                    {
+                        ProductId = product.Id,
+                        Path = path
+                    };
+                    listProductImage.Add(productImage);
+                }
+                await _unitOfWork.ProductImageRepository.AddRangeAsync(listProductImage);
+
+                await _unitOfWork.SaveChangesAsync();
+               
+                await transaction.CommitAsync();
+
+                return true;
             }
-            await _unitOfWork.ProductImageRepository.AddRangeAsync(listProductImage);
-           
-            return await _unitOfWork.SaveChangesAsync() > 0;
+            catch (System.Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
+            
         }
 
         public async Task<bool> DeleteProductAsync(int id)

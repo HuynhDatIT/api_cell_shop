@@ -55,6 +55,17 @@ namespace cell_shop_api.Services
 
             return getModelProduct;
         }
+
+        public async Task<IList<GetModelProduct>> GetModelProductbyCategorieAsync(int categorieId)
+        {
+            var modelProducts = await _unitOfWork.ModelProductRepository
+                                    .GetModelProductByCategorie(categorieId);
+
+            var getModelProduct = _mapper.Map<IList<GetModelProduct>>(modelProducts);
+
+            return getModelProduct;
+        }
+
         public async Task<bool> UpdateAsync(UpdateModelProduct updateModelProduct)
         {
             var modelProduct = await _unitOfWork.ModelProductRepository

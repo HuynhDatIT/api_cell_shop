@@ -22,20 +22,27 @@ namespace cell_shop_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var listBrand = await _modelProductService.GetAllAsync();
+            var listmodelProducts = await _modelProductService.GetAllAsync();
 
-            return Ok(listBrand);
+            return Ok(listmodelProducts);
         }
+        [HttpGet("categorie/{categorieId}")]
+        public async Task<IActionResult> GetModelProductByCategorie(int categorieId)
+        {
+            var listmodelProducts = await _modelProductService
+                                        .GetModelProductbyCategorieAsync(categorieId);
 
+            return listmodelProducts != null ? Ok(listmodelProducts) : NotFound();
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             if (string.IsNullOrEmpty(id.ToString()) || id <= 0)
                 return BadRequest();
 
-            var brand = await _modelProductService.GetByIdAsync(id);
+            var modelProduct = await _modelProductService.GetByIdAsync(id);
 
-            return brand != null ? Ok(brand) : NotFound();
+            return modelProduct != null ? Ok(modelProduct) : NotFound();
         }
         [HttpPost]
         public async Task<IActionResult> Add(CreateModelProduct createModelProduct)
