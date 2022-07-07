@@ -100,7 +100,6 @@ namespace cell_shop_api.Services
                  new Claim(ClaimTypes.PrimarySid, account.Id.ToString()),
                  new Claim(ClaimTypes.Role, account.Role.Name)
               }),
-                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = new SigningCredentials(
                                         new SymmetricSecurityKey(tokenKey),
                                             SecurityAlgorithms.HmacSha256Signature)
