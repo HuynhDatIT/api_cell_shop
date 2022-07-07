@@ -1,4 +1,5 @@
-﻿using cell_shop_api.Services.InterfaceSevice;
+﻿using cell_shop_api.Enum;
+using cell_shop_api.Services.InterfaceSevice;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting.Internal;
@@ -19,10 +20,10 @@ namespace cell_shop_api.Services
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public async Task<string> SaveImageAsync(IFormFile file)
+        public async Task<string> SaveImageAsync(IFormFile file, TypeImage typeImage)
         {
             
-            string upload = Path.Combine(_hostingEnvironment.ContentRootPath, "image");
+            string upload = Path.Combine(_hostingEnvironment.ContentRootPath, $"image//{typeImage}");
             
             if(!Directory.Exists(upload))
                 Directory.CreateDirectory(upload);
@@ -40,17 +41,17 @@ namespace cell_shop_api.Services
             }
             return null;
         }
-        public async Task<IList<string>> SaveImageRangeAsync(IList<IFormFile> formFiles)
+        public async Task<IList<string>> SaveImageRangeAsync(IList<IFormFile> formFiles, TypeImage typeImage)
         {
+            string upload = Path.Combine(_hostingEnvironment.ContentRootPath, $"image//{typeImage}");
+
+            if (!Directory.Exists(upload))
+                Directory.CreateDirectory(upload);
+            
             var listImage = new List<string>();
 
             foreach (var file in formFiles)
             {
-                string upload = Path.Combine(_hostingEnvironment.ContentRootPath, "image");
-
-                if (!Directory.Exists(upload))
-                    Directory.CreateDirectory(upload);
-
                 if (file.Length > 0)
                 {
                     string filePath = Path.Combine(upload, file.FileName);

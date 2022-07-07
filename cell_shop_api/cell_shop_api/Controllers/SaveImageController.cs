@@ -1,4 +1,5 @@
-﻿using cell_shop_api.Services.InterfaceSevice;
+﻿using cell_shop_api.Enum;
+using cell_shop_api.Services.InterfaceSevice;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace cell_shop_api.Controllers
         {
             foreach (var item in formFile)
             {
-                var path = await saveImageService.SaveImage(item);
+                var path = await saveImageService.SaveImageAsync(item, TypeImage.ImageProduct);
 
             }
             return Ok();

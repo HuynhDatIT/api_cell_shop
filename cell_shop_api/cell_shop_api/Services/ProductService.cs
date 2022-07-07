@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using cell_shop_api.Base.Interface;
+using cell_shop_api.Enum;
 using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
 using cell_shop_api.ViewModels.Request;
@@ -42,7 +43,8 @@ namespace cell_shop_api.Services
 
             foreach (var imagefile in createProduct.formFiles)
             {
-                var path = await _saveImageService.SaveImageAsync(imagefile);
+                var path = await _saveImageService.SaveImageAsync
+                                (imagefile, TypeImage.ImageProduct);
 
                 var productImage = new ProductImage
                 {
