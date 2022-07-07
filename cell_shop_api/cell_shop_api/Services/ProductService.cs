@@ -5,6 +5,8 @@ using cell_shop_api.Unit_Of_Work;
 using cell_shop_api.ViewModels.Request;
 using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -34,11 +36,13 @@ namespace cell_shop_api.Services
 
             await _unitOfWork.ProductRepository.AddAsync(product);
 
+            await _unitOfWork.SaveChangesAsync();
+
             var listProductImage = new List<ProductImage>();
 
             foreach (var imagefile in createProduct.formFiles)
             {
-                var path = await _saveImageService.SaveImage(imagefile);
+                var path = await _saveImageService.SaveImageAsync(imagefile);
 
                 var productImage = new ProductImage
                 {

@@ -6,6 +6,7 @@ namespace cell_shop_api.Services.InterfaceSevice
 {
     public interface ISaveImageService
     {
-        Task<string> SaveImage(IFormFile formFiles);
+        Task<string> SaveImageAsync(IFormFile formfile);
+        Task<IList<string>> SaveImageRangeAsync(IList<IFormFile> formFiles);
     }
 }

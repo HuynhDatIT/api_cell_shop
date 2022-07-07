@@ -1,5 +1,6 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.ViewModels.Request;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -46,9 +47,9 @@ namespace cell_shop_api.Controllers
             return product != null ? Ok(product) : NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateProduct( CreateProduct createProduct)
+        public async Task<IActionResult> CreateProduct([FromForm]CreateProduct createProduct)
         {
-            var result = await _productService.CreateProductAsync(createProduct);
+           var result = await _productService.CreateProductAsync(createProduct);
 
             return result ? Ok() : BadRequest();
         }

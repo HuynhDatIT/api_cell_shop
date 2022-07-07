@@ -19,7 +19,7 @@ namespace cell_shop_api.Services
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public async Task<string> SaveImage(IFormFile file)
+        public async Task<string> SaveImageAsync(IFormFile file)
         {
             
             string upload = Path.Combine(_hostingEnvironment.ContentRootPath, "image");
@@ -40,6 +40,32 @@ namespace cell_shop_api.Services
             }
             return null;
         }
-      
+        public async Task<IList<string>> SaveImageRangeAsync(IList<IFormFile> formFiles)
+        {
+            var listImage = new List<string>();
+
+            foreach (var file in formFiles)
+            {
+                string upload = Path.Combine(_hostingEnvironment.ContentRootPath, "image");
+
+                if (!Directory.Exists(upload))
+                    Directory.CreateDirectory(upload);
+
+                if (file.Length > 0)
+                {
+                    string filePath = Path.Combine(upload, file.FileName);
+
+                    using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+
+                    listImage.Add(file.FileName);
+                }
+            }
+            
+            return listImage;
+        }
+
     }
 }
