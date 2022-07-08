@@ -35,11 +35,14 @@ namespace CellShop_Api.Unit_Of_Work
             brandRepository = new BrandRepository(_dbContext);
             cartRepository = new CartRepository(_dbContext);
             productImageRepository = new ProductImageRepository(_dbContext);
-            accountRepository = new AccountRepository(dbContext);
-            invoiceRepository = new InvoiceRepository(dbContext);
-            invoiceDetailRepository = new InvoiceDetailRepository(dbContext);
-            wishListRepository = new WishListRepository(dbContext);
-            roleRepository = new RoleRepository(dbContext);
+            accountRepository = new AccountRepository(_dbContext);
+            invoiceRepository = new InvoiceRepository(_dbContext);
+            invoiceDetailRepository = new InvoiceDetailRepository(_dbContext);
+            wishListRepository = new WishListRepository(_dbContext);
+            roleRepository = new RoleRepository(_dbContext);
+            linkRepository = new LinkRepository(_dbContext);
+            promotionRepository = new PromotionRepository(_dbContext);
+            addressesRepository = new AddressesRepository(_dbContext);
         }
 
         public IModelProductRepository ModelProductRepository
@@ -95,6 +98,22 @@ namespace CellShop_Api.Unit_Of_Work
         {
             get { return roleRepository; }
         }
+
+        public ILinkRepository LinkRepository
+        {
+            get { return linkRepository; }
+        }
+
+        public IPromotionRepository PromotionRepository
+        {
+            get { return promotionRepository; }
+        }
+
+        public IAddressesRepository AddressesRepository
+        {
+            get { return addressesRepository; }
+        }
+
         public int SaveChanges()
         {
             return _dbContext.SaveChanges();
