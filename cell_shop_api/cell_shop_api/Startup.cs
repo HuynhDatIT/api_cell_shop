@@ -103,6 +103,7 @@ namespace CellShop_Api
             services.AddScoped<IWishListService, WishListService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddHttpContextAccessor();
+            services.AddScoped<ILinkService, LinkService>();
 
             //authentication
             services.AddAuthentication(x =>

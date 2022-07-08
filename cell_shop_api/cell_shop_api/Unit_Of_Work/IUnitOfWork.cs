@@ -20,6 +20,8 @@ namespace cell_shop_api.Unit_Of_Work
         IInvoiceDetailRepository InvoiceDetailRepository { get; }
         IWishListRepository WishListRepository { get; }
         IRoleRepository RoleRepository { get; }
+        ILinkRepository LinkRepository { get; }
+        IPromotionRepository PromotionRepository { get; }
         int SaveChanges();
         Task<int> SaveChangesAsync();
         Task<IDbContextTransaction> BeginTransactionAsync();
