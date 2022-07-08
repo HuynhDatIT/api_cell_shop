@@ -25,6 +25,7 @@ namespace CellShop_Api.Unit_Of_Work
         private IRoleRepository roleRepository;
         private ILinkRepository linkRepository;
         private IPromotionRepository promotionRepository;
+        private IAddressesRepository addressesRepository;
         public UnitOfWork(CellShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -39,8 +40,6 @@ namespace CellShop_Api.Unit_Of_Work
             invoiceDetailRepository = new InvoiceDetailRepository(dbContext);
             wishListRepository = new WishListRepository(dbContext);
             roleRepository = new RoleRepository(dbContext);
-            linkRepository = new LinkRepository(dbContext);
-            promotionRepository = new PromotionRepository(dbContext);
         }
 
         public IModelProductRepository ModelProductRepository
@@ -96,17 +95,6 @@ namespace CellShop_Api.Unit_Of_Work
         {
             get { return roleRepository; }
         }
-
-        public ILinkRepository LinkRepository
-        {
-            get { return linkRepository; }
-        }
-
-        public IPromotionRepository PromotionRepository
-        {
-            get { return promotionRepository; }
-        }
-
         public int SaveChanges()
         {
             return _dbContext.SaveChanges();

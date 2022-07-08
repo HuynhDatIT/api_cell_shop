@@ -22,6 +22,7 @@ namespace cell_shop_api.Unit_Of_Work
         IRoleRepository RoleRepository { get; }
         ILinkRepository LinkRepository { get; }
         IPromotionRepository PromotionRepository { get; }
+        IAddressesRepository AddressesRepository { get; }
         int SaveChanges();
         Task<int> SaveChangesAsync();
         Task<IDbContextTransaction> BeginTransactionAsync();

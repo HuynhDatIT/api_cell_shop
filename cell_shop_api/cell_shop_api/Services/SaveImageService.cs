@@ -46,7 +46,8 @@ namespace cell_shop_api.Services
                     await file.CopyToAsync(fileStream);
                 }
 
-                return file.FileName;
+                var path = Path.Combine($"{typeImage}", file.FileName);
+                return path;
             }
             return null;
         }
