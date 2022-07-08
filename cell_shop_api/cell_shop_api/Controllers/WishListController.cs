@@ -25,14 +25,14 @@ namespace cell_shop_api.Controllers
 
             return Ok(wishLists);
         }
-        [HttpPost]
+        [HttpPost("{productId}")]
         public async Task<IActionResult> AddWishList(int productId)
         {
             var result = await _wishListService.AddWishListAsync(productId);
 
             return result ? Ok() : BadRequest();
         }
-        [HttpDelete]
+        [HttpDelete("id")]
         public async Task<IActionResult> DeleteWishList(int id)
         {
             var result = await _wishListService.DeleteWishListAsync(id);

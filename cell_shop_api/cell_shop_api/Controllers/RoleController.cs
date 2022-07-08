@@ -36,7 +36,7 @@ namespace cell_shop_api.Controllers
             return Ok(role);
         }
 
-        [HttpPost]
+        [HttpPost("name")]
         public async Task<IActionResult> Post([FromBody] string name)
         {
             var result = await _roleService.CreateRoleAsync(name);
@@ -51,7 +51,7 @@ namespace cell_shop_api.Controllers
             
             return result ? Ok() : BadRequest();
         }
-        [HttpDelete]
+        [HttpDelete("id")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _roleService.DeleteRoleAsync(id);

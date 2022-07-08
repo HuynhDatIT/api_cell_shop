@@ -60,7 +60,7 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
-        [HttpDelete]
+        [HttpDelete("id")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _productService.DeleteProductAsync(id);

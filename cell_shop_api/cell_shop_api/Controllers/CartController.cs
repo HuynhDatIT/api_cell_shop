@@ -31,15 +31,12 @@ namespace cell_shop_api.Controllers
         {
             var result = await _cartService.AddAsync(createCart);
 
-            return result ? Ok() : BadRequest(); 
+            return result ? Ok() : BadRequest();
         }
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int cartid)
+        [HttpDelete("{cartId}")]
+        public async Task<IActionResult> Delete(int cartId)
         {
-            if (cartid <= 0)
-                return BadRequest();
-
-            var result = await _cartService.DeleteAsync(cartid);
+            var result = await _cartService.DeleteAsync(cartId);
 
             return result ? Ok() : BadRequest();
         }
