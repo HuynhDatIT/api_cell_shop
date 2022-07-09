@@ -177,6 +177,24 @@ namespace cell_shop_api.FluentConfig
                     ProductId = 2,
                 }
                 );
+            modelBuilder.Entity<Review>().HasData(
+               new Review
+               {
+                   Id = 1,
+                   Content = "Day la review1",
+                   Rating = 3,
+                   AccountId = 2,
+                   ProductId = 1,
+               },
+               new Review
+               {
+                   Id = 2,
+                   Content = "Day la review2",
+                   Rating = 4,
+                   AccountId = 2,
+                   ProductId = 1,
+               }
+               );
         }
     }
 }
