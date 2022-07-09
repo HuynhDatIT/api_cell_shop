@@ -78,10 +78,16 @@ namespace cell_shop_api.Services
                                         .GetByIdAsync(updateCart.CartId);
             
             cart.Quantity = updateCart.Quantity;
-            
-            _unitOfWork.CartRepository.Update(cart);
-            
-            return _unitOfWork.SaveChanges() > 0;
+
+            if (cart.Quantity <= 0)
+                return await DeleteAsync(cart.Id);
+            else
+            {
+                _unitOfWork.CartRepository.Update(cart);
+               
+                return _unitOfWork.SaveChanges() > 0;
+            }
+
         }
     }
 }
