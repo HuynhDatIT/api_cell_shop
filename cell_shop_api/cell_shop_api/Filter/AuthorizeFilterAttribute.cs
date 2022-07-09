@@ -8,9 +8,9 @@ namespace Mini_project_API.Filter
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizeFilterAttribute : Attribute, IAuthorizationFilter
     {
-        private string _role;
+        private string[] _role;
 
-        public AuthorizeFilterAttribute(string role)
+        public AuthorizeFilterAttribute(params string[] role)
         {
             _role = role;
         }
@@ -24,13 +24,19 @@ namespace Mini_project_API.Filter
                 { message = "Not login" })
                 { StatusCode = StatusCodes.Status401Unauthorized };
             }
-            else if(_role != user.ToString())
+            else
             {
+                foreach (var role in _role)
+                {
+                    if (role == user.ToString())
+                    {
+                        return;
+                    }
+                }
                 context.Result = new JsonResult(new
                 { message = "UnAthorization" })
                 { StatusCode = StatusCodes.Status401Unauthorized };
             }
-           
         }
     }
 }
