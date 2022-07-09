@@ -12,6 +12,7 @@ namespace CellShop_Api.AutoMapperConfig
             CreateMap<GetAccount, Account>().ReverseMap();
             CreateMap<CreateAccount, Account>().ReverseMap();
             CreateMap<UpdateAccount, Account>().ReverseMap();
+            CreateMap<Register, Account>().ReverseMap();
         }
     }
 }
