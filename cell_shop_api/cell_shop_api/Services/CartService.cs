@@ -42,7 +42,8 @@ namespace cell_shop_api.Services
             if(cart == null)
             {
                 var itemCart = _mapper.Map<Cart>(createCart);
-                
+
+                itemCart.AccountId = accountid;
 
                 await _unitOfWork.CartRepository.AddAsync(itemCart);
                 
