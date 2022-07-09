@@ -15,17 +15,20 @@ namespace cell_shop_api.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IClaimsService _claimsService;
+        private readonly IProductService _productService;
         private int accountId;
 
         public ReviewService(IUnitOfWork unitOfWork, 
-                            IMapper mapper, 
-                            IClaimsService claimsService)
+                            IMapper mapper,
+                            IClaimsService claimsService,
+                            IProductService productService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _claimsService = claimsService;
-
+            _productService = productService;
             accountId = _claimsService.GetCurrentAccountId;
+            
         }
 
         public async Task<bool> CreateReviewAsync(CreateReview createReview)
@@ -36,7 +39,13 @@ namespace cell_shop_api.Services
 
             await _unitOfWork.ReviewRepository.AddAsync(review);
 
-            return await _unitOfWork.SaveChangesAsync() > 0;
+            var avgRating = await CalculatorRatingAsync(createReview.ProductId);
+
+            var result1 = await _unitOfWork.SaveChangesAsync() > 0;
+            
+            var result2 = await _productService.UpdateRatingProductAsync(createReview.ProductId, avgRating);
+
+            return  (!result1 || !result2);
         }
 
         public async Task<bool> DeleteReviewAsync(int reviewId)
@@ -48,8 +57,14 @@ namespace cell_shop_api.Services
             review.Status = false;
 
             _unitOfWork.ReviewRepository.Update(review);
+           
+            var result1 = await _unitOfWork.SaveChangesAsync() > 0;
+            
+            var avgRating = await CalculatorRatingAsync(review.ProductId);
 
-            return await _unitOfWork.SaveChangesAsync() > 0;
+            var result2 = await _productService.UpdateRatingProductAsync(review.ProductId, avgRating);
+
+            return (!result1 || !result2);
         }
 
         public async Task<IList<GetReview>> GetReviewByProductAsync(int productId)
@@ -69,7 +84,34 @@ namespace cell_shop_api.Services
 
             _unitOfWork.ReviewRepository.Update(review);
 
-            return await _unitOfWork.SaveChangesAsync() > 0;
+            var result1 = await _unitOfWork.SaveChangesAsync() > 0;
+
+            if (updateReview.Rating == review.Rating) return result1;
+
+            var avgRating = await CalculatorRatingAsync(review.ProductId);
+
+            var result2 = await _productService.UpdateRatingProductAsync(review.ProductId, avgRating);
+
+            return (!result1 || !result2);
+
+        }
+
+        private async Task<float> CalculatorRatingAsync(int productId)
+        {
+            float sum = 0;
+            float avg = 0;
+            
+            var reviews = await _unitOfWork.ReviewRepository.GetReviewbyProductAsync(productId);
+            
+            if (reviews.Count == 0) return 0;
+            
+            foreach (var review in reviews)
+            {
+                sum += review.Rating;
+            }
+            avg = sum / reviews.Count;
+            
+            return avg;
         }
     }
 }

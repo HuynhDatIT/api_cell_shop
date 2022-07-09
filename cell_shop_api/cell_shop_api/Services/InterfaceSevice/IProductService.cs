@@ -16,5 +16,6 @@ namespace cell_shop_api.Services.InterfaceSevice
         Task<bool> CreateProductAsync(CreateProduct createProduct);
         Task<bool> UpdateProductAsync(UpdateProduct updateProduct);
         Task<bool> DeleteProductAsync(int id);
+        Task<bool> UpdateRatingProductAsync(int productId, float avgRating);
     }
 }

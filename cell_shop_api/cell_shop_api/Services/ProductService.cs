@@ -151,5 +151,18 @@ namespace cell_shop_api.Services
 
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
+
+        public async Task<bool> UpdateRatingProductAsync(int productId, float avgRating)
+        {
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+
+            if (product == null) return false;
+
+            product.Rating = avgRating;
+
+            _unitOfWork.ProductRepository.Update(product);
+
+            return await _unitOfWork.SaveChangesAsync() > 0;
+        }
     }
 }
