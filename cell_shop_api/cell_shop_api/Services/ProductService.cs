@@ -112,15 +112,13 @@ namespace cell_shop_api.Services
             return listGetProduct;
         }
 
-        public async Task<GetProductId> GetByIdAsync(int id)
+        public async Task<GetProduct> GetByIdAsync(int id)
         {
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(id);
 
             if(product == null) return null;
 
-            var getproduct = _mapper.Map<GetProductId>(product);
-            
-            getproduct.GetModelProduct = _mapper.Map<GetModelProduct>(product.ModelProduct);
+            var getproduct = _mapper.Map<GetProduct>(product);
             
             return getproduct;
         }

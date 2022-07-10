@@ -7,17 +7,12 @@ namespace CellShop_Api.Models
 {
     public class Account : IBaseModel
     {
-        [Key]
         public int Id { get; set; }
-        [Required]
         public string UserName { get; set; }
-        [Required]
         public string PassWord { get; set; }
-        [Required]
         public string FullName { get; set; }
         public string Email { get; set; }
         public bool Status { get; set; }
-        [Required]
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public ICollection<Log> Logs { get; set; }

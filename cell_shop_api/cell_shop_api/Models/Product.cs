@@ -7,19 +7,14 @@ namespace CellShop_Api.Models
 {
     public class Product : IBaseModel
     {
-        [Key]
         public int Id { get; set; }
-        [Required]
         public string Color { get; set; }
         public int Ram { get; set; }
         public int Rom { get; set; }
-        [Required]
         public float Price { get; set; }
-        [Required]
         public int Stock { get; set; }
         public float Rating { get; set; }
         public bool Status { get; set; }
-        [Required]
         public int ModelProductId { get; set; }
         public ModelProduct ModelProduct { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }

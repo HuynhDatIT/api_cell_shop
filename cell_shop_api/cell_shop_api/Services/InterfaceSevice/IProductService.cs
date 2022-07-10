@@ -11,7 +11,7 @@ namespace cell_shop_api.Services.InterfaceSevice
     public interface IProductService 
     {
         Task<IEnumerable<GetProduct>> GetAllAsync();
-        Task<GetProductId> GetByIdAsync(int id);
+        Task<GetProduct> GetByIdAsync(int id);
         Task<IList<GetProduct>> GetProductByModelIdAsync(int modelId);
         Task<bool> CreateProductAsync(CreateProduct createProduct);
         Task<bool> UpdateProductAsync(UpdateProduct updateProduct);

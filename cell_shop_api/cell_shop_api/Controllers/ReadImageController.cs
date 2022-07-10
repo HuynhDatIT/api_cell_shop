@@ -23,6 +23,8 @@ namespace cell_shop_api.Controllers
         {
             string upload = Path.Combine(_hostingEnvironment.ContentRootPath, $"image\\{path}");
             
+            if (!Directory.Exists(upload)) return NotFound();
+
             Byte[] b = System.IO.File.ReadAllBytes(upload);         
             
             return File(b, "image/png");

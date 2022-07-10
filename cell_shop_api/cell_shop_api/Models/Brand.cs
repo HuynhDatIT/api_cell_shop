@@ -7,9 +7,7 @@ namespace CellShop_Api.Models
 {
     public class Brand : IBaseModel
     {
-        [Key]
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public bool Status { get; set; }
         public ICollection<ModelProduct> ModelProducts { get; set; }
