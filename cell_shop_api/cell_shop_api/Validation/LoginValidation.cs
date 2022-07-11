@@ -1,6 +1,12 @@
-﻿namespace cell_shop_api.Validation
+﻿using cell_shop_api.ViewModels.Request;
+using FluentValidation;
+
+namespace cell_shop_api.Validation
 {
-    public class LoginValidation
+    public class LoginValidation : AbstractValidator<Login>
     {
+        public LoginValidation()
+        {
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
+using cell_shop_api.ViewModels.Request;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -24,6 +25,14 @@ namespace cell_shop_api.Controllers
                                         .GetProductImagesByProductIdAsync(productid);
 
             return Ok(productImages);
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateProductImgae([FromForm] UpdateProductImage updateProductImage)
+        {
+            var result = await _productImageService
+                                        .UpdateProductImagesByProductIdAsync(updateProductImage);
+
+            return result ? Ok() : BadRequest();
         }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using cell_shop_api.Enum;
 using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
+using cell_shop_api.ViewModels.Request;
 using cell_shop_api.ViewModels.Response;
+using CellShop_Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,36 +14,25 @@ namespace cell_shop_api.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ISaveImageService _saveImageService;
 
-        public ProductImageService(IUnitOfWork unitOfWork, IMapper mapper)
+        public ProductImageService(IUnitOfWork unitOfWork, IMapper mapper, ISaveImageService saveImageService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _saveImageService = saveImageService;
         }
 
         public async Task<bool> DeleteProductImageRangeAsync(int productid)
         {
             var productImages = await _unitOfWork.ProductImageRepository
                                             .GetProductImageByProductIdAsync(productid);
-
-            for (int i = 0; i < productImages.Count; i++)
-            {
-                productImages[i].Status = false;
-            }
-
-            _unitOfWork.ProductImageRepository.UpdateRange(productImages);
+            if (productImages == null) return false;
+           
+            _unitOfWork.ProductImageRepository.DeleteRange(productImages);
 
             return _unitOfWork.SaveChanges() > 0;
         }
-
-        //public async Task<IEnumerable<GetProductImage>> GetAllAsync()
-        //{
-        //    var productImages = await _unitOfWork.ProductImageRepository.GetAllAsync();
-
-        //    var getproductImage = _mapper.Map<IEnumerable<GetProductImage>>(productImages);
-
-        //    return getproductImage;    
-        //}
 
         public async Task<IEnumerable<GetProductImage>> GetProductImagesByProductIdAsync(int productId)
         {
@@ -52,6 +44,29 @@ namespace cell_shop_api.Services
             var getproductImages = _mapper.Map<IEnumerable<GetProductImage>>(productImages);
 
             return getproductImages;
+        }
+        public async Task<bool> UpdateProductImagesByProductIdAsync
+                                (UpdateProductImage updateProductImage)
+        {
+            var result = await DeleteProductImageRangeAsync(updateProductImage.ProductId);
+
+            if (!result) return false;
+
+            var paths = await _saveImageService.SaveImageRangeAsync
+                                (updateProductImage.formFiles, TypeImage.ImageProduct);
+            var productImages = new List<ProductImage>();
+            
+            foreach (var path in paths)
+            {
+                var productImage = new ProductImage 
+                { ProductId = updateProductImage.ProductId, Path = path };
+
+                productImages.Add(productImage);
+            }
+
+            await _unitOfWork.ProductImageRepository.AddRangeAsync(productImages);
+           
+            return await _unitOfWork.SaveChangesAsync() > 0;
         }
     }
 }
