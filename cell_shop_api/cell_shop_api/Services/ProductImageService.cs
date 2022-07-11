@@ -48,9 +48,7 @@ namespace cell_shop_api.Services
         public async Task<bool> UpdateProductImagesByProductIdAsync
                                 (UpdateProductImage updateProductImage)
         {
-            var result = await DeleteProductImageRangeAsync(updateProductImage.ProductId);
-
-            if (!result) return false;
+            await DeleteProductImageRangeAsync(updateProductImage.ProductId);
 
             var paths = await _saveImageService.SaveImageRangeAsync
                                 (updateProductImage.formFiles, TypeImage.ImageProduct);

@@ -11,6 +11,7 @@ namespace cell_shop_api.Services.InterfaceSevice
         Task<bool> AddAsync (CreateModelProduct createModelProduct);
         Task<bool> UpdateAsync (UpdateModelProduct updateModelProduct);
         Task<IList<GetModelProduct>> GetModelProductbyCategorieAsync(int categorieId);
+        Task<bool> DeleteModelProductAsync(int id);
 
     }
 }

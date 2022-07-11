@@ -14,11 +14,13 @@ namespace cell_shop_api.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IProductService _productService;
 
-        public ModelProductService(IUnitOfWork unitOfWork, IMapper mapper)
+        public ModelProductService(IUnitOfWork unitOfWork, IMapper mapper, IProductService productService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _productService = productService;
         }
 
         public async Task<bool> AddAsync(CreateModelProduct createModelProduct)
@@ -80,6 +82,27 @@ namespace cell_shop_api.Services
                 return _unitOfWork.SaveChanges() > 0;
             }
             return false;
+        }
+        public async Task<bool> DeleteModelProductAsync(int id)
+        {
+            var result = false;
+            var modelProduct = await _unitOfWork.ModelProductRepository
+                                                .GetByIdAsync(id);
+
+            if (modelProduct == null) return false;
+
+            modelProduct.Status = false;
+
+            _unitOfWork.ModelProductRepository.Update(modelProduct);
+
+            var products = await _productService.GetProductByModelIdAsync(id);
+           
+            foreach (var product in products)
+            {
+               result = await _productService.DeleteProductAsync(product.Id);
+            }
+
+            return result;
         }
     }
 }

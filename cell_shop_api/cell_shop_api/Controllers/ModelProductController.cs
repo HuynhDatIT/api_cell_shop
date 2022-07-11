@@ -58,5 +58,12 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _modelProductService.DeleteModelProductAsync(id);
+
+            return result ? Ok() : BadRequest();
+        }
     }
 }
