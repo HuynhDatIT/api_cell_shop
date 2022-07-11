@@ -7,6 +7,7 @@ namespace cell_shop_api.FluentConfig.ModelConfig
     {
         public static void ReviewFluent(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Review>().HasKey(x => x.Id);
             modelBuilder.Entity<Review>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Review>()

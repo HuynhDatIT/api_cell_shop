@@ -7,6 +7,7 @@ namespace cell_shop_api.FluentConfig.ModelConfig
     {
         public static void ProductFluent(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>().HasKey(x => x.Id);
             modelBuilder.Entity<Product>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Product>()

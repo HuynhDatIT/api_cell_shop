@@ -9,6 +9,7 @@ namespace cell_shop_api.FluentConfig.ModelConfig
     {
         public static void InvoiceFluent(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Invoice>().HasKey(x => x.Id);
             modelBuilder.Entity<Invoice>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Invoice>()

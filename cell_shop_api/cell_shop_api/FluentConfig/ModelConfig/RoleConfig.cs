@@ -7,6 +7,8 @@ namespace cell_shop_api.FluentConfig.ModelConfig
     {
         public static void RoleFluent(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Role>().HasKey(x => x.Id);
+
             modelBuilder.Entity<Role>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Role>()

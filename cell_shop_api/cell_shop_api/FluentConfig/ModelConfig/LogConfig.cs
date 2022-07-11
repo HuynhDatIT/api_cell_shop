@@ -8,6 +8,7 @@ namespace cell_shop_api.FluentConfig.ModelConfig
     {
         public static void LogFluent(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Log>().HasKey(x => x.Id);
             modelBuilder.Entity<Log>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Log>()

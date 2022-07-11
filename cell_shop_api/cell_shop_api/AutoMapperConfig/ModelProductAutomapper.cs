@@ -14,7 +14,8 @@ namespace cell_shop_api.AutoMapperConfig
                 .ForMember(x => x.CategorieName, x => x.MapFrom(x => x.Categorie.Name))
                 .ReverseMap();
                 
-            CreateMap<CreateModelProduct, ModelProduct>();
+            CreateMap<CreateModelProduct, ModelProduct>().ReverseMap();
+            CreateMap<UpdateModelProduct, ModelProduct>().ReverseMap();
         }
     }
 }

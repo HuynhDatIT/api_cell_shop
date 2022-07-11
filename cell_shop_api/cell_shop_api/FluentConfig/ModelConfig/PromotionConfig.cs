@@ -7,6 +7,7 @@ namespace cell_shop_api.FluentConfig.ModelConfig
     {
         public static void PromotionFluent(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Promotion>().HasKey(x => x.Id);
             modelBuilder.Entity<Promotion>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Promotion>()
