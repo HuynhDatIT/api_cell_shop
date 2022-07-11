@@ -16,6 +16,7 @@ namespace cell_shop_api.AutoMapperConfig
             CreateMap<Product, GetProductId>();
 
             CreateMap<CreateProduct, Product>().ReverseMap();
+            CreateMap<UpdateProduct, Product>().ReverseMap();
         }
     }
 }
