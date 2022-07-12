@@ -28,14 +28,12 @@ namespace cell_shop_api.Services
 
             if (categorie != null)
                 return false;
-            else
-            {
-                var categorienew = _mapper.Map<Categorie>(createCategorie);
+           
+            var categorienew = _mapper.Map<Categorie>(createCategorie);
 
-                await _unitOfWork.CategorieRepository.AddAsync(categorie);
+            await _unitOfWork.CategorieRepository.AddAsync(categorienew);
 
-                return _unitOfWork.SaveChanges() > 0;
-            }
+            return _unitOfWork.SaveChanges() > 0;
         }
 
         public async Task<IEnumerable<GetCategorie>> GetAllAsync()
