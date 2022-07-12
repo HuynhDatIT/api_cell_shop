@@ -23,14 +23,28 @@ namespace cell_shop_api.Services
             _claimsService = claimsService;
         }
 
-        public Task<bool> CreateAddresseAsync(CreateAddresse createAddresse)
+        public bool CreateAddresse(CreateAddresse createAddresse)
         {
-            throw new System.NotImplementedException();
+            var addresse = _mapper.Map<Addresse>(createAddresse);
+
+            addresse.AccountId = accountId;
+
+            _unitOfWork.AddressesRepository.Update(addresse);
+           
+            return _unitOfWork.SaveChanges() > 0;
         }
 
-        public Task<bool> DeleteAddresseAsync(int id)
+        public async Task<bool> DeleteAddresseAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var addresse = await _unitOfWork.AddressesRepository.GetByIdAsync(id);
+
+            if (addresse == null) return false;
+
+            addresse.Status = false;
+
+            _unitOfWork.AddressesRepository.Update(addresse);
+
+            return _unitOfWork.SaveChanges() > 0;
         }
 
         public async Task<IList<GetAddresse>> GetAddressesByAccountAsync(int accountID)
@@ -47,9 +61,18 @@ namespace cell_shop_api.Services
             return getAddresses;
         }
 
-        public Task<bool> UpdateAddresseAsync(UpdateAddresse updateAddresse)
+        public async Task<bool> UpdateAddresseAsync(UpdateAddresse updateAddresse)
         {
-            throw new System.NotImplementedException();
+            var addresse = await _unitOfWork.AddressesRepository
+                                            .GetByIdAsync(updateAddresse.Id);
+
+            if (addresse == null) return false;
+
+            var addresseNew = _mapper.Map(updateAddresse, addresse);
+
+            _unitOfWork.AddressesRepository.Update(addresseNew);
+
+            return _unitOfWork.SaveChanges() > 0;
         }
     }
 }
