@@ -5,6 +5,7 @@ using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
 using cell_shop_api.ViewModels;
 using cell_shop_api.ViewModels.Request;
+using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -35,6 +36,8 @@ namespace cell_shop_api.Services
             _claimsService = claimsService;
             _configuration = configuration;
             _saveImageService = saveImageService;
+            
+            accountId = _claimsService.GetCurrentAccountId;
         }
 
         public async Task<bool> ForgotPasswordAsync(ForgotPassword forgotPassword)
@@ -116,8 +119,6 @@ namespace cell_shop_api.Services
 
         public async Task<bool> UpdateProfileAsync(UpdateProfile updateProfile)
         {
-            accountId = _claimsService.GetCurrentAccountId;
-            
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
             
             var accountupdate = _mapper.Map(updateProfile, account);
@@ -132,6 +133,13 @@ namespace cell_shop_api.Services
             _unitOfWork.AccountRepository.Update(accountupdate);
 
             return _unitOfWork.SaveChanges() > 0;
+        }
+
+        public async Task<GetProfile> GetProfileAsync()
+        {
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+
+            return _mapper.Map<GetProfile>(account);
         }
     }
 }

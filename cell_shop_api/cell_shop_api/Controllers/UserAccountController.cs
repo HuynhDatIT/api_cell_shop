@@ -1,5 +1,6 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.ViewModels.Request;
+using cell_shop_api.ViewModels.Response;
 using Microsoft.AspNetCore.Mvc;
 using Mini_project_API.Filter;
 using System.Threading.Tasks;
@@ -47,6 +48,14 @@ namespace cell_shop_api.Controllers
             var result = await _userAccountService.UpdateProfileAsync(updateProfile);
 
             return result ? Ok() : BadRequest();
+        }
+        [AuthorizeFilter(role: "user")]
+        [HttpGet]
+        public async Task<IActionResult> GetProfile()
+        {
+            var profile = await _userAccountService.GetProfileAsync();
+
+            return Ok(profile);
         }
     }
 }

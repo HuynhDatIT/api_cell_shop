@@ -1,5 +1,6 @@
 ﻿using cell_shop_api.ViewModels;
 using cell_shop_api.ViewModels.Request;
+using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
 using System.Threading.Tasks;
 
@@ -11,6 +12,6 @@ namespace cell_shop_api.Services.InterfaceSevice
         Task<Token> AuthenticaAsync(Login login);
         Task<bool> ForgotPasswordAsync(ForgotPassword forgotPassword);
         Task<bool> UpdateProfileAsync(UpdateProfile updateProfile);
-
+        Task<GetProfile> GetProfileAsync();
     }
 }

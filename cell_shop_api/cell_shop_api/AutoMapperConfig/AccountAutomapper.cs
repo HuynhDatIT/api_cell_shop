@@ -17,7 +17,8 @@ namespace CellShop_Api.AutoMapperConfig
                 .ForMember(x => x.PassWord, y => y.MapFrom(y => y.PassWord.HashMD5()));
             CreateMap<Register,Account> ()
                 .ForMember(x => x.PassWord, y => y.MapFrom(y => y.PassWord.HashMD5()));
-            
+            CreateMap<Account, GetProfile>().ReverseMap();
+            CreateMap<Account, UpdateProfile>().ReverseMap();
         }
     }
 }

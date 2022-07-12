@@ -8,7 +8,7 @@ namespace cell_shop_api.ViewModels.Request
         public string FullName { get; set; }
         public string Email { get; set; }
         public DateTime Birthday { get; set; }
-        public bool Male { get; set; }
+        public bool Male { get; set; } 
         public IFormFile file { get; set; }
     }
 }

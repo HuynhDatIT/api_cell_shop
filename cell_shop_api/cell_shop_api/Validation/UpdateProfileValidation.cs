@@ -7,8 +7,10 @@ namespace cell_shop_api.Validation
     {
         public UpdateProfileValidation()
         {
-            RuleFor(x=>x.FullName).Null().NotEmpty();
+            RuleFor(x=>x.FullName).NotEmpty();
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
+            RuleFor(x => x.Birthday).Null();
+
         }
     }
 }
