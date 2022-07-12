@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
-    [AuthorizeFilter("user")]
+    [AuthorizeFilterAttribute("user")]
     [Route("api/[controller]")]
     [ApiController]
     public class CartController : ControllerBase

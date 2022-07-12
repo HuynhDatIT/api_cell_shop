@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
-    [AuthorizeFilter(role: "user")]
+    [AuthorizeFilterAttribute("user")]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
