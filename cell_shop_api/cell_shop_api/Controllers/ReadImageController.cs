@@ -21,13 +21,18 @@ namespace cell_shop_api.Controllers
         [HttpGet("{path}")]
         public IActionResult Get([FromRoute]string path)
         {
-            string upload = Path.Combine(_hostingEnvironment.ContentRootPath, $"image\\{path}");
-            
-            if (!Directory.Exists(upload)) return NotFound();
+            try
+            {
+                string getimage = Path.Combine(_hostingEnvironment.ContentRootPath, $"image\\{path}");
 
-            Byte[] b = System.IO.File.ReadAllBytes(upload);         
-            
-            return File(b, "image/png");
+                Byte[] b = System.IO.File.ReadAllBytes(getimage);
+
+                return File(b, "image/png");
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }
