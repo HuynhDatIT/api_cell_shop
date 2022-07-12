@@ -134,6 +134,7 @@ namespace CellShop_Api
                             .GetSection("EmailConfiguration")
                             .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
+            services.AddTransient<IEmailService, EmailService>();
 
         }
 

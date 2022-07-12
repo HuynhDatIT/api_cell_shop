@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace cell_shop_api.ViewModels.Response
+namespace cell_shop_api.ViewModels.Request
 {
     public class MessageEmail
     {
