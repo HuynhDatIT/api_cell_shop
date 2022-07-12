@@ -26,7 +26,7 @@ namespace cell_shop_api.Services
         public async Task<bool> AddAsync(CreateModelProduct createModelProduct)
         {
             var modelProduct = await _unitOfWork.ModelProductRepository
-                                    .GetModelProductByName(createModelProduct.Name);
+                                    .GetModelProductByNameAsync(createModelProduct.Name);
 
             if (modelProduct != null)
                 return false;
@@ -61,7 +61,7 @@ namespace cell_shop_api.Services
         public async Task<IList<GetModelProduct>> GetModelProductbyCategorieAsync(int categorieId)
         {
             var modelProducts = await _unitOfWork.ModelProductRepository
-                                    .GetModelProductByCategorie(categorieId);
+                                    .GetModelProductByCategorieAsync(categorieId);
 
             var getModelProduct = _mapper.Map<IList<GetModelProduct>>(modelProducts);
 

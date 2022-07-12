@@ -7,7 +7,8 @@ namespace cell_shop_api.Repository.InheritRepository.Interface
 {
     public interface IModelProductRepository : IBaseRepository<ModelProduct>
     {
-        Task<ModelProduct> GetModelProductByName (string name);
-        Task<IList<ModelProduct>> GetModelProductByCategorie(int categorieId);
+        Task<ModelProduct> GetModelProductByNameAsync (string name);
+        Task<IList<ModelProduct>> GetModelProductByCategorieAsync(int categorieId);
+        Task<IList<ModelProduct>> GetModelProductByBrandAsync(int categorieId);
     }
 }

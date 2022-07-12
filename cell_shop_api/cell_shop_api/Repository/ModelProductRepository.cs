@@ -32,17 +32,26 @@ namespace cell_shop_api.Repository
             return modelProduct;
         }
 
-        public async Task<ModelProduct> GetModelProductByName(string name)
+        public async Task<ModelProduct> GetModelProductByNameAsync(string name)
         {
             return await _dbSet.FirstOrDefaultAsync(
                                 x => x.Name == name && x.Status == true);
         }
-        public async Task<IList<ModelProduct>> GetModelProductByCategorie(int categorieId)
+        public async Task<IList<ModelProduct>> GetModelProductByCategorieAsync(int categorieId)
         {
             return await _dbSet
                             .Include(x => x.Categorie)
                             .Include(x => x.Brand)
                             .Where(x => x.CategorieId == categorieId && x.Status == true)
+                            .ToListAsync();
+        }
+
+        public async Task<IList<ModelProduct>> GetModelProductByBrandAsync(int brandId)
+        {
+            return await _dbSet
+                            .Include(x => x.Categorie)
+                            .Include(x => x.Brand)
+                            .Where(x => x.BrandId == brandId && x.Status == true)
                             .ToListAsync();
         }
     }
