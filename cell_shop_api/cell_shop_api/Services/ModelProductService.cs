@@ -85,7 +85,6 @@ namespace cell_shop_api.Services
         }
         public async Task<bool> DeleteModelProductAsync(int id)
         {
-            var result = false;
             var modelProduct = await _unitOfWork.ModelProductRepository
                                                 .GetByIdAsync(id);
 
@@ -94,15 +93,20 @@ namespace cell_shop_api.Services
             modelProduct.Status = false;
 
             _unitOfWork.ModelProductRepository.Update(modelProduct);
-
+            
+            var result = _unitOfWork.SaveChanges() > 0;
+            
             var products = await _productService.GetProductByModelIdAsync(id);
-           
-            foreach (var product in products)
+            
+            if(products != null)
             {
-               result = await _productService.DeleteProductAsync(product.Id);
-            }
-
-            return result;
+                foreach (var product in products)
+                {
+                    await _productService.DeleteProductAsync(product.Id);
+                }
+            }    
+            
+            return result;  
         }
     }
 }
