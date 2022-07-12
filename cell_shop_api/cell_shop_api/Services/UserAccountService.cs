@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using cell_shop_api.Base.Interface;
+using cell_shop_api.Enum;
 using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
 using cell_shop_api.ViewModels;
@@ -22,16 +23,18 @@ namespace cell_shop_api.Services
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IClaimsService _claimsService;
+        private readonly ISaveImageService _saveImageService;
         private int accountId;
 
         public UserAccountService(IUnitOfWork unitOfWork, 
                     IMapper mapper, IConfiguration configuration, 
-                    IClaimsService claimsService)
+                    IClaimsService claimsService, ISaveImageService saveImageService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _claimsService = claimsService;
             _configuration = configuration;
+            _saveImageService = saveImageService;
         }
 
         public async Task<bool> ForgotPasswordAsync(ForgotPassword forgotPassword)
@@ -118,6 +121,13 @@ namespace cell_shop_api.Services
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
             
             var accountupdate = _mapper.Map(updateProfile, account);
+
+            if(updateProfile.file != null)
+            {
+                var path = await _saveImageService.SaveImageAsync(updateProfile.file, TypeImage.ImageAccount);
+
+                accountupdate.AvatarPath = path;
+            }    
 
             _unitOfWork.AccountRepository.Update(accountupdate);
 
