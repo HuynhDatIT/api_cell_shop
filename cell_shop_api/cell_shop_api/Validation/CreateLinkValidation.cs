@@ -7,6 +7,9 @@ namespace cell_shop_api.Validation
     {
         public CreateLinkValidation()
         {
+            RuleFor(x => x.PathLink).NotEmpty();
+            RuleFor(x => x.Status).NotEmpty();
+            RuleFor(x => x.Title).NotEmpty();
         }
     }
 }

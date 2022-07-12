@@ -7,7 +7,7 @@ namespace cell_shop_api.Validation
     {
         public UpdateRoleValidation()
         {
-
+            RuleFor(x => x.Name).NotEmpty();
         }
     }
 }

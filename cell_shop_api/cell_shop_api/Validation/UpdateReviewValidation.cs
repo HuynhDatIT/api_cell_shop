@@ -7,6 +7,8 @@ namespace cell_shop_api.Validation
     {
         public UpdateReviewValidation()
         {
+            RuleFor(x => x.Rating).NotEmpty();
+            RuleFor(x => x.Content).NotEmpty();
         }
     }
 }

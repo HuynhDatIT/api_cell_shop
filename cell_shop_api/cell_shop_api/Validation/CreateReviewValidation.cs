@@ -7,6 +7,9 @@ namespace cell_shop_api.Validation
     {
         public CreateReviewValidation()
         {
+            RuleFor(x => x.ProductId).NotEmpty();
+            RuleFor(x => x.Rating).NotEmpty();
+            RuleFor(x => x.Content).NotEmpty();
         }
     }
 }

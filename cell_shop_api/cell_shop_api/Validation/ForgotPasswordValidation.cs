@@ -7,6 +7,8 @@ namespace cell_shop_api.Validation
     {
         public ForgotPasswordValidation()
         {
+            RuleFor(x=>x.Email).NotEmpty().EmailAddress();
+            RuleFor(x => x.Password).NotEmpty();
         }
     }
 }

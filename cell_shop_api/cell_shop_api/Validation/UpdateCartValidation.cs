@@ -7,6 +7,8 @@ namespace cell_shop_api.Validation
     {
         public UpdateCartValidation()
         {
+            RuleFor(x => x.CartId).NotEmpty();
+            RuleFor(x => x.Quantity).NotEmpty();
         }
     }
 }

@@ -7,6 +7,9 @@ namespace cell_shop_api.Validation
     {
         public CreateInvoiceDetailValidation()
         {
+            RuleFor(x => x.Price).NotEmpty();
+            RuleFor(x => x.Quantity).NotEmpty();
+            RuleFor(x => x.ProductId).NotEmpty();
         }
     }
 }
