@@ -41,7 +41,7 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
-        [AuthorizeFilter(role: "user")]
+        [AuthorizeFilterAttribute("user")]
         [HttpPut("UpdateProfile")]
         public async Task<IActionResult> UpdateProfile([FromForm] UpdateProfile updateProfile)
         {
@@ -49,7 +49,7 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
-        [AuthorizeFilter(role: "user")]
+        [AuthorizeFilterAttribute("user")]
         [HttpGet]
         public async Task<IActionResult> GetProfile()
         {

@@ -19,7 +19,7 @@ namespace cell_shop_api.Controllers
             _reviewService = reviewService;
         }
 
-        [HttpGet("productId")]
+        [HttpGet("{productId}")]
         public async Task<IActionResult> GetAllProductReview(int productId)
         {
             var reviews = await _reviewService.GetReviewByProductAsync(productId);
@@ -41,7 +41,7 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _reviewService.DeleteReviewAsync(id);

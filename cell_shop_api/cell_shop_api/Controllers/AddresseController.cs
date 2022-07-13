@@ -17,7 +17,7 @@ namespace cell_shop_api.Controllers
             _addressesService = addressesService;
         }
         
-        [HttpGet("accountId")]
+        [HttpGet("{accountId}")]
         public async Task<IActionResult> GetAddresseAccount(int accountId)
         {
             var addresses = await _addressesService.GetAddressesByAccountAsync(accountId);

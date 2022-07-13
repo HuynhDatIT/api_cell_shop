@@ -36,7 +36,7 @@ namespace cell_shop_api.Controllers
             return Ok(link);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result =await _linkService.DeleteLinkAsync(id);

@@ -33,7 +33,7 @@ namespace cell_shop_api.Controllers
             var result = await _bannerImageService.UpdateBannerImageAnsyc(updateBannerImage);
             return result ? Ok() : BadRequest();
         }
-        [HttpDelete]
+        [HttpDelete("{bannerId}")]
         public async Task<IActionResult> DeleteBannerImage(int bannerId)
         {
             var result = await _bannerImageService.DelteBannerImageAnsyc(bannerId);

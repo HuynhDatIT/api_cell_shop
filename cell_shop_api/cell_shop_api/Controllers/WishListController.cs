@@ -32,7 +32,7 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteWishList(int id)
         {
             var result = await _wishListService.DeleteWishListAsync(id);
