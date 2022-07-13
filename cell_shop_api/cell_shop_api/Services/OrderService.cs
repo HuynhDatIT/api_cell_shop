@@ -87,13 +87,6 @@ namespace cell_shop_api.Services
             
 
         }
-
-        public  Task<List<GetOrder>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-
-        }
-
         public async Task<List<GetOrder>> GetOrderByAccountAsync()
         {
             var invoices = await _unitOfWork.InvoiceRepository

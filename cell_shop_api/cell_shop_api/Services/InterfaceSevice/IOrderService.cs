@@ -9,6 +9,5 @@ namespace cell_shop_api.Services.InterfaceSevice
     {
         Task<bool> CreateOrderAsync(CreateOrder createOrder);
         Task<List<GetOrder>> GetOrderByAccountAsync();
-        Task<List<GetOrder>> GetAllAsync();
     }
 }

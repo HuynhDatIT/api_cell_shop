@@ -108,6 +108,7 @@ namespace CellShop_Api
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IBannerImageService, BannerImageService>();
             services.AddScoped<IAddressesService, AddressesService>();
+            services.AddScoped<IInvoiceService, InvoiceService>();
 
             //authentication
             services.AddAuthentication(x =>

@@ -11,6 +11,7 @@ namespace cell_shop_api.AutoMapperConfig
         {
             CreateMap<CreateOrder, Invoice>().ReverseMap();
             CreateMap<GetOrder, Invoice>().ReverseMap();
+            CreateMap<GetInvoice, Invoice>().ReverseMap();
         }
     }
 }
