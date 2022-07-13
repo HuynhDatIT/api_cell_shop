@@ -7,6 +7,6 @@ namespace cell_shop_api.Repository.Interface
 {
     public interface IInvoiceRepository : IBaseRepository<Invoice>
     {
-       
+        Task<IList<Invoice>> GetInvoiceByAccountAsync(int accountId);
     }
 }

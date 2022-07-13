@@ -27,6 +27,13 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [HttpGet]
+        public async Task<IActionResult> GetOrderAccount()
+        {
+            var orders = await _orderService.GetOrderByAccountAsync();
+
+            return Ok(orders);
+        }
 
     }
 }

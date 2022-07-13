@@ -40,9 +40,13 @@ namespace cell_shop_api.Services
 
         public async Task<bool> DelteBannerImageAnsyc(int bannerId)
         {
-            var bannerImage = await _unitOfWork.BannerImageRepository.GetBannerImageById(bannerId);
+            var bannerImage = await _unitOfWork
+                .BannerImageRepository.GetBannerImageById(bannerId);
+            
             if (bannerImage == null) return false;
+            
             _unitOfWork.BannerImageRepository.Delete(bannerImage);
+            
             return await _unitOfWork.SaveChangesAsync()>0;
 
         }
@@ -50,16 +54,22 @@ namespace cell_shop_api.Services
         public async Task<IEnumerable<GetBannerImage>> GetAllBannerImageAsync()
         {
             var listBannerImage = await _unitOfWork.BannerImageRepository.GetAllAsync();
+            
             var bannerImage = _mapper.Map<IEnumerable<GetBannerImage>>(listBannerImage);
+            
             return bannerImage;
         }
 
         public async Task<bool> UpdateBannerImageAnsyc(UpdateBannerImage updateBannerImage)
         {
             var bannerUpdate = _mapper.Map<BannerImage>(updateBannerImage);
+            
             var path = await _saveImageService.SaveImageAsync(updateBannerImage.File, TypeImage.ImageBanner);
+            
             bannerUpdate.Path = path;
+            
             _unitOfWork.BannerImageRepository.Update(bannerUpdate);
+            
             return await _unitOfWork.SaveChangesAsync() > 0;
         }
     }

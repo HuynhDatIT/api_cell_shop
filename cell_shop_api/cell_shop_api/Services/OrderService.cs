@@ -3,6 +3,7 @@ using cell_shop_api.Base.Interface;
 using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
 using cell_shop_api.ViewModels.Request;
+using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,11 @@ namespace cell_shop_api.Services
         {
             _unitOfWork = unitOfWork;
             _claimsService = claimsService;
-            _mapper = mapper;   
-        }
+            _mapper = mapper;
 
+            _currenAccountId = _claimsService.GetCurrentAccountId;
+
+        }
         public async Task<bool> CreateOrderAsync(CreateOrder createOrder)
         {
             /* Procces - Step by step
@@ -40,7 +43,6 @@ namespace cell_shop_api.Services
             try
             {
                 // step 1
-                _currenAccountId = _claimsService.GetCurrentAccountId;
 
                 var invoice = _mapper.Map<Invoice>(createOrder);
 
@@ -84,6 +86,33 @@ namespace cell_shop_api.Services
             }      
             
 
+        }
+
+        public  Task<List<GetOrder>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+
+        }
+
+        public async Task<List<GetOrder>> GetOrderByAccountAsync()
+        {
+            var invoices = await _unitOfWork.InvoiceRepository
+                            .GetInvoiceByAccountAsync(_currenAccountId);
+
+            var getOrders = new List<GetOrder>();
+            foreach (var invoice in invoices)
+            {
+                var getOrder = _mapper.Map<GetOrder>(invoice);
+
+                var invoiceDetail = await _unitOfWork.InvoiceDetailRepository
+                                    .GetInvoiceDetailsByInvoiceAsync(invoice.Id);
+
+                getOrder.invoiceDetails = _mapper.Map<IList<CreateInvoiceDetail>>(invoiceDetail);
+
+                getOrders.Add(getOrder);
+            }
+
+            return getOrders;
         }
     }
 }
