@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Repository
 {
-    public class CartRepository : BaseRepository<Cart> , ICartRepository
+    public class CartRepository : BaseRepository<Cart>, ICartRepository
     {
         public CartRepository(CellShopDbContext db) : base(db)
         {
@@ -22,7 +22,7 @@ namespace cell_shop_api.Repository
                                     .Include(x => x.Account)
                                     .Include(x => x.Product)
                                     .ToListAsync();
-            
+
             return listCart;
         }
 
@@ -41,6 +41,12 @@ namespace cell_shop_api.Repository
                                          && x.ProductId == productId)
                                     .FirstOrDefaultAsync();
             return cart;
+        }
+        public async Task<IList<Cart>> GetCartByProductIdAsync(int productId)
+        {
+            var carts = await _dbSet.Where(x => x.ProductId == productId)
+                                    .ToListAsync();
+            return carts;
         }
     }
 }

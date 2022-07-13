@@ -4,6 +4,7 @@
     {
         Order,
         Delivery,
-        Done
+        Done,
+        cancel
     }
 }

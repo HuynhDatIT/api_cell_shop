@@ -10,5 +10,6 @@ namespace cell_shop_api.Repository.Interface
     {
         Task<IEnumerable<Cart>> GetCartByAccountIdAsync(int accountid);
         Task<Cart> GetCartByProductAsync(int productId, int accountId);
+        Task<IList<Cart>> GetCartByProductIdAsync(int productId);
     }
 }

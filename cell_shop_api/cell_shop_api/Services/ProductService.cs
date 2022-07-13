@@ -90,6 +90,12 @@ namespace cell_shop_api.Services
 
                 await _productImageService.DeleteProductImageRangeAsync(id);
 
+                var carts = await _unitOfWork.CartRepository.GetCartByProductIdAsync(id);
+
+                _unitOfWork.CartRepository.DeleteRange(carts);
+
+                _unitOfWork.SaveChanges();
+
                 await trancistion.CommitAsync();
 
                 return true;

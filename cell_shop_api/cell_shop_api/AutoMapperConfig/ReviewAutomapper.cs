@@ -11,7 +11,6 @@ namespace cell_shop_api.AutoMapperConfig
         {
             CreateMap<Review, CreateReview>().ReverseMap();
             CreateMap<Review, UpdateReview>();
-
             CreateMap<Review, GetReview>()
                 .ForMember(x => x.AccountName, 
                 y => y.MapFrom(y => y.Account.FullName))
