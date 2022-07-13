@@ -1,8 +1,6 @@
-﻿using cell_shop_api.Base.Interface;
-
-namespace CellShop_Api.Models
+﻿namespace cell_shop_api.ViewModels.Response
 {
-    public class BannerImage : IBaseModel
+    public class GetBannerImage
     {
         public int Id { get; set; }
         public string Content { get; set; }
@@ -10,8 +8,6 @@ namespace CellShop_Api.Models
         public int Position { get; set; }
         public bool IsActive { get; set; }
         public int ProductId { get; set; }
-
-        public Product Product { get; set; }
-        public bool Status { get ; set ; }
+        public bool Status { get; set; }
     }
 }

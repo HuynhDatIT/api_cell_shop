@@ -105,6 +105,7 @@ namespace CellShop_Api
             services.AddHttpContextAccessor();
             services.AddScoped<ILinkService, LinkService>();
             services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<IBannerImageService, BannerImageService>();
 
             //authentication
             services.AddAuthentication(x =>

@@ -1,5 +1,6 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.ViewModels.Request;
+using CellShop_Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -33,6 +34,12 @@ namespace cell_shop_api.Controllers
                                         .UpdateProductImagesByProductIdAsync(updateProductImage);
 
             return result ? Ok() : BadRequest();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProductImage([FromForm] int productId)
+        {
+            var result = await _productImageService.DeleteProductImageRangeAsync(productId);
+            return Ok(result);
         }
     }
 }
