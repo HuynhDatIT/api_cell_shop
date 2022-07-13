@@ -35,7 +35,7 @@ namespace cell_shop_api.Repository
             return listcart;
         }
 
-        public async Task<Cart> IsProductAccountExistAsync(int productId, int accountId)
+        public async Task<Cart> GetCartByProductAsync(int productId, int accountId)
         {
             var cart = await _dbSet.Where(x => x.AccountId == accountId
                                          && x.ProductId == productId)

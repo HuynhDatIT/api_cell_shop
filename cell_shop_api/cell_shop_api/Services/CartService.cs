@@ -38,7 +38,7 @@ namespace cell_shop_api.Services
             var accountid = _claimsService.GetCurrentAccountId;
             
             var cart = await _unitOfWork.CartRepository
-                                        .IsProductAccountExistAsync(createCart.ProductId, accountid);
+                                        .GetCartByProductAsync(createCart.ProductId, accountid);
             if(cart == null)
             {
                 var itemCart = _mapper.Map<Cart>(createCart);

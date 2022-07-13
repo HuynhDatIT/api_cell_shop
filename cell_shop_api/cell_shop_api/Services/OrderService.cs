@@ -34,6 +34,7 @@ namespace cell_shop_api.Services
             3. Reduce Stock Product
                 3.1 - Get productById in list InvoiceDetails
                 3.2 - Update Stock
+            4. Remove cart
              */
             var transaction = await _unitOfWork.BeginTransactionAsync();
             try
@@ -61,7 +62,15 @@ namespace cell_shop_api.Services
                         throw new Exception();
 
                     _unitOfWork.ProductRepository.Update(product);
+                    
+                    var cart = await _unitOfWork.CartRepository
+                                .GetCartByProductAsync(
+                                    invoiceDetail.ProductId,
+                                    _currenAccountId);
+
+                    _unitOfWork.CartRepository.Delete(cart);
                 }
+                
                  _unitOfWork.SaveChanges();
                
                 await transaction.CommitAsync();
