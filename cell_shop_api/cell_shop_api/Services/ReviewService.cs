@@ -45,7 +45,7 @@ namespace cell_shop_api.Services
             
             var result2 = await _productService.UpdateRatingProductAsync(createReview.ProductId, avgRating);
 
-            return  (!result1 || !result2);
+            return  (result1 || result2);
         }
 
         public async Task<bool> DeleteReviewAsync(int reviewId)

@@ -17,7 +17,8 @@ namespace cell_shop_api.Repository
 
         public async Task<IList<Review>> GetReviewbyProductAsync(int productId)
         {
-            return await _dbSet.Where(x => x.Status == true && x.ProductId == productId)
+            return await _dbSet.Include(x => x.Account)
+                                .Where(x => x.Status == true && x.ProductId == productId)
                                 .ToListAsync();
         }
     }

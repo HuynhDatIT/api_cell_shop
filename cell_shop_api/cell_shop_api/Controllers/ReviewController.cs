@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
-    [AuthorizeFilterAttribute("admin", "user")]
     [Route("api/[controller]")]
     [ApiController]
     public class ReviewController : ControllerBase
@@ -26,7 +25,7 @@ namespace cell_shop_api.Controllers
 
             return Ok(reviews);
         }
-
+        [AuthorizeFilterAttribute("admin", "user")]
         [HttpPost]
         public async Task<IActionResult> Add(CreateReview createReview)
         {
@@ -34,6 +33,7 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin", "user")]
         [HttpPut]
         public async Task<IActionResult> Update(UpdateReview updateReview)
         {
@@ -41,6 +41,7 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin", "user")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -7,5 +7,7 @@
         public float Rating { get; set; }
         public int ProductId { get; set; }
         public int AccountId { get; set; }
+        public string AccountName { get; set; }
+        public string Path { get; set; }
     }
 }

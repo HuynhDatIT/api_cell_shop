@@ -11,7 +11,11 @@ namespace cell_shop_api.AutoMapperConfig
         {
             CreateMap<Review, CreateReview>().ReverseMap();
             CreateMap<Review, UpdateReview>().ReverseMap();
-            CreateMap<Review, GetReview>().ReverseMap();
+            CreateMap<Review, GetReview>()
+                .ForMember(x => x.AccountName, 
+                y => y.MapFrom(y => y.Account.FullName))
+             .ForMember(x => x.Path,
+                y => y.MapFrom(y => y.Account.AvatarPath)).ReverseMap();
         }
     }
 }
