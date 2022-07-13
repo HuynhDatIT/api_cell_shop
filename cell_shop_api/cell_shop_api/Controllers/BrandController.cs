@@ -26,7 +26,7 @@ namespace CellShop_Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var listBrand = await _brandService.GetAllAsync();
-           
+
             return Ok(listBrand);
         }
 
@@ -37,8 +37,8 @@ namespace CellShop_Api.Controllers
                 return BadRequest();
 
             var brand = await _brandService.GetByIdAsync(id);
-            
-            return brand != null ? Ok(brand) : NotFound();  
+
+            return brand != null ? Ok(brand) : NotFound();
         }
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateBrand createBrand)
@@ -51,6 +51,13 @@ namespace CellShop_Api.Controllers
         public async Task<IActionResult> Update(GetBrand getBrand)
         {
             var result = await _brandService.UpdateAsync(getBrand);
+
+            return result ? Ok() : BadRequest();
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _brandService.DeleteAsync(id);
 
             return result ? Ok() : BadRequest();
         }

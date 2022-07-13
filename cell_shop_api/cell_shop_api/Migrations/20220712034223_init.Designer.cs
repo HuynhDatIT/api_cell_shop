@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace cell_shop_api.Migrations
 {
     [DbContext(typeof(CellShopDbContext))]
-    [Migration("20220623130338_init")]
+    [Migration("20220712034223_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,13 +30,21 @@ namespace cell_shop_api.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AvatarPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Male")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PassWord")
                         .IsRequired()
@@ -66,8 +74,10 @@ namespace cell_shop_api.Migrations
                         new
                         {
                             Id = 1,
+                            Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             FullName = "Huynh Tan Dat",
+                            Male = false,
                             PassWord = "827ccb0eea8a706c4c34a16891f84e7b",
                             RoleId = 1,
                             Status = false,
@@ -76,8 +86,10 @@ namespace cell_shop_api.Migrations
                         new
                         {
                             Id = 2,
+                            Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user1@gmail.com",
                             FullName = "Nguoi dung 1",
+                            Male = false,
                             PassWord = "827ccb0eea8a706c4c34a16891f84e7b",
                             RoleId = 2,
                             Status = false,
@@ -86,8 +98,10 @@ namespace cell_shop_api.Migrations
                         new
                         {
                             Id = 3,
+                            Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user2@gmail.com",
                             FullName = "Huynh Tan Dat",
+                            Male = false,
                             PassWord = "827ccb0eea8a706c4c34a16891f84e7b",
                             RoleId = 1,
                             Status = false,
@@ -108,11 +122,9 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
@@ -121,7 +133,6 @@ namespace cell_shop_api.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -141,14 +152,12 @@ namespace cell_shop_api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Path")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Position")
@@ -179,7 +188,6 @@ namespace cell_shop_api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
@@ -274,7 +282,6 @@ namespace cell_shop_api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
@@ -316,18 +323,15 @@ namespace cell_shop_api.Migrations
                     b.Property<DateTime>("DateInvoice")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 23, 20, 3, 37, 617, DateTimeKind.Local).AddTicks(1383));
+                        .HasDefaultValue(new DateTime(2022, 7, 12, 10, 42, 22, 939, DateTimeKind.Local).AddTicks(9631));
 
                     b.Property<string>("DeliveryAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeliveryName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeliveryPhone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DeliveryStatus")
@@ -400,7 +404,6 @@ namespace cell_shop_api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("PathLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
@@ -409,7 +412,6 @@ namespace cell_shop_api.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -430,13 +432,12 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Action")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 23, 20, 3, 37, 620, DateTimeKind.Local).AddTicks(61));
+                        .HasDefaultValue(new DateTime(2022, 7, 12, 10, 42, 22, 945, DateTimeKind.Local).AddTicks(8262));
 
                     b.HasKey("Id");
 
@@ -464,7 +465,6 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Specification")
@@ -516,7 +516,6 @@ namespace cell_shop_api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Color")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModelProductId")
@@ -611,7 +610,6 @@ namespace cell_shop_api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Path")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")
@@ -639,7 +637,6 @@ namespace cell_shop_api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Discount")
@@ -674,7 +671,6 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")
@@ -695,6 +691,26 @@ namespace cell_shop_api.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = 2,
+                            Content = "Day la review1",
+                            ProductId = 1,
+                            Rating = 3f,
+                            Status = false
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = 2,
+                            Content = "Day la review2",
+                            ProductId = 1,
+                            Rating = 4f,
+                            Status = false
+                        });
                 });
 
             modelBuilder.Entity("CellShop_Api.Models.Role", b =>
@@ -707,7 +723,6 @@ namespace cell_shop_api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")

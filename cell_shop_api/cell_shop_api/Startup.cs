@@ -3,6 +3,7 @@ using cell_shop_api.Base.Interface;
 using cell_shop_api.Services;
 using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
+using cell_shop_api.ViewModels.Request;
 using CellShop_Api.AutoMapperConfig;
 using CellShop_Api.Data;
 using CellShop_Api.Models;
@@ -106,6 +107,7 @@ namespace CellShop_Api
             services.AddScoped<ILinkService, LinkService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IBannerImageService, BannerImageService>();
+            services.AddScoped<IAddressesService, AddressesService>();
 
             //authentication
             services.AddAuthentication(x =>
@@ -129,6 +131,12 @@ namespace CellShop_Api
             });
             services.AddScoped<IUserAccountService, UserAccountService>();
 
+            //email
+            var emailConfig = Configuration
+                            .GetSection("EmailConfiguration")
+                            .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+            services.AddTransient<IEmailService, EmailService>();
 
         }
 

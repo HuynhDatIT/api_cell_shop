@@ -3,6 +3,7 @@
     public enum TypeImage
     {
         ImageProduct,
-        ImageBanner
+        ImageBanner,
+        ImageAccount
     }
 }

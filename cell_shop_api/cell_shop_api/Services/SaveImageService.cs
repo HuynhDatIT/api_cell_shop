@@ -73,7 +73,7 @@ namespace cell_shop_api.Services
                         await file.CopyToAsync(fileStream);
                     }
 
-                    listImage.Add(file.FileName);
+                    listImage.Add(Path.Combine($"{typeImage}", file.FileName));
                 }
             }
             

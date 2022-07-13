@@ -11,5 +11,6 @@ namespace cell_shop_api.Services.InterfaceSevice
     {
         Task<bool> AddAsync(CreateBrand brand);
         Task<bool> UpdateAsync(GetBrand getBrand);
+        Task<bool> DeleteAsync(int id);
     }
 }

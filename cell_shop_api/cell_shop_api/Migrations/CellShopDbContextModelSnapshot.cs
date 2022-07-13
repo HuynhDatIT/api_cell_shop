@@ -321,7 +321,7 @@ namespace cell_shop_api.Migrations
                     b.Property<DateTime>("DateInvoice")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 12, 11, 39, 31, 391, DateTimeKind.Local).AddTicks(2941));
+                        .HasDefaultValue(new DateTime(2022, 7, 12, 10, 42, 22, 939, DateTimeKind.Local).AddTicks(9631));
 
                     b.Property<string>("DeliveryAddress")
                         .HasColumnType("nvarchar(max)");
@@ -435,7 +435,7 @@ namespace cell_shop_api.Migrations
                     b.Property<DateTime>("Time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 12, 11, 39, 31, 394, DateTimeKind.Local).AddTicks(5934));
+                        .HasDefaultValue(new DateTime(2022, 7, 9, 10, 50, 19, 4, DateTimeKind.Local).AddTicks(5765));
 
                     b.HasKey("Id");
 

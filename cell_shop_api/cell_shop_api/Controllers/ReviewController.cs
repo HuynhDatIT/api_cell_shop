@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
-    [AuthorizeFilter("admin", "user")]
+    [AuthorizeFilterAttribute("admin", "user")]
     [Route("api/[controller]")]
     [ApiController]
     public class ReviewController : ControllerBase

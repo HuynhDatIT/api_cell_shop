@@ -13,7 +13,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
@@ -27,7 +27,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
@@ -41,8 +41,8 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PathLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PathLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
@@ -56,7 +56,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Discount = table.Column<int>(type: "int", nullable: false),
@@ -73,7 +73,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
@@ -87,7 +87,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Specification = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
@@ -119,8 +119,11 @@ namespace cell_shop_api.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PassWord = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Male = table.Column<bool>(type: "bit", nullable: false),
+                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     RoleId = table.Column<int>(type: "int", nullable: false, defaultValue: 2)
                 },
@@ -141,7 +144,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ram = table.Column<int>(type: "int", nullable: false),
                     Rom = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
@@ -167,9 +170,9 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     AccountId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -190,12 +193,12 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateInvoice = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 6, 23, 20, 3, 37, 617, DateTimeKind.Local).AddTicks(1383)),
+                    DateInvoice = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 12, 10, 42, 22, 939, DateTimeKind.Local).AddTicks(9631)),
                     Discount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Total = table.Column<float>(type: "real", nullable: false),
-                    DeliveryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeliveryPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeliveryAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeliveryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeliveryPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeliveryAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeliveryStatus = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     AccountId = table.Column<int>(type: "int", nullable: false)
@@ -217,8 +220,8 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 6, 23, 20, 3, 37, 620, DateTimeKind.Local).AddTicks(61)),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Time = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 12, 10, 42, 22, 945, DateTimeKind.Local).AddTicks(8262)),
                     AccountId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -238,8 +241,8 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Position = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
@@ -290,7 +293,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
@@ -311,7 +314,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rating = table.Column<float>(type: "real", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     ProductId = table.Column<int>(type: "int", nullable: false),
@@ -419,12 +422,12 @@ namespace cell_shop_api.Migrations
 
             migrationBuilder.InsertData(
                 table: "Accounts",
-                columns: new[] { "Id", "Email", "FullName", "PassWord", "RoleId", "UserName" },
+                columns: new[] { "Id", "AvatarPath", "Birthday", "Email", "FullName", "Male", "PassWord", "RoleId", "UserName" },
                 values: new object[,]
                 {
-                    { 1, "admin@gmail.com", "Huynh Tan Dat", "827ccb0eea8a706c4c34a16891f84e7b", 1, "admin" },
-                    { 3, "user2@gmail.com", "Huynh Tan Dat", "827ccb0eea8a706c4c34a16891f84e7b", 1, "user2" },
-                    { 2, "user1@gmail.com", "Nguoi dung 1", "827ccb0eea8a706c4c34a16891f84e7b", 2, "user1" }
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@gmail.com", "Huynh Tan Dat", false, "827ccb0eea8a706c4c34a16891f84e7b", 1, "admin" },
+                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user2@gmail.com", "Huynh Tan Dat", false, "827ccb0eea8a706c4c34a16891f84e7b", 1, "user2" },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user1@gmail.com", "Nguoi dung 1", false, "827ccb0eea8a706c4c34a16891f84e7b", 2, "user1" }
                 });
 
             migrationBuilder.InsertData(
@@ -455,6 +458,15 @@ namespace cell_shop_api.Migrations
                     { 1, 2, 1, 1 },
                     { 2, 2, 2, 1 },
                     { 3, 2, 3, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reviews",
+                columns: new[] { "Id", "AccountId", "Content", "ProductId", "Rating" },
+                values: new object[,]
+                {
+                    { 1, 2, "Day la review1", 1, 3f },
+                    { 2, 2, "Day la review2", 1, 4f }
                 });
 
             migrationBuilder.InsertData(

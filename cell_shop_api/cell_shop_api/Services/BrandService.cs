@@ -42,6 +42,24 @@ namespace CellShop_Api.Services
             
         }
 
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var brand = await _unitOfWork.BrandRepository.GetByIdAsync(id);
+
+            if (brand == null) return false;
+
+            var modelproduct = await _unitOfWork.ModelProductRepository
+                                                .GetModelProductByBrandAsync(id);
+
+            if (modelproduct.Count > 0) return false;
+
+            brand.Status = false;
+            
+            _unitOfWork.BrandRepository.Update(brand);
+
+            return _unitOfWork.SaveChanges() > 0;
+        }
+
         public async Task<IEnumerable<GetBrand>> GetAllAsync()
         {
             var listBrand = await _unitOfWork.BrandRepository.GetAllAsync();

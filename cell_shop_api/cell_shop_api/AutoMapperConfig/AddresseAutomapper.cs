@@ -11,6 +11,7 @@ namespace cell_shop_api.AutoMapperConfig
         {
             CreateMap<GetAddresse, Addresse>().ReverseMap();
             CreateMap<CreateAddresse, Addresse>().ReverseMap();
+            CreateMap<UpdateAddresse, Addresse>().ReverseMap();
         }
     }
 }

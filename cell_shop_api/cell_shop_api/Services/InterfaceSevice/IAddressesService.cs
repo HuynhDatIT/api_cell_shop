@@ -8,7 +8,7 @@ namespace cell_shop_api.Services.InterfaceSevice
     public interface IAddressesService 
     {
         Task<IList<GetAddresse>> GetAddressesByAccountAsync(int accountID);
-        Task<bool> CreateAddresseAsync(CreateAddresse createAddresse);
+        bool CreateAddresse(CreateAddresse createAddresse);
         Task<bool> UpdateAddresseAsync(UpdateAddresse updateAddresse);
         Task<bool> DeleteAddresseAsync(int id);
     }

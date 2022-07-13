@@ -36,6 +36,24 @@ namespace cell_shop_api.Services
             return _unitOfWork.SaveChanges() > 0;
         }
 
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var categorie = await _unitOfWork.CategorieRepository.GetByIdAsync(id);
+
+            if (categorie == null) return false;
+
+            var modelproduct = await _unitOfWork.ModelProductRepository
+                                                .GetModelProductByCategorieAsync(id);
+
+            if (modelproduct.Count > 0) return false;
+
+            categorie.Status = false;
+
+            _unitOfWork.CategorieRepository.Update(categorie);
+
+            return _unitOfWork.SaveChanges() > 0;
+        }
+
         public async Task<IEnumerable<GetCategorie>> GetAllAsync()
         {
             var listCategorie = await _unitOfWork.CategorieRepository.GetAllAsync();
