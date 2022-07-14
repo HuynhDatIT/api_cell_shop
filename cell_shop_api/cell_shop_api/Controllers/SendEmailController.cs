@@ -25,7 +25,7 @@ namespace cell_shop_api.Controllers
         {
             try
             {
-                _emailService.SendEmail();
+                //_emailService.SendEmail();
                 return Ok();
             }
             catch (Exception ex)

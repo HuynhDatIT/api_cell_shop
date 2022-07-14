@@ -13,21 +13,33 @@ namespace cell_shop_api.Services
         {
             _emailConfig = emailConfig;
         }
-        public void SendEmail()
+        public void SendEmail(string to, string addresse, string name, string phone, double total, string status)
         {
-            var emailMessage = CreateEmailMessageAsync("1", "2");
+            var emailMessage = CreateEmailMessageAsync(to, addresse, name, phone, total, status);
             Send(emailMessage);
         }
-        private MailMessage CreateEmailMessageAsync(string from, string to)
+        private MailMessage CreateEmailMessageAsync(string to, string addresse, string name, string phone, double total, string status)
         {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("cellshop.123quangtrung@gmail.com");
-            mailMessage.To.Add(new MailAddress("huynhtandat080297@gmail.com"));
-            mailMessage.Subject = "test";
+            mailMessage.From = new MailAddress(_emailConfig.From);
+            mailMessage.To.Add(new MailAddress(to));
+            mailMessage.Subject = "CellShop";
             mailMessage.IsBodyHtml = true;
-            mailMessage.Body = string.Format("<a style='color: red; '>Heloo <a>");
+            mailMessage.Body = Body(addresse, name, phone, total, status);
 
             return mailMessage;
+        }
+        public string Body(string addresse, string name, string phone, double total, string status)
+        {
+            string h1 = "<h1>Cell shop</h1> <br/>";
+            string h2 = "<h2>Thông tin đơn hàng<h2> <br/>";
+            string addressehtml = "<b>Địa chỉ:<b/>" + addresse + "<br/>";
+            string namehtml = "<b>Người nhận:<b/>" + name + "<br/>";
+            string phonehtml = "<b>Số điện thoại:<b/>" + phone + "<br/>";
+            string totalhtml = "<b>Tổng tiền: <b/>" + total + "VNĐ <br/>";
+            string statushtml = "<b>Trạng thái: <b/>" + status + "<br/>";
+            string end = "<b>Cảm ơn quý khách<b/>";
+            return h1 + h2 + addresse + namehtml + phonehtml + totalhtml + statushtml + end;
         }
         private void Send(MailMessage mailMessage)
         {

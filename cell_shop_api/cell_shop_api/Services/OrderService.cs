@@ -16,18 +16,20 @@ namespace cell_shop_api.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IClaimsService _claimsService;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
         private int _currenAccountId;
 
         public OrderService(IUnitOfWork unitOfWork, 
-                            IClaimsService claimsService, 
-                            IMapper mapper)
+                            IClaimsService claimsService,
+                            IMapper mapper,
+                            IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _claimsService = claimsService;
             _mapper = mapper;
 
             _currenAccountId = _claimsService.GetCurrentAccountId;
-
+            _emailService = emailService;   
         }
         public async Task<bool> CreateOrderAsync(CreateOrder createOrder)
         {
@@ -74,9 +76,9 @@ namespace cell_shop_api.Services
                 }
                 
                  _unitOfWork.SaveChanges();
-               
-                await transaction.CommitAsync();
 
+                await transaction.CommitAsync();
+                
                 return true;
             }
             catch (Exception)
