@@ -25,6 +25,13 @@ namespace cell_shop_api.Controllers
 
             return Ok(reviews);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var reviews = await _reviewService.GetAllAsync();
+
+            return Ok(reviews);
+        }
         [AuthorizeFilterAttribute("admin", "user")]
         [HttpPost]
         public async Task<IActionResult> Add(CreateReview createReview)

@@ -5,6 +5,6 @@ namespace cell_shop_api.Services.InterfaceSevice
 {
     public interface IEmailService
     {
-        void SendEmail(MessageEmail messageEmail);
+        void SendEmail();
     }
 }

@@ -11,5 +11,6 @@ namespace cell_shop_api.Services.InterfaceSevice
         Task<bool> DeleteReviewAsync(int reviewId);
         Task<bool> UpdateReviewAsync(UpdateReview updateReview);
         Task<IList<GetReview>> GetReviewByProductAsync(int productId);
+        Task<IList<GetReview>> GetAllAsync();
     }
 }

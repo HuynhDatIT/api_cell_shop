@@ -1,10 +1,7 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.ViewModels.Request;
-using MailKit.Security;
-using Microsoft.Extensions.Options;
-using MimeKit;
-using MailKit.Net.Smtp;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Mail;
 
 namespace cell_shop_api.Services
 {
@@ -16,29 +13,40 @@ namespace cell_shop_api.Services
         {
             _emailConfig = emailConfig;
         }
-        public void SendEmail(MessageEmail messageEmail)
+        public void SendEmail()
         {
-            var emailMessage = CreateEmailMessageAsync(messageEmail);
+            var emailMessage = CreateEmailMessageAsync("1", "2");
             Send(emailMessage);
         }
-        private MimeMessage CreateEmailMessageAsync(MessageEmail messageEmail)
+        private MailMessage CreateEmailMessageAsync(string from, string to)
         {
-            var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(_emailConfig.UserName, _emailConfig.From));
-            emailMessage.To.AddRange(messageEmail.To);
-            emailMessage.Subject = messageEmail.Subject;
-            emailMessage.Body = new TextPart
-                (MimeKit.Text.TextFormat.Text)
-            { Text = messageEmail.Content };
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("cellshop.123quangtrung@gmail.com");
+            mailMessage.To.Add(new MailAddress("huynhtandat080297@gmail.com"));
+            mailMessage.Subject = "test";
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Body = string.Format("<b>This {0} line<br/> {1} is in bold.</b>");
 
-            return emailMessage;
+            return mailMessage;
         }
 
-        private void Send(MimeMessage mailMessage)
+        private void Send(MailMessage mailMessage)
         {
             SmtpClient client = new SmtpClient();
-            client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, true);
-            client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
+
+            client.Host = _emailConfig.SmtpServer;
+            //client.Username = "cellshop.123quangtrung@gmail.com";
+            //client.Password = "Doantotnghiep123";
+
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.Port = _emailConfig.Port;
+            client.UseDefaultCredentials = false;
+            client.EnableSsl = true;
+
+            var credential = new NetworkCredential(
+               _emailConfig.UserName, _emailConfig.Password);
+            client.Credentials = credential;
+            client.Send(mailMessage);
         }
     }
 }

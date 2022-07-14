@@ -67,6 +67,13 @@ namespace cell_shop_api.Services
             return (!result1 || !result2);
         }
 
+        public async Task<IList<GetReview>> GetAllAsync()
+        {
+            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+
+            return _mapper.Map<IList<GetReview>>(reviews);
+        }
+
         public async Task<IList<GetReview>> GetReviewByProductAsync(int productId)
         {
             var reviews = await _unitOfWork.ReviewRepository.GetReviewbyProductAsync(productId);
