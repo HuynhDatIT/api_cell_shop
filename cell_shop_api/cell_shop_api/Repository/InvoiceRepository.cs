@@ -21,5 +21,11 @@ namespace cell_shop_api.Repository
             return await _dbSet.Where(x => x.Status == true && x.AccountId == accountId)
                                 .ToListAsync();
         }
+
+        public override async Task<Invoice> GetByIdAsync(int id)
+        {
+            return await _dbSet.Include(x => x.InvoiceDetails)
+                               .FirstOrDefaultAsync(x => x.Status == true && x.Id == id);
+        }
     }
 }

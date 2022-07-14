@@ -2,9 +2,9 @@
 {
     public enum DeliveryStatus
     {
-        Order,
-        Delivery,
-        Done,
-        cancel
+        Order = 0,
+        Delivery = 1,
+        Done = 2,
+        cancel = 3
     }
 }

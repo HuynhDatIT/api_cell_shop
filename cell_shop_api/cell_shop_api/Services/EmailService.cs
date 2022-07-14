@@ -25,11 +25,10 @@ namespace cell_shop_api.Services
             mailMessage.To.Add(new MailAddress("huynhtandat080297@gmail.com"));
             mailMessage.Subject = "test";
             mailMessage.IsBodyHtml = true;
-            mailMessage.Body = string.Format("<b>This {0} line<br/> {1} is in bold.</b>");
+            mailMessage.Body = string.Format("<a style='color: red; '>Heloo <a>");
 
             return mailMessage;
         }
-
         private void Send(MailMessage mailMessage)
         {
             SmtpClient client = new SmtpClient();

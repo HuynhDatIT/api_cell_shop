@@ -23,5 +23,19 @@ namespace cell_shop_api.Controllers
 
             return Ok(invoices);
         }
-     }
+        [HttpPut("ChangeStatus/{invoiceId}")]
+        public async Task<IActionResult> UpdateStatus(int invoiceId)
+        {
+            var invoiceStatus = await _invoiceService.ChangeStatusInvocie(invoiceId);
+
+            return invoiceStatus != null ? Ok(invoiceStatus) : BadRequest();
+        }
+        [HttpPut("Cancel/{invoiceId}")]
+        public async Task<IActionResult> CancelStatus(int invoiceId)
+        {
+            var invoiceStatus = await _invoiceService.CancelInvocieAsync(invoiceId);
+
+            return invoiceStatus != null ? Ok(invoiceStatus) : BadRequest();
+        }
+    }
 }
