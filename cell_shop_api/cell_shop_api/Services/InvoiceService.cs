@@ -55,7 +55,7 @@ namespace cell_shop_api.Services
                 }
                 return invoice.DeliveryStatus;
             }
-
+            
             invoice.DeliveryStatus = DeliveryStatus.cancel;
 
             _unitOfWork.InvoiceRepository.Update(invoice);
@@ -82,7 +82,8 @@ namespace cell_shop_api.Services
 
             if (invoice == null) return null;
 
-            if (invoice.DeliveryStatus == DeliveryStatus.Done) return invoice.DeliveryStatus;
+            if (((int)invoice.DeliveryStatus) >= 2) 
+                return invoice.DeliveryStatus;
 
             invoice.DeliveryStatus += 1;
 
