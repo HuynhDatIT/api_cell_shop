@@ -3,5 +3,6 @@
     public interface IClaimsService
     {
         public int GetCurrentAccountId { get;}
+        public string GetCurrentRole { get; }
     }
 }

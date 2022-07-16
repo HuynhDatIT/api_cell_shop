@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using cell_shop_api.Base.Interface;
 using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.Unit_Of_Work;
 using cell_shop_api.ViewModels.Request;
@@ -13,11 +14,17 @@ namespace cell_shop_api.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IClaimsService _claimsService;
 
-        public InvoiceService(IUnitOfWork unitOfWork, IMapper mapper)
+        private string role;
+
+        public InvoiceService(IUnitOfWork unitOfWork, IMapper mapper, IClaimsService claimsService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _claimsService = claimsService;
+
+            role = _claimsService.GetCurrentRole;
         }
 
         public async Task<DeliveryStatus?> CancelInvocieAsync(int invoiceId)
@@ -26,29 +33,47 @@ namespace cell_shop_api.Services
 
             if (invoice == null) return null;
 
-            if (invoice.DeliveryStatus == DeliveryStatus.Order)
+            if(role == "user")
             {
-                invoice.DeliveryStatus = DeliveryStatus.cancel;
-
-                _unitOfWork.InvoiceRepository.Update(invoice);
-
-                foreach (var invoiceDetail in invoice.InvoiceDetails)
+                if (invoice.DeliveryStatus == DeliveryStatus.Order)
                 {
-                    var product = await _unitOfWork.ProductRepository.GetByIdAsync(invoiceDetail.ProductId);
+                    invoice.DeliveryStatus = DeliveryStatus.cancel;
 
-                    if(product == null) continue;
+                    _unitOfWork.InvoiceRepository.Update(invoice);
 
-                    product.Stock += invoiceDetail.Quantity;
+                    foreach (var invoiceDetail in invoice.InvoiceDetails)
+                    {
+                        var product = await _unitOfWork.ProductRepository.GetByIdAsync(invoiceDetail.ProductId);
 
-                    _unitOfWork.ProductRepository.Update(product);
+                        if (product == null) continue;
+
+                        product.Stock += invoiceDetail.Quantity;
+
+                        _unitOfWork.ProductRepository.Update(product);
+                    }
+                    _unitOfWork.SaveChanges();
                 }
-
-                _unitOfWork.SaveChanges();
-
                 return invoice.DeliveryStatus;
             }
-            
-            return null;
+
+            invoice.DeliveryStatus = DeliveryStatus.cancel;
+
+            _unitOfWork.InvoiceRepository.Update(invoice);
+
+            foreach (var invoiceDetail in invoice.InvoiceDetails)
+            {
+                var product = await _unitOfWork.ProductRepository.GetByIdAsync(invoiceDetail.ProductId);
+
+                if (product == null) continue;
+
+                product.Stock += invoiceDetail.Quantity;
+
+                _unitOfWork.ProductRepository.Update(product);
+            }
+
+            _unitOfWork.SaveChanges();
+
+            return invoice.DeliveryStatus;
         }
 
         public async Task<DeliveryStatus?> ChangeStatusInvocie(int invoiceId)

@@ -14,11 +14,16 @@ namespace cell_shop_api.Base
         {
             // todo implementation to get the current userId
             var id = httpContextAccessor.HttpContext?.Items["AccountId"];
-            
+            var role = httpContextAccessor.HttpContext?.Items["Role"];
             if (id != null)
+            {
                 GetCurrentAccountId = Int32.Parse(id.ToString());
+                GetCurrentRole = role.ToString();
+            }
 
         }
         public int GetCurrentAccountId { get; }
+
+        public string GetCurrentRole { get; }
     }
 }
