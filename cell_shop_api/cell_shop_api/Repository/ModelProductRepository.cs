@@ -19,7 +19,8 @@ namespace cell_shop_api.Repository
         {
             var listModelProduct = await _dbSet.Include(x => x.Categorie)
                                                .Include(x => x.Brand)
-                                               .Where(x => x.Status == true).ToListAsync();
+                                               .Where(x => x.Status == true)
+                                               .ToListAsync();
             return listModelProduct;
         }
 
@@ -43,6 +44,7 @@ namespace cell_shop_api.Repository
                             .Include(x => x.Categorie)
                             .Include(x => x.Brand)
                             .Where(x => x.CategorieId == categorieId && x.Status == true)
+                            .OrderByDescending(x => x.Id)
                             .ToListAsync();
         }
 
@@ -52,6 +54,7 @@ namespace cell_shop_api.Repository
                             .Include(x => x.Categorie)
                             .Include(x => x.Brand)
                             .Where(x => x.BrandId == brandId && x.Status == true)
+                            .OrderByDescending(x => x.Id)
                             .ToListAsync();
         }
     }

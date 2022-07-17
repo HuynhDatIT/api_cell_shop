@@ -67,5 +67,12 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [HttpGet("categorie/{categorieId}")]
+        public async Task<IActionResult> GetProductByCategorie(int categorieId)
+        {
+            var getProducts = await _productService.GetProductsByCatagorieAsync(categorieId);
+
+            return Ok(getProducts);
+        }
     }
 }

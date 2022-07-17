@@ -46,5 +46,11 @@ namespace cell_shop_api.Repository
 
             return products;
         }
+        public async Task<IList<Product>> GetProductsByCatagorieAsync(int catogorieId)
+        {
+            return await _dbSet.Include(x => x.ModelProduct.Categorie)
+                                .Where(x => x.ModelProduct.CategorieId == catogorieId)
+                                .OrderByDescending(x => x.Id).ToListAsync();
+        }
     }
 }
