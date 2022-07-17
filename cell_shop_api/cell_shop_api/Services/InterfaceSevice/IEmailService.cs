@@ -1,10 +1,11 @@
 ﻿using cell_shop_api.ViewModels.Request;
+using CellShop_Api.Models;
 using System.Threading.Tasks;
 
 namespace cell_shop_api.Services.InterfaceSevice
 {
     public interface IEmailService
     {
-        void SendEmail(string to, string addresse, string name, string phone, double total, string status);
+        void SendEmail(EmailRequest emailRequest);
     }
 }

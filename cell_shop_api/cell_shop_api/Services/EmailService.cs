@@ -1,5 +1,10 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.ViewModels.Request;
+using CellShop_Api.Models;
+using Newtonsoft.Json;
+using StackExchange.Profiling.Internal;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 
@@ -13,34 +18,38 @@ namespace cell_shop_api.Services
         {
             _emailConfig = emailConfig;
         }
-        public void SendEmail(string to, string addresse, string name, string phone, double total, string status)
+        public void SendEmail(EmailRequest emailRequest)
         {
-            var emailMessage = CreateEmailMessageAsync(to, addresse, name, phone, total, status);
-            Send(emailMessage);
+            try
+            {
+                var emailMessage = CreateEmailMessageAsync(emailRequest);
+                Send(emailMessage);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+            
         }
-        private MailMessage CreateEmailMessageAsync(string to, string addresse, string name, string phone, double total, string status)
+        private MailMessage CreateEmailMessageAsync(EmailRequest emailRequest)
         {
+            var template = File.ReadAllText("TemplateEmail\\base-email.html");
+            var templatenew = template.Replace("[$$var(name)]", emailRequest.AccountName)
+                                       .Replace("[$$var(status)]", emailRequest.DeliveryStatus.ToString())
+                                       .Replace("[$$var(addresse)]", emailRequest.DeliveryAddress)
+                                       .Replace("[$$var(nameAddresse)]", emailRequest.DeliveryName)
+                                       .Replace("[$$var(phone)]", emailRequest.DeliveryPhone)
+                                       .Replace("[$$var(total)]", emailRequest.Total.ToString());
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(_emailConfig.From);
-            mailMessage.To.Add(new MailAddress(to));
+            mailMessage.To.Add(new MailAddress(emailRequest.To));
             mailMessage.Subject = "CellShop";
             mailMessage.IsBodyHtml = true;
-            mailMessage.Body = Body(addresse, name, phone, total, status);
+            mailMessage.Body = templatenew;
 
             return mailMessage;
         }
-        public string Body(string addresse, string name, string phone, double total, string status)
-        {
-            string h1 = "<h1>Cell shop</h1> <br/>";
-            string h2 = "<h2>Thông tin đơn hàng<h2> <br/>";
-            string addressehtml = "<b>Địa chỉ:<b/>" + addresse + "<br/>";
-            string namehtml = "<b>Người nhận:<b/>" + name + "<br/>";
-            string phonehtml = "<b>Số điện thoại:<b/>" + phone + "<br/>";
-            string totalhtml = "<b>Tổng tiền: <b/>" + total + "VNĐ <br/>";
-            string statushtml = "<b>Trạng thái: <b/>" + status + "<br/>";
-            string end = "<b>Cảm ơn quý khách<b/>";
-            return h1 + h2 + addresse + namehtml + phonehtml + totalhtml + statushtml + end;
-        }
+        
         private void Send(MailMessage mailMessage)
         {
             SmtpClient client = new SmtpClient();
@@ -59,5 +68,6 @@ namespace cell_shop_api.Services
             client.Credentials = credential;
             client.Send(mailMessage);
         }
+        
     }
 }

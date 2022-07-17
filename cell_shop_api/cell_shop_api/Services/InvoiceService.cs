@@ -5,6 +5,7 @@ using cell_shop_api.Unit_Of_Work;
 using cell_shop_api.ViewModels.Request;
 using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Enum;
+using CellShop_Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,16 +16,31 @@ namespace cell_shop_api.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IClaimsService _claimsService;
-
+        private readonly IEmailService _emailService;
         private string role;
-
-        public InvoiceService(IUnitOfWork unitOfWork, IMapper mapper, IClaimsService claimsService)
+        private int _currenAccountId;
+        public InvoiceService(IUnitOfWork unitOfWork, IMapper mapper, IClaimsService claimsService, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _claimsService = claimsService;
 
             role = _claimsService.GetCurrentRole;
+            _currenAccountId = _claimsService.GetCurrentAccountId;
+            _emailService = emailService;
+        }
+
+        private async Task SendEmailAsync(Invoice invoice)
+        {
+            var emailRequest = _mapper.Map<EmailRequest>(invoice);
+
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(_currenAccountId);
+
+            emailRequest.AccountName = account.FullName;
+
+            emailRequest.To = account.Email;
+
+            _emailService.SendEmail(emailRequest);
         }
 
         public async Task<DeliveryStatus?> CancelInvocieAsync(int invoiceId)
@@ -53,6 +69,8 @@ namespace cell_shop_api.Services
                     }
                     _unitOfWork.SaveChanges();
                 }
+                await SendEmailAsync(invoice);
+
                 return invoice.DeliveryStatus;
             }
             
@@ -73,6 +91,8 @@ namespace cell_shop_api.Services
 
             _unitOfWork.SaveChanges();
 
+            await SendEmailAsync(invoice);
+
             return invoice.DeliveryStatus;
         }
 
@@ -90,7 +110,9 @@ namespace cell_shop_api.Services
             _unitOfWork.InvoiceRepository.Update(invoice);
             
             _unitOfWork.SaveChanges();
-            
+
+            await SendEmailAsync(invoice);
+
             return invoice.DeliveryStatus;
         }
 

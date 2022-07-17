@@ -78,7 +78,17 @@ namespace cell_shop_api.Services
                  _unitOfWork.SaveChanges();
 
                 await transaction.CommitAsync();
-                
+
+                var emailRequest = _mapper.Map<EmailRequest>(invoice);
+
+                var account = await _unitOfWork.AccountRepository.GetByIdAsync(_currenAccountId);
+
+                emailRequest.AccountName = account.FullName;
+
+                emailRequest.To = account.Email;
+
+                _emailService.SendEmail(emailRequest);
+
                 return true;
             }
             catch (Exception)
