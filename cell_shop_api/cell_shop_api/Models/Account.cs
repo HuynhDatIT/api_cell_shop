@@ -13,6 +13,7 @@ namespace CellShop_Api.Models
         public string UserName { get; set; }
         [Required]
         public string PassWord { get; set; }
+        [Required]
         public string FullName { get; set; }
         [Required]
         public string Email { get; set; }

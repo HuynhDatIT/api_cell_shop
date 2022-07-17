@@ -21,6 +21,8 @@ namespace cell_shop_api.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _claimsService = claimsService;
+
+            accountId = _claimsService.GetCurrentAccountId;
         }
 
         public bool CreateAddresse(CreateAddresse createAddresse)
@@ -47,14 +49,11 @@ namespace cell_shop_api.Services
             return _unitOfWork.SaveChanges() > 0;
         }
 
-        public async Task<IList<GetAddresse>> GetAddressesByAccountAsync(int accountID)
+        public async Task<IList<GetAddresse>> GetAddressesByAccountAsync()
         {
-            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountID);
-
-            if(account == null) return null;
 
             var addresses = await _unitOfWork.AddressesRepository
-                                        .GetAddressesByAccountIdAsync(accountID);
+                                        .GetAddressesByAccountIdAsync(accountId);
 
             var getAddresses = _mapper.Map<IList<GetAddresse>>(addresses);
 
