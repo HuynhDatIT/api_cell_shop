@@ -9,6 +9,7 @@ using CellShop_Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace cell_shop_api.Services
@@ -181,6 +182,20 @@ namespace cell_shop_api.Services
             _unitOfWork.ProductRepository.Update(product);
 
             return await _unitOfWork.SaveChangesAsync() > 0;
+        }
+        public async Task<IList<GetProduct>> SearchProductAsync(int? categorieId, int? brandId, string? name)
+        {
+            
+            var products = await _unitOfWork.ProductRepository.GetAllAsync();
+
+            if(categorieId != null)
+                products = products.Where(x => x.ModelProduct.CategorieId == categorieId).ToList();
+            if(brandId != null)
+                products = products.Where(x => x.ModelProduct.BrandId == brandId).ToList();
+            if (name != null)
+                products = products.Where(x => x.ModelProduct.Name.ToLower().Contains(name.ToLower())).ToList();
+
+            return _mapper.Map<IList<GetProduct>>(products);
         }
     }
 }

@@ -52,5 +52,6 @@ namespace cell_shop_api.Repository
                                 .Where(x => x.ModelProduct.CategorieId == catogorieId)
                                 .OrderByDescending(x => x.Id).ToListAsync();
         }
+       
     }
 }

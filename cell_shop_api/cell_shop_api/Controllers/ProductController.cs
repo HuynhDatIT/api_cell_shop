@@ -74,5 +74,12 @@ namespace cell_shop_api.Controllers
 
             return Ok(getProducts);
         }
+        [HttpGet("Search")]
+        public async Task<IActionResult> GetProductByCategorie(int? categorieId = null, int? brandId = null, string? name = null)
+        {
+            var getProducts = await _productService.SearchProductAsync(categorieId, brandId, name);
+
+            return Ok(getProducts);
+        }
     }
 }

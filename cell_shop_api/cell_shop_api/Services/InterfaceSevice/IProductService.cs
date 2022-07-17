@@ -18,5 +18,6 @@ namespace cell_shop_api.Services.InterfaceSevice
         Task<bool> DeleteProductAsync(int id);
         Task<bool> UpdateRatingProductAsync(int productId, float avgRating);
         Task<IList<GetProduct>> GetProductsByCatagorieAsync(int catogorieId);
+        Task<IList<GetProduct>> SearchProductAsync(int? categorieId, int? brandId, string? name);
     }
 }
