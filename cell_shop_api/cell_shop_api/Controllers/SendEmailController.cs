@@ -1,6 +1,7 @@
 ﻿
 
 using cell_shop_api.Services.InterfaceSevice;
+using cell_shop_api.ViewModels.Request;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Diagnostics;
@@ -25,6 +26,17 @@ namespace cell_shop_api.Controllers
         {
             try
             {
+                var email = new EmailRequest {
+
+                    DateInvoice = DateTime.Now.ToString(),
+                    DeliveryAddress = "sasdsfdjsfsfj",
+                    DeliveryName = "huynhdat",
+                    DeliveryPhone = "028398",
+                    Total = 1234,
+                    To = "huynhtandat080297@gmail.com",
+                    AccountName = "Huyndhat"
+                };
+                _emailService.SendEmail(email);
                 return Ok();
             }
             catch (Exception ex)

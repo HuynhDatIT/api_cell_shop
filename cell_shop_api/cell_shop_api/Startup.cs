@@ -110,7 +110,7 @@ namespace CellShop_Api
             services.AddScoped<IAddressesService, AddressesService>();
             services.AddScoped<IInvoiceService, InvoiceService>();
             services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();
-            services.AddScoped<IEmailService, EmailService>();
+            services.AddTransient<IEmailService, EmailService>();
 
             //authentication
             services.AddAuthentication(x =>

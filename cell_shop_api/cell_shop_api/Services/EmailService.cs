@@ -22,16 +22,15 @@ namespace cell_shop_api.Services
         {
             try
             {
-                var emailMessage = CreateEmailMessageAsync(emailRequest);
+                var emailMessage = CreateEmailMessage(emailRequest);
                 Send(emailMessage);
             }
             catch (System.Exception)
             {
                 throw;
             }
-            
         }
-        private MailMessage CreateEmailMessageAsync(EmailRequest emailRequest)
+        private MailMessage CreateEmailMessage(EmailRequest emailRequest)
         {
             var template = File.ReadAllText("TemplateEmail\\base-email.html");
             var templatenew = template.Replace("[$$var(name)]", emailRequest.AccountName)
@@ -39,6 +38,7 @@ namespace cell_shop_api.Services
                                        .Replace("[$$var(addresse)]", emailRequest.DeliveryAddress)
                                        .Replace("[$$var(nameAddresse)]", emailRequest.DeliveryName)
                                        .Replace("[$$var(phone)]", emailRequest.DeliveryPhone)
+                                       .Replace("[$$var(date)]", emailRequest.DateInvoice)
                                        .Replace("[$$var(total)]", emailRequest.Total.ToString());
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(_emailConfig.From);
