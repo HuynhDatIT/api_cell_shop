@@ -2,10 +2,12 @@
 using cell_shop_api.ViewModels.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mini_project_API.Filter;
 using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
+    [AuthorizeFilterAttribute("user")]
     [Route("api/[controller]")]
     [ApiController]
     public class AddresseController : ControllerBase
@@ -17,10 +19,10 @@ namespace cell_shop_api.Controllers
             _addressesService = addressesService;
         }
         
-        [HttpGet("{accountId}")]
-        public async Task<IActionResult> GetAddresseAccount(int accountId)
+        [HttpGet]
+        public async Task<IActionResult> GetAddresseAccount()
         {
-            var addresses = await _addressesService.GetAddressesByAccountAsync(accountId);
+            var addresses = await _addressesService.GetAddressesByAccountAsync();
 
             return addresses != null ? Ok(addresses) : BadRequest();
         }
