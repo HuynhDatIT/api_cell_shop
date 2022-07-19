@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace cell_shop_api.Migrations
 {
     [DbContext(typeof(CellShopDbContext))]
-    [Migration("20220712043932_test")]
-    partial class test
+    [Migration("20220719013536_initdata")]
+    partial class initdata
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,6 +41,7 @@ namespace cell_shop_api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Male")
@@ -323,7 +324,7 @@ namespace cell_shop_api.Migrations
                     b.Property<DateTime>("DateInvoice")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 12, 11, 39, 31, 391, DateTimeKind.Local).AddTicks(2941));
+                        .HasDefaultValue(new DateTime(2022, 7, 19, 8, 35, 35, 769, DateTimeKind.Local).AddTicks(602));
 
                     b.Property<string>("DeliveryAddress")
                         .HasColumnType("nvarchar(max)");
@@ -437,7 +438,7 @@ namespace cell_shop_api.Migrations
                     b.Property<DateTime>("Time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 12, 11, 39, 31, 394, DateTimeKind.Local).AddTicks(5934));
+                        .HasDefaultValue(new DateTime(2022, 7, 19, 8, 35, 35, 773, DateTimeKind.Local).AddTicks(4591));
 
                     b.HasKey("Id");
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace cell_shop_api.Migrations
 {
-    public partial class init : Migration
+    public partial class initdata : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -119,7 +119,7 @@ namespace cell_shop_api.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PassWord = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Male = table.Column<bool>(type: "bit", nullable: false),
@@ -193,7 +193,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateInvoice = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 12, 10, 42, 22, 939, DateTimeKind.Local).AddTicks(9631)),
+                    DateInvoice = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 19, 8, 35, 35, 769, DateTimeKind.Local).AddTicks(602)),
                     Discount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Total = table.Column<float>(type: "real", nullable: false),
                     DeliveryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -221,7 +221,7 @@ namespace cell_shop_api.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Action = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 12, 10, 42, 22, 945, DateTimeKind.Local).AddTicks(8262)),
+                    Time = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 19, 8, 35, 35, 773, DateTimeKind.Local).AddTicks(4591)),
                     AccountId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

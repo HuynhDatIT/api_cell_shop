@@ -42,6 +42,14 @@ namespace cell_shop_api.Controllers
             return result ? Ok() : BadRequest();
         }
         [AuthorizeFilterAttribute("user")]
+        [HttpPut("ChangePassword")]
+        public async Task<IActionResult> ChangetPassword(ChangePassword changePassword)
+        {
+            var result = await _userAccountService.ChangePasswordAsync(changePassword);
+
+            return result ? Ok() : BadRequest();
+        }
+        [AuthorizeFilterAttribute("user")]
         [HttpPut("UpdateProfile")]
         public async Task<IActionResult> UpdateProfile([FromForm] UpdateProfile updateProfile)
         {

@@ -87,7 +87,7 @@ namespace cell_shop_api.Services
 
                 emailRequest.To = account.Email;
 
-                _emailService.SendEmail(emailRequest);
+                _emailService.SendEmailInvoice(emailRequest);
 
                 return true;
             }

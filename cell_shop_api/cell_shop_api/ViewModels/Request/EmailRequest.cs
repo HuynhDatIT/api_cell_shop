@@ -5,7 +5,7 @@ namespace cell_shop_api.ViewModels.Request
 {
     public class EmailRequest
     {
-        public string DateInvoice { get; set; }
+        public DateTime DateInvoice { get; set; }
         public float Total { get; set; }
         public string DeliveryName { get; set; }
         public string DeliveryPhone { get; set; }

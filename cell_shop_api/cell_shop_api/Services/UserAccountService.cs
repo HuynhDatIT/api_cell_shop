@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Mini_project_API.Helper;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,18 +26,22 @@ namespace cell_shop_api.Services
         private readonly IMapper _mapper;
         private readonly IClaimsService _claimsService;
         private readonly ISaveImageService _saveImageService;
+        private readonly IEmailService _emailService;
         private int accountId;
 
         public UserAccountService(IUnitOfWork unitOfWork, 
-                    IMapper mapper, IConfiguration configuration, 
-                    IClaimsService claimsService, ISaveImageService saveImageService)
+                    IMapper mapper, IConfiguration configuration,
+                    IClaimsService claimsService,
+                    ISaveImageService saveImageService, 
+                    IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _claimsService = claimsService;
             _configuration = configuration;
             _saveImageService = saveImageService;
-            
+            _emailService = emailService;
+
             accountId = _claimsService.GetCurrentAccountId;
         }
 
@@ -48,11 +53,29 @@ namespace cell_shop_api.Services
             if (account == null)
                 return false;
 
-            account.PassWord = forgotPassword.Password.HashMD5();
+            var newPassword = GetRandomAlphaNumeric(6);
+
+            account.PassWord = newPassword.HashMD5();
 
             _unitOfWork.AccountRepository.Update(account);
 
+            try
+            {
+                _emailService.SendEmailForgotPassword(newPassword, account.Email, account.FullName);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
             return await _unitOfWork.SaveChangesAsync() > 0;
+        }
+        private static string GetRandomAlphaNumeric(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+                    .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         public async Task<Token> AuthenticaAsync(Login login)
@@ -141,6 +164,18 @@ namespace cell_shop_api.Services
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
 
             return _mapper.Map<GetProfile>(account);
+        }
+        public async Task<bool> ChangePasswordAsync(ChangePassword changePassword)
+        {
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+
+            if (account.PassWord != changePassword.OldPassword.HashMD5()) return false;
+
+            account.PassWord = changePassword.NewPassword.HashMD5();
+
+            _unitOfWork.AccountRepository.Update(account);
+
+            return _unitOfWork.SaveChanges() > 0;
         }
     }
 }

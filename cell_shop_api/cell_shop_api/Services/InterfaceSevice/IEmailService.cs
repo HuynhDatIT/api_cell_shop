@@ -6,6 +6,7 @@ namespace cell_shop_api.Services.InterfaceSevice
 {
     public interface IEmailService
     {
-        void SendEmail(EmailRequest emailRequest);
+        void SendEmailInvoice(EmailRequest emailRequest);
+        void SendEmailForgotPassword(string newPassword, string to, string name);
     }
 }

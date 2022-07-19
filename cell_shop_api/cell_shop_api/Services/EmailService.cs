@@ -1,5 +1,6 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.ViewModels.Request;
+using CellShop_Api.Enum;
 using CellShop_Api.Models;
 using Newtonsoft.Json;
 using StackExchange.Profiling.Internal;
@@ -18,28 +19,30 @@ namespace cell_shop_api.Services
         {
             _emailConfig = emailConfig;
         }
-        public void SendEmail(EmailRequest emailRequest)
+        public void SendEmailInvoice(EmailRequest emailRequest)
         {
-            try
-            {
-                var emailMessage = CreateEmailMessage(emailRequest);
-                Send(emailMessage);
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+
+            var emailMessage = CreateEmailMessageInvoice(emailRequest);
+            Send(emailMessage);
+
         }
-        private MailMessage CreateEmailMessage(EmailRequest emailRequest)
+        public void SendEmailForgotPassword(string newPassword, string to, string name)
         {
-            var template = File.ReadAllText("TemplateEmail\\base-email.html");
+
+            var emailMessage = CreateEmailMessageForgotPassword(newPassword, to, name);
+            Send(emailMessage);
+
+        }
+        private MailMessage CreateEmailMessageInvoice(EmailRequest emailRequest)
+        {
+            var template = File.ReadAllText("TemplateEmail\\InvoiceEmail.html");
             var templatenew = template.Replace("[$$var(name)]", emailRequest.AccountName)
-                                       .Replace("[$$var(status)]", emailRequest.DeliveryStatus.ToString())
+                                       .Replace("[$$var(status)]", ReplaceEnum(emailRequest.DeliveryStatus))
                                        .Replace("[$$var(addresse)]", emailRequest.DeliveryAddress)
                                        .Replace("[$$var(nameAddresse)]", emailRequest.DeliveryName)
                                        .Replace("[$$var(phone)]", emailRequest.DeliveryPhone)
-                                       .Replace("[$$var(date)]", emailRequest.DateInvoice)
-                                       .Replace("[$$var(total)]", emailRequest.Total.ToString());
+                                       .Replace("[$$var(date)]", emailRequest.DateInvoice.ToString("dd/MM/yyyy"))
+                                       .Replace("[$$var(total)]", emailRequest.Total.ToString("#.###"));
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(_emailConfig.From);
             mailMessage.To.Add(new MailAddress(emailRequest.To));
@@ -49,7 +52,42 @@ namespace cell_shop_api.Services
 
             return mailMessage;
         }
-        
+        private MailMessage CreateEmailMessageForgotPassword(string newPassword, string to, string name)
+        {
+            var template = File.ReadAllText("TemplateEmail\\ForgotPassword.html");
+            var templatenew = template.Replace("[$$var(name)]", name)
+                                      .Replace("[$$var(password)]", newPassword);
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(_emailConfig.From);
+            mailMessage.To.Add(new MailAddress(to));
+            mailMessage.Subject = "CellShop";
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Body = templatenew;
+
+            return mailMessage;
+        }
+        private string ReplaceEnum(DeliveryStatus deliveryStatus)
+        {
+            string status = "";
+            switch (deliveryStatus)
+            {
+                case DeliveryStatus.Order:
+                    status = "Bạn vừa đặt hàng thành công!";
+                    break;
+                case DeliveryStatus.Delivery:
+                    status = "Bạn có đơn hàng đang được giao!";
+                    break;
+                case DeliveryStatus.Done:
+                    status = "Giao hàng thành công!";
+                    break;
+                case DeliveryStatus.Cancel:
+                    status = "Đơn của bạn đã hủy!";
+                    break;
+                default:
+                    break;
+            }
+            return status;
+        }
         private void Send(MailMessage mailMessage)
         {
             SmtpClient client = new SmtpClient();
@@ -68,6 +106,6 @@ namespace cell_shop_api.Services
             client.Credentials = credential;
             client.Send(mailMessage);
         }
-        
+
     }
 }

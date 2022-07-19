@@ -40,7 +40,7 @@ namespace cell_shop_api.Services
 
             emailRequest.To = account.Email;
 
-            _emailService.SendEmail(emailRequest);
+            _emailService.SendEmailInvoice(emailRequest);
         }
 
         public async Task<DeliveryStatus?> CancelInvocieAsync(int invoiceId)
@@ -53,7 +53,7 @@ namespace cell_shop_api.Services
             {
                 if (invoice.DeliveryStatus == DeliveryStatus.Order)
                 {
-                    invoice.DeliveryStatus = DeliveryStatus.cancel;
+                    invoice.DeliveryStatus = DeliveryStatus.Cancel;
 
                     _unitOfWork.InvoiceRepository.Update(invoice);
 
@@ -69,12 +69,19 @@ namespace cell_shop_api.Services
                     }
                     _unitOfWork.SaveChanges();
                 }
-                await SendEmailAsync(invoice);
+                try
+                {
+                    await SendEmailAsync(invoice);
+                }
+                catch (System.Exception)
+                {
+                    throw;
+                }
 
                 return invoice.DeliveryStatus;
             }
             
-            invoice.DeliveryStatus = DeliveryStatus.cancel;
+            invoice.DeliveryStatus = DeliveryStatus.Cancel;
 
             _unitOfWork.InvoiceRepository.Update(invoice);
 
@@ -90,8 +97,14 @@ namespace cell_shop_api.Services
             }
 
             _unitOfWork.SaveChanges();
-
-            await SendEmailAsync(invoice);
+            try
+            {
+                await SendEmailAsync(invoice);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
 
             return invoice.DeliveryStatus;
         }

@@ -13,5 +13,6 @@ namespace cell_shop_api.Services.InterfaceSevice
         Task<bool> ForgotPasswordAsync(ForgotPassword forgotPassword);
         Task<bool> UpdateProfileAsync(UpdateProfile updateProfile);
         Task<GetProfile> GetProfileAsync();
+        Task<bool> ChangePasswordAsync(ChangePassword changePassword);
     }
 }

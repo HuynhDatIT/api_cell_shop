@@ -26,24 +26,23 @@ namespace cell_shop_api.Controllers
         {
             try
             {
-                var email = new EmailRequest {
-
-                    DateInvoice = DateTime.Now.ToString(),
-                    DeliveryAddress = "sasdsfdjsfsfj",
-                    DeliveryName = "huynhdat",
-                    DeliveryPhone = "028398",
-                    Total = 1234,
-                    To = "huynhtandat080297@gmail.com",
-                    AccountName = "Huyndhat"
-                };
-                _emailService.SendEmail(email);
-                return Ok();
+                //var email = new EmailRequest {
+                //    DeliveryStatus = 0,
+                //    DateInvoice = DateTime.Now,
+                //    DeliveryAddress = "sasdsfdjsfsfj",
+                //    DeliveryName = "huynhdat",
+                //    DeliveryPhone = "028398",
+                //    Total = 1234,
+                //    To = "huynhtandat080297@gmail.com",
+                //    AccountName = "Huyndhat"
+                //};
+                _emailService.SendEmailForgotPassword("12345", "huynhtandat00297@gmail.com", "Dat");
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
                 throw;
             }
+            return Ok();
         }
     }
 }
