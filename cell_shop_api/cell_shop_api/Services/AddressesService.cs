@@ -64,7 +64,6 @@ namespace cell_shop_api.Services
         }
         public async Task<IList<GetAddresse>> GetAddressesByAccountAsync()
         {
-
             var addresses = await _unitOfWork.AddressesRepository
                                         .GetAddressesByAccountIdAsync(_accountId);
 
