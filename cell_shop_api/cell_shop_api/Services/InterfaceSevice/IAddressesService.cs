@@ -11,5 +11,6 @@ namespace cell_shop_api.Services.InterfaceSevice
         Task<bool> CreateAddresse(CreateAddresse createAddresse);
         Task<bool> UpdateAddresseAsync(UpdateAddresse updateAddresse);
         Task<bool> DeleteAddresseAsync(int id);
+        Task<bool> DeleteAddresseRangeAsync(int accountId);
     }
 }

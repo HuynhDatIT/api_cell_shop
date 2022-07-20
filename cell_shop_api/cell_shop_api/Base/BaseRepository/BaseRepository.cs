@@ -21,7 +21,7 @@ namespace cell_shop_api.Repository.BaseRepository
         {
             _db.Set<T>().Remove(obj);
         }
-        public virtual void DeleteRange(IList<T> listobj)
+        public virtual void DeleteRange(IEnumerable<T> listobj)
         {
             _db.Set<T>().RemoveRange(listobj);
         }

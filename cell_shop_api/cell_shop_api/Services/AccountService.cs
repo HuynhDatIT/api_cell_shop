@@ -12,12 +12,19 @@ namespace cell_shop_api.Services
     public class AccountService : IAccountService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAddressesService _addressesService;
+        private readonly ICartService _cartService;
         private readonly IMapper _mapper;
 
-        public AccountService(IUnitOfWork unitOfWork, IMapper mapper)
+        public AccountService(IUnitOfWork unitOfWork, 
+                                IMapper mapper,
+                                IAddressesService addressesService,
+                                ICartService cartService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _addressesService = addressesService;
+            _cartService = cartService;
         }
 
         public async Task<bool> AddAsync(CreateAccount createAccount)
@@ -46,7 +53,10 @@ namespace cell_shop_api.Services
 
             _unitOfWork.AccountRepository.Update(account);
 
-            return await _unitOfWork.SaveChangesAsync() > 0;
+            await _cartService.DeleteCartRangeAsync(account.Id);
+
+            return await _addressesService.DeleteAddresseRangeAsync(account.Id);
+
         }
         public async Task<IEnumerable<GetAccount>> GetAllAsync()
         {

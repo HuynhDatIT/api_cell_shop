@@ -15,24 +15,24 @@ namespace cell_shop_api.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IClaimsService _claimsService;
-        private int accountId;
+        private int _accountId;
         public AddressesService(IUnitOfWork unitOfWork, IMapper mapper, IClaimsService claimsService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _claimsService = claimsService;
 
-            accountId = _claimsService.GetCurrentAccountId;
+            _accountId = _claimsService.GetCurrentAccountId;
         }
 
         public async Task<bool> CreateAddresse(CreateAddresse createAddresse)
         {
             var addresse = _mapper.Map<Addresse>(createAddresse);
 
-            addresse.AccountId = accountId;
+            addresse.AccountId = _accountId;
 
             await _unitOfWork.AddressesRepository.AddAsync(addresse);
-           
+
             return _unitOfWork.SaveChanges() > 0;
         }
 
@@ -49,11 +49,24 @@ namespace cell_shop_api.Services
             return _unitOfWork.SaveChanges() > 0;
         }
 
+        public async Task<bool> DeleteAddresseRangeAsync(int accountId)
+        {
+            var addresses = await _unitOfWork.AddressesRepository
+                                        .GetAddressesByAccountIdAsync(accountId);
+            for (int i = 0; i < addresses.Count; i++)
+            {
+                addresses[i].Status = false;
+            }
+
+            _unitOfWork.AddressesRepository.UpdateRange(addresses);
+
+            return _unitOfWork.SaveChanges() > 0;
+        }
         public async Task<IList<GetAddresse>> GetAddressesByAccountAsync()
         {
 
             var addresses = await _unitOfWork.AddressesRepository
-                                        .GetAddressesByAccountIdAsync(accountId);
+                                        .GetAddressesByAccountIdAsync(_accountId);
 
             var getAddresses = _mapper.Map<IList<GetAddresse>>(addresses);
 

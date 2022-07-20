@@ -89,5 +89,16 @@ namespace cell_shop_api.Services
             }
 
         }
+
+        public async Task<bool> DeleteCartRangeAsync(int accountId)
+        {
+            var carts = await _unitOfWork.CartRepository.GetCartByAccountIdAsync(accountId);
+            
+            if (carts == null) return false;
+
+            _unitOfWork.CartRepository.DeleteRange(carts);
+
+            return _unitOfWork.SaveChanges() > 0;
+        }
     }
 }

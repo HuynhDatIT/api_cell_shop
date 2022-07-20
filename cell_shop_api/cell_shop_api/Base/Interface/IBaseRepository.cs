@@ -6,7 +6,7 @@ namespace cell_shop_api.Base.Interface
     public interface IBaseRepository<T> where T : class
     {
         void Delete(T obj);
-        void DeleteRange(IList<T> obj);
+        void DeleteRange(IEnumerable<T> obj);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
         Task AddAsync(T obj);

@@ -11,5 +11,6 @@ namespace cell_shop_api.Services.InterfaceSevice
         Task<bool> AddAsync(CreateCart createCart);
         Task<bool> UpdateAsync(UpdateCart updateCart);
         Task<bool> DeleteAsync(int cartid);
+        Task<bool> DeleteCartRangeAsync(int accountId);
     }
 }
