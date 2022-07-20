@@ -20,5 +20,15 @@ namespace cell_shop_api.Repository
             return await _dbSet.Where(x => x.Status == true && x.InvoiceId == invoiceId)
                                 .ToListAsync();
         }
+        public async Task<IList<InvoiceDetail>> GetInvoiceDetailsByInvoiceAsync(IList<int> invoicesId)
+        {
+            var invoicesDetail = new List<InvoiceDetail>();
+            foreach (var invoiceId in invoicesId)
+            {
+                var list = await GetInvoiceDetailsByInvoiceAsync(invoiceId);
+                invoicesDetail.AddRange(list);
+            }
+            return invoicesDetail;
+        }
     }
 }

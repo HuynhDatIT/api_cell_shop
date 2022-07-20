@@ -6,6 +6,7 @@ using cell_shop_api.ViewModels.Request;
 using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace cell_shop_api.Services
@@ -16,7 +17,7 @@ namespace cell_shop_api.Services
         private readonly IMapper _mapper;
         private readonly IClaimsService _claimsService;
         private readonly IProductService _productService;
-        private int accountId;
+        private int _accountId;
 
         public ReviewService(IUnitOfWork unitOfWork, 
                             IMapper mapper,
@@ -27,15 +28,31 @@ namespace cell_shop_api.Services
             _mapper = mapper;
             _claimsService = claimsService;
             _productService = productService;
-            accountId = _claimsService.GetCurrentAccountId;
+            _accountId = _claimsService.GetCurrentAccountId;
             
+        }
+
+        private async Task<bool> IsBuyProduct(int productid)
+        {
+            var invoicesId = await _unitOfWork.InvoiceRepository.GetInvoiceByAccountAsync(_accountId);
+
+            if(invoicesId == null) return false;
+
+            var invoicesdetail = await _unitOfWork.InvoiceDetailRepository
+                                .GetInvoiceDetailsByInvoiceAsync(invoicesId.Select(x => x.Id).ToList());
+
+            var product = invoicesdetail.Where(x => x.ProductId == productid).FirstOrDefault();
+
+            return product != null ? true : false;
         }
 
         public async Task<bool> CreateReviewAsync(CreateReview createReview)
         {
+            if(!await IsBuyProduct(createReview.ProductId)) return false;
+
             var review = _mapper.Map<Review>(createReview);
 
-            review.AccountId = accountId;
+            review.AccountId = _accountId;
 
             await _unitOfWork.ReviewRepository.AddAsync(review);
 
@@ -81,7 +98,7 @@ namespace cell_shop_api.Services
         {
             var review = await _unitOfWork.ReviewRepository.GetByIdAsync(updateReview.Id);
 
-            if (review == null || review.Id != accountId) return false;
+            if (review == null || review.Id != _accountId) return false;
 
             var reviewUpdate = _mapper.Map(updateReview, review);
 
