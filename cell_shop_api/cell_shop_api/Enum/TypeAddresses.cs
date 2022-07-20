@@ -2,8 +2,8 @@
 {
     public enum TypeAddresses
     {
-        Home,
-        Company,
-        Orther
+        Home = 0,
+        Company = 1,
+        Orther =2
     }
 }
