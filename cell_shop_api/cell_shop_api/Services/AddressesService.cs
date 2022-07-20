@@ -25,13 +25,13 @@ namespace cell_shop_api.Services
             accountId = _claimsService.GetCurrentAccountId;
         }
 
-        public bool CreateAddresse(CreateAddresse createAddresse)
+        public async Task<bool> CreateAddresse(CreateAddresse createAddresse)
         {
             var addresse = _mapper.Map<Addresse>(createAddresse);
 
             addresse.AccountId = accountId;
 
-            _unitOfWork.AddressesRepository.Update(addresse);
+            await _unitOfWork.AddressesRepository.AddAsync(addresse);
            
             return _unitOfWork.SaveChanges() > 0;
         }
