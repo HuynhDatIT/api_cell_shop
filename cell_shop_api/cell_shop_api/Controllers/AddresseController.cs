@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
-    [AuthorizeFilterAttribute("user")]
     [Route("api/[controller]")]
     [ApiController]
     public class AddresseController : ControllerBase
@@ -26,6 +25,7 @@ namespace cell_shop_api.Controllers
 
             return addresses != null ? Ok(addresses) : BadRequest();
         }
+        [AuthorizeFilterAttribute("user")]
         [HttpPut]
         public async Task<IActionResult> Update(UpdateAddresse updateAddresse)
         {
@@ -33,6 +33,7 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateAddresse createAddresse)
         {

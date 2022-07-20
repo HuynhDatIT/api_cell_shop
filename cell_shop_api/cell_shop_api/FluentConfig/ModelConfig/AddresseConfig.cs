@@ -11,6 +11,10 @@ namespace cell_shop_api.FluentConfig.ModelConfig
             modelBuilder.Entity<Addresse>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Addresse>()
+                .Property(b => b.Address).IsRequired();
+            modelBuilder.Entity<Addresse>()
+                .Property(b => b.Type).IsRequired();
+            modelBuilder.Entity<Addresse>()
                 .Property(b => b.Status)
                 .HasDefaultValue(true);
         }

@@ -11,6 +11,12 @@ namespace cell_shop_api.FluentConfig.ModelConfig
             modelBuilder.Entity<Account>()
                 .Property(b => b.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Account>()
+                .Property(b => b.Email).IsRequired();
+            modelBuilder.Entity<Account>()
+                .Property(b => b.UserName).IsRequired();
+            modelBuilder.Entity<Account>()
+                .Property(b => b.PassWord).IsRequired();
+            modelBuilder.Entity<Account>()
                 .Property(b => b.Status)
                 .HasDefaultValue(true);
             modelBuilder.Entity<Account>()// defaul account la user
