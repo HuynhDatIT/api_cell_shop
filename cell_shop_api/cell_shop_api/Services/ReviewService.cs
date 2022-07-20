@@ -58,13 +58,9 @@ namespace cell_shop_api.Services
 
             _unitOfWork.ReviewRepository.Update(review);
            
-            var result1 = await _unitOfWork.SaveChangesAsync() > 0;
-            
             var avgRating = await CalculatorRatingAsync(review.ProductId);
 
-            var result2 = await _productService.UpdateRatingProductAsync(review.ProductId, avgRating);
-
-            return (!result1 || !result2);
+            return await _productService.UpdateRatingProductAsync(review.ProductId, avgRating);
         }
 
         public async Task<IList<GetReview>> GetAllAsync()

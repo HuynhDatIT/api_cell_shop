@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace cell_shop_api.Migrations
 {
-    public partial class initdata : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -193,7 +193,7 @@ namespace cell_shop_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateInvoice = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 19, 8, 35, 35, 769, DateTimeKind.Local).AddTicks(602)),
+                    DateInvoice = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 20, 8, 13, 13, 636, DateTimeKind.Local).AddTicks(1046)),
                     Discount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Total = table.Column<float>(type: "real", nullable: false),
                     DeliveryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -221,7 +221,7 @@ namespace cell_shop_api.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Action = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 19, 8, 35, 35, 773, DateTimeKind.Local).AddTicks(4591)),
+                    Time = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 7, 20, 8, 13, 13, 641, DateTimeKind.Local).AddTicks(3711)),
                     AccountId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
