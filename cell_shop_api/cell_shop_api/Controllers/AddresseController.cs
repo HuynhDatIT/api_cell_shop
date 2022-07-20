@@ -18,7 +18,7 @@ namespace cell_shop_api.Controllers
         {
             _addressesService = addressesService;
         }
-        
+        [AuthorizeFilterAttribute("user","admin")]
         [HttpGet]
         public async Task<IActionResult> GetAddresseAccount()
         {

@@ -2,6 +2,7 @@
 using cell_shop_api.ViewModels.Request;
 using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
 namespace cell_shop_api.Services.InterfaceSevice
@@ -14,5 +15,6 @@ namespace cell_shop_api.Services.InterfaceSevice
         Task<bool> UpdateProfileAsync(UpdateProfile updateProfile);
         Task<GetProfile> GetProfileAsync();
         Task<bool> ChangePasswordAsync(ChangePassword changePassword);
+        Task<bool> UpdateImageProfileAsync(IFormFile file);
     }
 }

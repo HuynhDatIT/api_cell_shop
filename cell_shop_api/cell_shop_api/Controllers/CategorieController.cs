@@ -2,6 +2,7 @@
 using cell_shop_api.ViewModels.Request;
 using cell_shop_api.ViewModels.Response;
 using Microsoft.AspNetCore.Mvc;
+using Mini_project_API.Filter;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
+
+    [AuthorizeFilterAttribute("admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CategorieController : ControllerBase

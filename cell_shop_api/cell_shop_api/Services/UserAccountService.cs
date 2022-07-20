@@ -7,6 +7,7 @@ using cell_shop_api.ViewModels;
 using cell_shop_api.ViewModels.Request;
 using cell_shop_api.ViewModels.Response;
 using CellShop_Api.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Mini_project_API.Helper;
@@ -147,14 +148,19 @@ namespace cell_shop_api.Services
             
             var accountupdate = _mapper.Map(updateProfile, account);
 
-            if(updateProfile.file != null)
-            {
-                var path = await _saveImageService.SaveImageAsync(updateProfile.file, TypeImage.ImageAccount);
-
-                accountupdate.AvatarPath = path;
-            }    
-
             _unitOfWork.AccountRepository.Update(accountupdate);
+
+            return _unitOfWork.SaveChanges() > 0;
+        }
+        public async Task<bool> UpdateImageProfileAsync(IFormFile file)
+        {
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+
+            var path = await _saveImageService.SaveImageAsync(file, TypeImage.ImageAccount);
+
+            account.AvatarPath = path;
+
+            _unitOfWork.AccountRepository.Update(account);
 
             return _unitOfWork.SaveChanges() > 0;
         }

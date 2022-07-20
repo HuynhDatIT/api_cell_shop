@@ -1,10 +1,13 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mini_project_API.Filter;
 using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
+
+    [AuthorizeFilterAttribute("admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class InvoiceController : ControllerBase
@@ -30,6 +33,8 @@ namespace cell_shop_api.Controllers
 
             return invoiceStatus != null ? Ok(invoiceStatus) : BadRequest();
         }
+
+        [AuthorizeFilterAttribute("admin","user")]
         [HttpPut("Cancel/{invoiceId}")]
         public async Task<IActionResult> CancelStatus(int invoiceId)
         {

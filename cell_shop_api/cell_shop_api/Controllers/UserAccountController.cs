@@ -1,6 +1,7 @@
 ﻿using cell_shop_api.Services.InterfaceSevice;
 using cell_shop_api.ViewModels.Request;
 using cell_shop_api.ViewModels.Response;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mini_project_API.Filter;
 using System.Threading.Tasks;
@@ -51,9 +52,17 @@ namespace cell_shop_api.Controllers
         }
         [AuthorizeFilterAttribute("user")]
         [HttpPut("UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile([FromForm] UpdateProfile updateProfile)
+        public async Task<IActionResult> UpdateProfile(UpdateProfile updateProfile)
         {
             var result = await _userAccountService.UpdateProfileAsync(updateProfile);
+
+            return result ? Ok() : BadRequest();
+        }
+        [AuthorizeFilterAttribute("user")]
+        [HttpPut("UpdateImageProfile")]
+        public async Task<IActionResult> UpdateImageProfile(IFormFile file)
+        {
+            var result = await _userAccountService.UpdateImageProfileAsync(file);
 
             return result ? Ok() : BadRequest();
         }

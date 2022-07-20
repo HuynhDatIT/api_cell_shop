@@ -8,7 +8,7 @@ namespace cell_shop_api.Validation
         public CreateAddresseValidation()
         {
             RuleFor(x => x.Address).NotEmpty();
-            RuleFor(x => x.TypeAddresse).NotEmpty();
+            RuleFor(x => x.Type).NotEmpty();
             RuleFor(x => x.Phone).NotEmpty();
         }
     }

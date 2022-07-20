@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
-    [AuthorizeFilterAttribute("admin")]
+    [AuthorizeFilter("admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
