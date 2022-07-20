@@ -44,19 +44,28 @@ namespace cell_shop_api.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
+            try
+            {
+                var account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
 
-            if (account == null)
+                if (account == null)
+                    return false;
+
+                account.Status = false;
+
+                _unitOfWork.AccountRepository.Update(account);
+
+                await _cartService.DeleteCartRangeAsync(account.Id);
+
+                await _addressesService.DeleteAddresseRangeAsync(account.Id);
+
+                return true;
+            }
+            catch (System.Exception)
+            {
                 return false;
-
-            account.Status = false;
-
-            _unitOfWork.AccountRepository.Update(account);
-
-            await _cartService.DeleteCartRangeAsync(account.Id);
-
-            return await _addressesService.DeleteAddresseRangeAsync(account.Id);
-
+                throw;
+            }
         }
         public async Task<IEnumerable<GetAccount>> GetAllAsync()
         {

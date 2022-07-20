@@ -34,9 +34,9 @@ namespace cell_shop_api.Controllers
             return result ? Ok() : BadRequest();
         }
         [HttpPost]
-        public IActionResult Create(CreateAddresse createAddresse)
+        public async Task<IActionResult> Create(CreateAddresse createAddresse)
         {
-            var result = _addressesService.CreateAddresse(createAddresse);
+            var result = await _addressesService.CreateAddresseAsync(createAddresse);
 
             return result ? Ok() : BadRequest();
         }
