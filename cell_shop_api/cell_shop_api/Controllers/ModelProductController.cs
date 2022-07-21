@@ -43,6 +43,8 @@ namespace cell_shop_api.Controllers
 
             return modelProduct != null ? Ok(modelProduct) : NotFound();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpPost]
         public async Task<IActionResult> Add(CreateModelProduct createModelProduct)
         {
@@ -50,6 +52,8 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpPut]
         public async Task<IActionResult> Update(UpdateModelProduct updateModelProduct)
         {
@@ -57,6 +61,8 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

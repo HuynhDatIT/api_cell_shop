@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace cell_shop_api.Controllers
 {
 
-    [AuthorizeFilterAttribute("admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CategorieController : ControllerBase
@@ -38,6 +37,8 @@ namespace cell_shop_api.Controllers
 
             return brand != null ? Ok(brand) : NotFound();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpPost]
         public async Task<IActionResult> Add(CreateCategorie createCategorie)
         {
@@ -45,6 +46,8 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpPut]
         public async Task<IActionResult> Update(GetCategorie getCategorie)
         {
@@ -52,6 +55,8 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

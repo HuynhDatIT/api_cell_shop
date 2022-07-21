@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
+    [AuthorizeFilterAttribute("admin")]
 
     [Route("api/[controller]")]
     [ApiController]

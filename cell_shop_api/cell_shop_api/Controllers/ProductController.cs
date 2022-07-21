@@ -2,6 +2,7 @@
 using cell_shop_api.ViewModels.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mini_project_API.Filter;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -43,6 +44,8 @@ namespace cell_shop_api.Controllers
 
             return product != null ? Ok(product) : NotFound();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromForm]CreateProduct createProduct)
         {
@@ -50,6 +53,8 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpPut]
         public async Task<IActionResult> Update(UpdateProduct updateProduct)
         {
@@ -57,6 +62,8 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

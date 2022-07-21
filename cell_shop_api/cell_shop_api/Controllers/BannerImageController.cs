@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace cell_shop_api.Controllers
 {
-    [AuthorizeFilterAttribute("admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class BannerImageController : ControllerBase
@@ -23,18 +22,21 @@ namespace cell_shop_api.Controllers
             var result = await _bannerImageService.GetAllBannerImageAsync();
             return Ok(result);
         }
+        [AuthorizeFilterAttribute("admin")]
         [HttpPost]
         public async Task<IActionResult> CreateBannerImage([FromForm] CreateBannerImage createBannerImage)
         {
             var result = await _bannerImageService.CreateBannerImageAnsyc(createBannerImage);
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
         [HttpPut]
         public async Task<IActionResult> UpdeteBannerImage([FromForm] UpdateBannerImage updateBannerImage)
         {
             var result = await _bannerImageService.UpdateBannerImageAnsyc(updateBannerImage);
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
         [HttpDelete("{bannerId}")]
         public async Task<IActionResult> DeleteBannerImage(int bannerId)
         {

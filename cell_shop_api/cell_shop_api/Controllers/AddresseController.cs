@@ -33,7 +33,7 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
-
+        [AuthorizeFilterAttribute("user", "admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateAddresse createAddresse)
         {

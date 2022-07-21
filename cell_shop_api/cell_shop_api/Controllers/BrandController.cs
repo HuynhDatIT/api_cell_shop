@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace CellShop_Api.Controllers
 {
-    [AuthorizeFilterAttribute("admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class BrandController : ControllerBase
@@ -39,6 +38,7 @@ namespace CellShop_Api.Controllers
 
             return brand != null ? Ok(brand) : NotFound();
         }
+        [AuthorizeFilterAttribute("admin")]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateBrand createBrand)
         {
@@ -46,6 +46,8 @@ namespace CellShop_Api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+
+        [AuthorizeFilterAttribute("admin")]
         [HttpPut]
         public async Task<IActionResult> Update(GetBrand getBrand)
         {
@@ -53,6 +55,7 @@ namespace CellShop_Api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

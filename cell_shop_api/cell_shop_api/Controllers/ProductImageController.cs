@@ -2,6 +2,7 @@
 using cell_shop_api.ViewModels.Request;
 using CellShop_Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Mini_project_API.Filter;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,6 +28,8 @@ namespace cell_shop_api.Controllers
 
             return Ok(productImages);
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpPut]
         public async Task<IActionResult> UpdateProductImgae([FromForm] UpdateProductImage updateProductImage)
         {
@@ -35,6 +38,8 @@ namespace cell_shop_api.Controllers
 
             return result ? Ok() : BadRequest();
         }
+        [AuthorizeFilterAttribute("admin")]
+
         [HttpDelete]
         public async Task<IActionResult> DeleteProductImage([FromForm] int productId)
         {
