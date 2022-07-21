@@ -92,9 +92,10 @@ namespace cell_shop_api.Services
 
         public async Task<bool> DeleteCartRangeAsync(int accountId)
         {
-            var carts = await _unitOfWork.CartRepository.GetCartByAccountIdAsync(accountId);
+            var carts = (IList<Cart>)await _unitOfWork.CartRepository
+                                                    .GetCartByAccountIdAsync(accountId);
             
-            if (carts == null) return false;
+            if (carts.Count == 0) return false;
 
             _unitOfWork.CartRepository.DeleteRange(carts);
 

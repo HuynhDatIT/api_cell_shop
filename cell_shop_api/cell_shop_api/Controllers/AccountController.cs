@@ -32,9 +32,6 @@ namespace cell_shop_api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            if (string.IsNullOrEmpty(id.ToString()) || id <= 0)
-                return BadRequest();
-
             var account = await _accountService.GetByIdAsync(id);
 
             return account != null ? Ok(account) : NotFound();
@@ -50,6 +47,13 @@ namespace cell_shop_api.Controllers
         public async Task<IActionResult> Update(UpdateAccount updateAccount)
         {
             var result = await _accountService.UpdateAsync(updateAccount);
+
+            return result ? Ok() : BadRequest();
+        }
+        [HttpDelete("{accountId}")]
+        public async Task<IActionResult> Delete(int accountId)
+        {
+            var result = await _accountService.DeleteAsync(accountId);
 
             return result ? Ok() : BadRequest();
         }

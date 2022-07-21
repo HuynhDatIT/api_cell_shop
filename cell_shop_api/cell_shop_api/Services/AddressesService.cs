@@ -53,6 +53,9 @@ namespace cell_shop_api.Services
         {
             var addresses = await _unitOfWork.AddressesRepository
                                         .GetAddressesByAccountIdAsync(accountId);
+            
+            if(addresses.Count == 0) return false;
+            
             for (int i = 0; i < addresses.Count; i++)
             {
                 addresses[i].Status = false;

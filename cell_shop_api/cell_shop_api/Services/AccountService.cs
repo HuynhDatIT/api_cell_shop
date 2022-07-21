@@ -55,9 +55,12 @@ namespace cell_shop_api.Services
 
                 _unitOfWork.AccountRepository.Update(account);
 
-                await _cartService.DeleteCartRangeAsync(account.Id);
+                var result1 = await _cartService.DeleteCartRangeAsync(account.Id);
 
-                await _addressesService.DeleteAddresseRangeAsync(account.Id);
+                var result2 = await _addressesService.DeleteAddresseRangeAsync(account.Id);
+
+                if(!result1 && !result2)
+                    _unitOfWork.SaveChanges();
 
                 return true;
             }

@@ -23,7 +23,7 @@ namespace cell_shop_api.Controllers
         {
             var addresses = await _addressesService.GetAddressesByAccountAsync();
 
-            return addresses != null ? Ok(addresses) : BadRequest();
+            return addresses != null ? Ok(addresses) : NotFound();
         }
         [AuthorizeFilterAttribute("user")]
         [HttpPut]

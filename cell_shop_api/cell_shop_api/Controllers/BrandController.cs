@@ -35,9 +35,6 @@ namespace CellShop_Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            if (string.IsNullOrEmpty(id.ToString()) || id <= 0)
-                return BadRequest();
-
             var brand = await _brandService.GetByIdAsync(id);
 
             return brand != null ? Ok(brand) : NotFound();
