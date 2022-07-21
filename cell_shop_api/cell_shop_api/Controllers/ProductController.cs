@@ -44,7 +44,6 @@ namespace cell_shop_api.Controllers
 
             return product != null ? Ok(product) : NotFound();
         }
-        [AuthorizeFilterAttribute("admin")]
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromForm]CreateProduct createProduct)

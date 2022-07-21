@@ -38,7 +38,6 @@ namespace CellShop_Api.Controllers
 
             return brand != null ? Ok(brand) : NotFound();
         }
-        [AuthorizeFilterAttribute("admin")]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateBrand createBrand)
         {

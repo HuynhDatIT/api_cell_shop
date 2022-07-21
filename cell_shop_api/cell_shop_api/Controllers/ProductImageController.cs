@@ -28,7 +28,6 @@ namespace cell_shop_api.Controllers
 
             return Ok(productImages);
         }
-        [AuthorizeFilterAttribute("admin")]
 
         [HttpPut]
         public async Task<IActionResult> UpdateProductImgae([FromForm] UpdateProductImage updateProductImage)
